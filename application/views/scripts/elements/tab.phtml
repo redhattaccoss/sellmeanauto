@@ -1,0 +1,134 @@
+<!---- Start SignUp PopUp ---->
+<div aria-hidden="true" aria-labelledby="windowTitleLabel" role="dialog" tabindex="-1" class="modal fade closeDiv" id="welcomePopup" style="display:none;">
+	<ul style="display:none;">
+		<li>
+			<a href="#tabs-1">Nunc tincidunt</a>
+		</li>
+		<li>
+			<a href="#tabs-2">Proin dolor</a>
+		</li>
+		<li>
+			<a href="#tabs-3">Aenean lacinia</a>
+		</li>
+	</ul>
+	<div id="tabs-1">
+		<div class="modal-header">
+			<div class="icon cloudLogo"></div>
+		</div>
+		<div class="modal-body">
+			<h1>Welcome to LeadsChat</h1>
+			<p>
+				Chat with your customers from anywhere and manage your leads with our Cloud based, Lead Management CRM. LeadsChat helps you convert more visitors and deliver better customer service.
+			</p>
+		</div>
+		<div class="modal-footer">
+			<div class="right modalBtn">
+				<a class="bttn blueBtn nexttab"href="#tabs-2">Next<i class="icon arrowCirc"></i></a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="tabs-2" style="display: none;">
+		<div class="modal-header">
+			<ul class="stepProcess">
+				<li class="activeStep">
+					<i><span>1</span></i>
+					<div>
+						Create Profile
+					</div>
+				</li>
+				<li>
+					<i><span>2</span></i>
+					<div>
+						Activate Widget
+					</div>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="modal-body">
+			<form action="">
+				<ul class="formList">
+					<li>
+						<div class="flLabel">
+							First Name
+						</div>
+						<div class="flInput">
+							<input type="text" />
+						</div><div class="clear"></div>
+					</li>
+					<li>
+						<div class="flLabel">
+							Last Name
+						</div>
+						<div class="flInput">
+							<input type="text" />
+						</div><div class="clear"></div>
+					</li>
+					<li>
+						<div class="flLabel">
+							Screen Name
+						</div>
+						<div class="flInput">
+							<input type="text" />
+						</div><div class="clear"></div>
+					</li>
+				</ul>
+				<hr class="separator"/>
+				<input type="checkbox" class="receiveMessage" checked />
+				Receive message when I'm offline
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="right modalBtn">
+				<a class="bttn left grayBtn prevtab" href="#tabs-1">Previous<i class="icon arrowCirc"></i></a>
+				<a class="bttn blueBtn nexttab" href="#tabs-3">Next<i class="icon arrowCirc"></i></a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="tabs-3" style="display: none;">
+		<div class="modal-header">
+			<ul class="stepProcess">
+				<li>
+					<i><span>1</span></i>
+					<div>
+						Create Profile
+					</div>
+				</li>
+				<li class="activeStep">
+					<i><span>2</span></i>
+					<div>
+						Activate Widget
+					</div>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="modal-body">
+			<p>
+				Copy and insert the code listed below into your HTML source code between the <em>&lt;head&gt;</em> tags. The code must be implemented on every page you want to display the widget.
+			</p>
+			<div class="codeDisplay">
+				&lt;!--start LeadsChat Widget ---&gt;
+				jQuery(function(){handle_side_menu();enable_search_ahead();ad
+				d_browser_detection(jQuery);general_things();widget_boxes();$
+				(docum andle_side_menu() $("#menu-toggler") on
+				("click",function()$("#sidebar").toggleClass("display");$(thi
+				s).toggleClass("display");returnbar").hasClassb=c.next()
+				&lt;!--start LeadsChat Widget ---&gt;
+			</div>
+			<p>
+				Once your widget is installed you will begin seeing visitors.
+			</p>
+		</div>
+		<div class="modal-footer">
+			<div class="right modalBtn">
+				<a class="bttn left grayBtn prevtab" href="#tabs-2">Previous<i class="icon arrowCirc"></i></a>
+				<a data-dismiss="modal" onclick="closeDialog ();" class="bttn blueBtn"  href="#">Activate<i class="icon arrowCirc"></i></a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<!---- End SignUp PopUp ---->

@@ -1,0 +1,152 @@
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '385351674954003',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="mod-make">
+
+
+        <div id="make-item" class="container modal fade">
+            <div class="choose-make ">
+                <div class="maker-con body-type">
+                    <div class="btn-group pull-right" style=" margin: 10px; ">
+                        <button type="button" class="btn btn-default" id="select-car-default">Select Body Type</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu " role="menu">
+                            <li><a href="#" class="select-car" data-label="Hatchback" data-value="Hatchback"><i class="icon-hatchback"></i>Hatchback</a></li>
+                            <li><a href="#" class="select-car" data-label="Sedan" data-value="Sedan"><i class="icon-sedan"></i>Sedan</a></li>
+                            <li><a href="#" class="select-car" data-label="Convertible" data-value="Convertible"><i class="icon-convertable"></i>Convertible</a></li>
+                            <li><a href="#" class="select-car" data-label="Coupe" data-value="Coupe"><i class="icon-coupe"></i>Coupe</a></li>
+                            <li><a href="#" class="select-car" data-label="Luxury" data-value="Luxury"><i class="icon-luxury"></i>Luxury</a></li>
+                            <li><a href="#" class="select-car" data-label="Hybrid" data-value="Hybrid"><i class="icon-hybrid"></i>Hybrid</a></li>
+                            <li><a href="#" class="select-car" data-label="SUV" data-value="SUV"><i class="icon-suv"></i>SUV</a></li>
+                            <li><a href="#" class="select-car" data-label="Trucks" data-value="Trucks"><i class="icon-truck"></i>Truck</a></li>
+                            <li><a href="#" class="select-car" data-label="Wagon" data-value="Wagons"><i class="icon-wagons"></i>Wagons</a></li>
+                            <li><a href="#" class="select-car" data-label="Van" data-value="Van"><i class="icon-van"></i>Van</a></li>
+                        </ul>
+                    </div>
+                    <h4 class="">Choose your <span><a href="" id="make-name-link">Hyundai</a></span></h4>
+                </div>
+
+                <div class="make-av" id="make-model-list">
+                    <ul>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Accent</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Azera</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal" v><img src="img/genesis_car.png" /> <span>Elantra</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal" v><img src="img/genesis_car.png" /> <span>Elantra Coupe</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Elantra GT</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Equus</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Genesis</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Genesis Coupe</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Santa Fe</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Santa Fe Sport</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Sonata</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Tucson</span></a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Veloster</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Signup" tabindex="-1" role="dialog" aria-labelledby="Signup" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div style="background-color: #0E4C75; padding: 20px;">
+                        <h3 style="color: #fff; text-align: center; margin:0px;">Let's get started, Choose an Option</h3>
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align: center;">
+                            <h3 style="margin: 0px 0 30px 0;">I am a <span style="color:#FFA54C;">Dealer</span></h3>
+                            <div style="border: 1px dashed #FFA54C; padding: 20px; border-radius: 3px; ">
+                                <p>Create a <span style="color:red; font-weight:bold;">Free profile</span> - Search vehicles customers are ready to buy, and out price your competitors.</p>
+                                <a class="btn btn-warning" y>Create an Account</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="text-align: center;">
+                            <h3 style="margin:0px 0 30px 0;">I am a <span style="color: #92BC48;">User</span></h3>
+                            <div style="border: 1px dashed #92BC48; padding: 20px; border-radius: 3px;">
+                                <p><span style="color: red; font-weight: bold;">It's FREE</span> - Build your own car and get the lowest price from our networked.. </p>
+                                <a class="btn btn-success">Create an Account</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Signin" tabindex="-1" role="dialog" aria-labelledby="Signup" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel" style="font-family: 'Open Sans'; font-weight: 300;">Login to your Account</h3>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" type="text" placeholder="Email Address">
+                    <input class="form-control" type="text" placeholder="Password">
+                    <a class="btn btn-success" style="float: right;">Sign In</a>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                    </div>
+                    <br />
+                    <hr />
+                    <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Open Sans'; font-weight: 300;">Or Sign in  &amp; Connect with</h3>
+                    <img src="img/sign-fb.jpg" style="display: block; margin: 10px auto;" id="sign-in-fb" />
+                    <img src="img/sign-twitter.jpg" style="display: block; margin: 10px auto;" />
+                    <h3 style="text-align: center; margin: 30px 0 0 0; font-family: 'Open Sans'; font-weight: 300;">Forgot your password?</h3>
+                    <p style="text-align: center; margin-bottom: 30px;">no worries, <a href="#">click here</a> to reset your password.</p>
+                    <hr />
+                    <p style="text-align: center;">Don't have an account yet? <span><a href="/register/" data-dismiss="modal" data-toggle="modal" data-target="#Signup">Create an Account</a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ZIPcode" tabindex="-1" role="dialog" aria-labelledby="ZIPcode" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <label class="control-label" style="color: #0D4B72; font-size: 16px; padding-top: 0px;">NOW ENTER YOUR ZIP CODE:</label>
+                                <span style="font-size: 12px; display: block;">ZIP code is used to find dealers near you.</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-lg" id="inputZZIPcode" placeholder="">
+                            </div>
+                        </div>
+                    </form>
+                    <div style="display: block; margin: 20px auto 0; text-align: center;">
+                        <a class="btn btn-warning btn-lg btn-shadow" style="text-align: left; font-weight: bold; padding: 10px 25px;"><span style="display: block; color: #333333; font-size: 13px; font-weight: normal;">Proceed to</span> STYLE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+<script type="text/x-handlebars-template" id="loaded-model-template">
+	<li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal" data-id="{{id}}"><img src="img/genesis_car.png" id="model_{{id}}"/> <span>{{name}}</span></a></li>
+</script>
