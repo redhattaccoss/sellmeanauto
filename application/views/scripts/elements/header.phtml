@@ -22,11 +22,17 @@
                                 <img src="/img/chat_icon.png" />
                             </span><a href="#">Live Chat</a>
                         </span>
-                        <div class="btn-group login-info">
-                            <button type="button" class="btn btn-success btn-lg" style="height:50px;" data-toggle="modal" data-target="#Signin">
-                                Login
-                            </button>
-                        </div>
+                        <?php if ($this->user_profiles) { ?>  
+                           <span class="contacts">
+                                <span class="glyphicon glyphicon-user"></span><a href="#"><?php echo $this->user_profiles['fname']; ?> Account</a>                            
+                        	</span>
+                        <?php }else { ?>      
+                            <div class="btn-group login-info">
+                                <button type="button" class="btn btn-success btn-lg" style="height:50px;" data-toggle="modal" data-target="#Signin">
+                                    Login 
+                                </button>                            
+                            </div>
+                        <?php } ?>
                     </form>
                 </div><!--/.navbar-collapse -->
             </div>
@@ -114,7 +120,7 @@
         </div>
 
     </header>
-    <section class="main-wrapper">
+    <section class="main-wrapper hide">
         <div id="bg">
             <img class="mainimage" src="/img/home_back_wrapper.jpg" />
         </div>

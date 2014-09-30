@@ -223,10 +223,10 @@ class RegisterController extends Zend_Controller_Action
 		$temp_registration = $db->fetchRow($sql);
 		
 		
-		//if($temp_registration['account_activated'] == 'Y'){
-		//	header("Location:/");
-		//	exit;
-		//}
+		if($temp_registration['account_activated'] == 'Y'){
+			header("Location:/");
+			exit;
+		}
 		
 		
 		//print_r($temp_registration); exit;
