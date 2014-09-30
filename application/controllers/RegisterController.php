@@ -199,7 +199,7 @@ class RegisterController extends Zend_Controller_Action
 		$mail->setSubject("Please activate you sellmeanuto account");
 		$mail->setFrom('noreply@sellmeanauto.com', 'sellmeanauto');
 		$mail->setBodyHtml($bodyText);
-		$mail->send();
+		//$mail->send();
 		
 		$this->view->temp_registration = $temp_registration;
 		$this->_helper->layout->setLayout("register");
@@ -223,10 +223,12 @@ class RegisterController extends Zend_Controller_Action
 		$temp_registration = $db->fetchRow($sql);
 		
 		
-		if($temp_registration['account_activated'] == 'Y'){
-			header("Location:/");
-			exit;
-		}
+		//if($temp_registration['account_activated'] == 'Y'){
+		//	header("Location:/");
+		//	exit;
+		//}
+		
+		
 		//print_r($temp_registration); exit;
 		$data=array(
 			'account_activated' => 'Y',
@@ -234,7 +236,54 @@ class RegisterController extends Zend_Controller_Action
 		);
 		$where = "ran = '".$ran."'";
 		$db->update('temp_registration', $data, $where);
-		header("Location:/signin");
+		
+		
+		
+		#TODO
+		//isnert new record in user_credentials 
+		$data=array(
+			'username' => $temp_registration['email'], 
+			'password' => $temp_registration['password'], 
+			'registration_type' => 'manual', 
+			'date_created' => date("Y-m-d H:i:s"), 
+			'date_updated' => date("Y-m-d H:i:s")
+		);
+		
+		$db->insert('user_credentials', $data);
+		$user_credentials_id = $db->lastInsertId();
+		
+		//insert new record in user_profiles
+		$data=array(
+			'user_credentials_id' => $user_credentials_id, 
+			'fname' => $temp_registration['fname'], 
+			'lname' => $temp_registration['lname'], 
+			'email' => $temp_registration['email'], 
+			'about_user' => $temp_registration['about_user'], 
+			'img_path' => $temp_registration['img_path'], 
+			'cell_no' => $temp_registration['cell_no'], 
+			'tell_no' => $temp_registration['tell_no'], 
+			'fax_no' => $temp_registration['fax_no'], 
+			'street' => $temp_registration['street'], 
+			'city_town' => $temp_registration['city_town'], 
+			'state_province' => $temp_registration['state_province'], 
+			'zip_code' => $temp_registration['zip_code'] 		
+		);
+		$db->insert('user_profiles', $data);
+		
+		
+		
+		
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$user_login_credentials->user_credentials_id = $user_credentials_id;
+		
+		//print_r($user_login_credentials->user_credentials_id);exit;
+		//echo "<pre>";
+		//print_r($data); 
+		//echo "</pre>";
+		//exit;
+		
+		//die("Insert record in user_credentials and user_profiles");		
+		header("Location:/");
 		exit;
 	}
 	
