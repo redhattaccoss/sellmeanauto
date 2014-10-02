@@ -8,10 +8,12 @@ class IndexController extends Zend_Controller_Action
         // action body
     	//echo "<p>hello world</p>";exit;
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		//echo $user_login_credentials->user_credentials_id;exit;
 		$db = Zend_Registry::get("main_db");
-		if ($user_login_credentials->user_credentials_id){
+		$user_profiles=array();
+		if($user_login_credentials->user_credentials_id){
 			$sql = $db->select()
 				->from('user_profiles')
 				->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
@@ -25,6 +27,8 @@ class IndexController extends Zend_Controller_Action
 		}else{
 			$this->view->twitter_status = "";
 		}
+		
+		$this->view->user_profiles= $user_profiles;
     }
 	
 	

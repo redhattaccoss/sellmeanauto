@@ -15,7 +15,8 @@
 	</head>
 	<body>
 		<?php
-		echo $this->partial("elements/header.phtml", array("user_profiles"=>$this->user_profiles)  );
+		echo $this->partial("elements/header.phtml", array("user_profiles"=>$this->user_profiles, "register_page"=>$this->register_page)  );
+		echo $this->partial("elements/login.phtml");
 		?>
 		<!--Main Body starts-->
 		<div class="mainBody">

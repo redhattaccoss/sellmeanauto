@@ -6,6 +6,10 @@ class RegisterController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
+		$this->view->headScript()->appendFile("/controllers/register/js/register.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
+		$this->view->register_page=true;
     }
 
     public function indexAction()
@@ -32,7 +36,7 @@ class RegisterController extends Zend_Controller_Action
 			//print_r($temp_registration);exit;
 		}
 		
-		$this->_helper->layout->setLayout("register");
+		//$this->_helper->layout->setLayout("register");
 		
     }
 	
@@ -53,7 +57,7 @@ class RegisterController extends Zend_Controller_Action
 		$this->view->temp_registration = $temp_registration;
 		
 		
-		$this->_helper->layout->setLayout("register");
+		//$this->_helper->layout->setLayout("register");
     }
 	
 	public function step3Action()
@@ -64,7 +68,7 @@ class RegisterController extends Zend_Controller_Action
 			header("Location:/register/step1");
 			exit;
 		}
-		$this->_helper->layout->setLayout("register");
+		//$this->_helper->layout->setLayout("register");
     }
 	
 	
@@ -202,7 +206,7 @@ class RegisterController extends Zend_Controller_Action
 		//$mail->send();
 		
 		$this->view->temp_registration = $temp_registration;
-		$this->_helper->layout->setLayout("register");
+		//$this->_helper->layout->setLayout("register");
 	}
 	
 	public function activateAccountAction(){
@@ -283,7 +287,7 @@ class RegisterController extends Zend_Controller_Action
 		//exit;
 		
 		//die("Insert record in user_credentials and user_profiles");		
-		header("Location:/");
+		header("Location:/user/");
 		exit;
 	}
 	

@@ -8,7 +8,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="/">
                         <img src="/img/sell_me_an_auto_logo.png" />
                     </a>
                 </div>
@@ -24,7 +24,8 @@
                         </span>
                         <?php if ($this->user_profiles) { ?>  
                            <span class="contacts">
-                                <span class="glyphicon glyphicon-user"></span><a href="#"><?php echo $this->user_profiles['fname']; ?> Account</a>                            
+                                <span class="glyphicon glyphicon-user"></span><a href="/user/"><?php echo $this->user_profiles['fname']; ?></a>   
+                                <span class="glyphicon glyphicon-log-out"></span> <a href="/user/logout">Logout</a>                        
                         	</span>
                         <?php }else { ?>      
                             <div class="btn-group login-info">
@@ -36,6 +37,7 @@
                     </form>
                 </div><!--/.navbar-collapse -->
             </div>
+           <?php if (!$this->register_page) { ?> 
            
             <section class="builder-con">
                 <div class="container">
@@ -116,11 +118,11 @@
                     </div>
                 </div>
             </section>
-
+			<?php } ?>
         </div>
 
     </header>
-    <section class="main-wrapper hide">
+    <section class="main-wrapper">
         <div id="bg">
             <img class="mainimage" src="/img/home_back_wrapper.jpg" />
         </div>

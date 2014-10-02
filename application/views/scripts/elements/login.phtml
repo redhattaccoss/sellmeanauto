@@ -1,0 +1,49 @@
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '385351674954003',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+<div class="modal fade" id="Signin" tabindex="-1" role="dialog" aria-labelledby="Signup" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel" style="font-family: 'Open Sans'; font-weight: 300;">Login to your Account</h3>
+                </div>
+                <div class="modal-body">
+                	<form id="login_form" method="post">
+                        <input class="form-control" type="text" placeholder="Email Address" name="username" id="username">
+                        <input class="form-control" type="text" placeholder="Password" name="password" id="password">
+                        <button class="btn btn-success" style="float: right;">Sign In</button>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember me
+                            </label>
+                        </div>
+                    </form>
+                    <br />
+                    <hr />
+                    <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Open Sans'; font-weight: 300;">Or Sign in  &amp; Connect with</h3>
+                    <img src="/img/sign-fb.jpg" style="display: block; margin: 10px auto;" id="sign-in-fb" />
+                    <img src="/img/sign-twitter.jpg" style="display: block; margin: 10px auto;" />
+                    <h3 style="text-align: center; margin: 30px 0 0 0; font-family: 'Open Sans'; font-weight: 300;">Forgot your password?</h3>
+                    <p style="text-align: center; margin-bottom: 30px;">no worries, <a href="/forgot-password/">click here</a> to reset your password.</p>
+                    <hr />
+                    <p style="text-align: center;">Don't have an account yet? <span><a href="/register/step1">Create an Account</a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
