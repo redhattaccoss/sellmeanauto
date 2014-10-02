@@ -119,13 +119,23 @@ function loadModelList(name, make){
 
 
 jQuery(document).ready(function() {
-
+	
+	if (jQuery("#twitter_status").val()!=undefined){
+		if (jQuery("#twitter_status").val()=="already_registered"){
+			alert("Already Registered via Twitter. Landing page otw!");
+		}else{
+			alert("Registered via Twitter. Landing page otw!");
+		}
+	}
 	jQuery(".select-car").on("click", function(e){
 		BODY_TYPE = jQuery(this).attr("data-value");
 		jQuery("#select-car-default").html(jQuery(this).attr("data-label"));
 		loadModelList(SELECTED_NAME, SELECTED_MAKE);
 	});
-	
+	jQuery("#sign-in-twitter").on("click", function(e) {
+		window.location.href = "/twitter/redirect/"
+		e.preventDefault();
+	});
 	jQuery("#sign-in-fb").on("click", function(e) {
 		FB.login(function(response) {
 			FB.api('/me', function(response) {

@@ -15,7 +15,8 @@ class FacebookRegisterController extends Zend_Controller_Action
 			"username"=>$_REQUEST["email"],
 			"date_created"=>date("Y-m-d H:i:s"),
 			"date_updated"=>date("Y-m-d H:i:s"),
-			"facebook_id"=>$_REQUEST["id"],		
+			"facebook_id"=>$_REQUEST["id"],	
+			"registration_type"=>"facebook"	
 			);	
 			$db->insert("user_credentials", $user_credentials);
 			$user_credential_id = $db->lastInsertId("user_credentials");

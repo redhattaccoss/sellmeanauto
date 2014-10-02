@@ -11,13 +11,20 @@ class IndexController extends Zend_Controller_Action
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		//echo $user_login_credentials->user_credentials_id;exit;
 		$db = Zend_Registry::get("main_db");
-		$sql = $db->select()
-			->from('user_profiles')
-			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
-		$user_profiles = $db->fetchRow($sql);
-		
-		$this->view->user_profiles= $user_profiles;
-		
+		if ($user_login_credentials->user_credentials_id){
+			$sql = $db->select()
+				->from('user_profiles')
+				->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+			$user_profiles = $db->fetchRow($sql);
+			
+			$this->view->user_profiles= $user_profiles;			
+		}
+
+		if ($_REQUEST["twitter_status"]){
+			$this->view->twitter_status = $_REQUEST["twitter_status"];		
+		}else{
+			$this->view->twitter_status = "";
+		}
     }
 	
 	
