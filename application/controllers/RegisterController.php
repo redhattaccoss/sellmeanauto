@@ -77,6 +77,21 @@ class RegisterController extends Zend_Controller_Action
 		
 		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
 		$ran = Utilities::generateHash();
+		
+		$validator = new Zend_Validate_EmailAddress();
+		
+		if (!$validator->isValid($_POST['email'])) {
+			// email is invalid; print the reasons
+			$err_msg="";
+			foreach ($validator->getMessages() as $message) {
+				$err_msg .= "$message\n";
+			}
+			echo json_encode(array("success"=>false, "msg"=>$err_msg ));
+			exit;
+		}
+		
+				  
+		//exit;
 		//echo strlen($ran);
 		
 		//Check if email if existing

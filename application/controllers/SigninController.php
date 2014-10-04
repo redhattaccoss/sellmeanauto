@@ -22,7 +22,7 @@ class SigninController extends Zend_Controller_Action
 			->from('user_credentials', 'id')
 			->where('registration_type=?', 'manual' )
 			->where('username=?', $_POST['username'] )
-			->where('password=?', sha1($_POST['password']) );
+			->where('password=?', sha1($_POST['login_password']) );
 		$user_credentials_id = $db->fetchOne($sql);	
 		if(!$user_credentials_id){
 			echo json_encode(array("success"=>false, "msg"=>'Email / Password does not match.' ));

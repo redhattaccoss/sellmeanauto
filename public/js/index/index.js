@@ -124,7 +124,11 @@ jQuery(document).ready(function() {
 		if (jQuery("#twitter_status").val()=="already_registered"){
 			alert("Already Registered via Twitter. Landing page otw!");
 		}else{
-			alert("Registered via Twitter. Landing page otw!");
+			if(jQuery("#twitter_status").val()==""){
+				//do nothing
+			}else{
+				alert("Registered via Twitter. Landing page otw!");
+			}
 		}
 	}
 	jQuery(".select-car").on("click", function(e){
