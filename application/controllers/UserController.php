@@ -6,11 +6,6 @@ class UserController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
-		
-    }
-
-    public function indexAction()
-    {
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		//echo $user_login_credentials->user_credentials_id;
 		$user_profiles=array();
@@ -23,9 +18,16 @@ class UserController extends Zend_Controller_Action
 			
 		}		
 		$this->view->user_profiles= $user_profiles;
-        
+    }
+
+    public function indexAction()
+    {
+		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
+        $this->_helper->layout->setLayout("user");
 		
     }
+	
+	
 	
 	public function logoutAction()
 	{

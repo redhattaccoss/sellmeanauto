@@ -17,16 +17,24 @@
                         <span class="contacts">
                             <span>
                                 <img src="/img/message_icon.png" />
-                            </span><a href="#">Contact Us</a>
+                            </span><a href="/contact-us">Contact Us</a>
                             <span>
                                 <img src="/img/chat_icon.png" />
-                            </span><a href="#">Live Chat</a>
+                            </span><a href="/live-chat">Live Chat</a>
                         </span>
                         <?php if ($this->user_profiles) { ?>  
-                           <span class="contacts">
-                                <span class="glyphicon glyphicon-user"></span><a href="/user/"><?php echo $this->user_profiles['fname']; ?></a>   
-                                <span class="glyphicon glyphicon-log-out"></span> <a href="/user/logout">Logout</a>                        
-                        	</span>
+                        <div class="btn-group login-info">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="profile-pic"><img src="/img/no-profile-icon.jpg" /></span><?php echo $this->user_profiles['fname']; ?> <?php echo $this->user_profiles['lname']; ?> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/user/">Edit My Profile</a></li>
+                                <li><a href="/user/">Bids</a></li>
+                                <li><a href="/user/">Account Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/user/logout"><strong>Log Out</strong></a></li>
+                            </ul>
+                    	</div>
                         <?php }else { ?>      
                             <div class="btn-group login-info">
                                 <button type="button" class="btn btn-success btn-lg" style="height:50px;" data-toggle="modal" data-target="#Signin">

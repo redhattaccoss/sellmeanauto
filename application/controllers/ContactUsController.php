@@ -1,7 +1,12 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class ContactUsController extends Zend_Controller_Action
 {
+
+    public function init()
+    {
+        /* Initialize action controller here */
+    }
 
     public function indexAction()
     {
@@ -30,6 +35,7 @@ class IndexController extends Zend_Controller_Action
 		
 		$this->view->user_profiles= $user_profiles;
     }
+
 
 }
 

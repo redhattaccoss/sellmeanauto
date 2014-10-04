@@ -1,11 +1,16 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class LiveChatController extends Zend_Controller_Action
 {
+
+    public function init()
+    {
+        /* Initialize action controller here */
+    }
 
     public function indexAction()
     {
-        // action body
+		// action body
     	//echo "<p>hello world</p>";exit;
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
@@ -30,6 +35,7 @@ class IndexController extends Zend_Controller_Action
 		
 		$this->view->user_profiles= $user_profiles;
     }
+
 
 }
 
