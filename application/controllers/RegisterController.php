@@ -95,6 +95,7 @@ class RegisterController extends Zend_Controller_Action
 		//echo strlen($ran);
 		
 		//Check if email if existing
+		
 		$sql = $db->select()
 			->from('temp_registration', 'email')
 			->where('email =?', $_POST['email']);
@@ -102,6 +103,19 @@ class RegisterController extends Zend_Controller_Action
 		
 		if($existing_email){
 			echo json_encode(array("success"=>false, "existing_email"=>$existing_email, "msg"=>'This email has already been registered.' ));
+			exit;
+		}
+		
+		
+		//Check if email if existing
+		$sql = $db->select()
+			->from('user_credentials', 'username')
+			->where('registration_type =?', 'manual')
+			->where('username =?', $_POST['email']);
+		$existing_email = $db->fetchOne($sql);	
+		
+		if($existing_email){
+			echo json_encode(array("success"=>false, "existing_email"=>$existing_email, "msg"=>'This email has already been registered!' ));
 			exit;
 		}
 		
@@ -218,7 +232,7 @@ class RegisterController extends Zend_Controller_Action
 		$mail->setSubject("Please activate you sellmeanuto account");
 		$mail->setFrom('noreply@sellmeanauto.com', 'sellmeanauto');
 		$mail->setBodyHtml($bodyText);
-		//$mail->send();
+		$mail->send();
 		
 		$this->view->temp_registration = $temp_registration;
 		//$this->_helper->layout->setLayout("register");
