@@ -12,27 +12,142 @@ class UserController extends Zend_Controller_Action
     public function indexAction()
     {
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
+		
 		if(!$user_login_credentials->user_credentials_id){
 			header("Location:/");
 			exit;
 		}
 
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+			Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
+			$ran = Utilities::generateHash(10);
+			//echo basename($_FILES['file_upload']['name']);exit;
+			
+			$error_msg="";
+			//temporary name of image
+			$tmpName = $_FILES['file_upload']['tmp_name']; 
+			$img = $_FILES['file_upload']['name']; 
+			$imgsize= $_FILES['file_upload']['size']; 
+			$imgtype = $_FILES['file_upload']['type'];
+			
+			if($img != ''){
+				if($imgtype=="image/pjpeg") 
+				{ 
+					$imgtype=".jpg"; 
+				} 
+				elseif($imgtype=="image/jpeg") 
+				{ 
+					$imgtype=".jpg"; 
+				} 
+				elseif($imgtype=="image/gif") 
+				{ 
+					$imgtype=".gif"; 
+				} 
+				elseif($imgtype=="image/png") 
+				{ 
+					$imgtype=".png"; 
+				}
+				elseif($imgtype=="image/x-png") 
+				{ 
+					$imgtype=".png"; 
+				}  
+				else 
+				{ 
+					$error_msg="Error uploading file, file type is not allowed";
+				} 
+			}
+			//echo $error_msg;exit;
+			if(!$error_msg){
+				
+				$file_path =APPLICATION_PATH.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."public".DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR.$user_login_credentials->user_credentials_id.DIRECTORY_SEPARATOR;
+				//echo $file_path;exit;
+				if(!file_exists($file_path)){
+					mkdir("$file_path",0755); // create a new Folder php function to make a new folder
+				}
+				
+				//$target_path = $file_path.DIRECTORY_SEPARATOR.basename($_FILES['file_upload']['name']);
+				$new_filename = sprintf('%s%s', $ran, $imgtype);
+				//echo $new_filename;exit;
+				$target_path = $file_path.DIRECTORY_SEPARATOR.$new_filename;
+				chmod($target_path, 0755);
+				
+				
+				if(@move_uploaded_file($_FILES['file_upload']['tmp_name'], $target_path)) {
+					chmod($target_path, 0755);
+					$data=array(
+						'img_path' => $new_filename		
+					);
+					$where = "user_credentials_id =".$user_login_credentials->user_credentials_id;
+					$db->update('user_profiles', $data, $where);
+				}
+				
+				//print_r($data);exit; 			
+			}
+			
+			$this->view->error_msg= $error_msg;	
+			
+		}
 
-		$db = Zend_Registry::get("main_db");
+		
+
+
 		$sql = $db->select()
 			->from('user_profiles')
 			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
 		$user_profiles = $db->fetchRow($sql);
-			
-		$this->view->user_profiles= $user_profiles;
 		
+		$this->view->user_image="/img/no-profile-icon.jpg";
+		if($user_profiles['img_path']){
+			$this->view->user_image=sprintf('/public/uploads/%s/%s', $user_login_credentials->user_credentials_id, $user_profiles['img_path'] );
+		}
+		
+		
+		$this->view->user_profiles= $user_profiles;		
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
         $this->_helper->layout->setLayout("user");
+		
+		
+		
+		
+		
+		
 		
     }
 	
 	
-	
+	public function updatePersonalInfoAction()
+	{
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
+		
+		if(!$user_login_credentials->user_credentials_id){
+			echo json_encode(array("success"=>false, "msg"=>"Session expires. Please re-login" ));
+			exit;
+		}
+		
+		$data=array(
+			'fname' => $_POST['fname'], 
+			'lname' => $_POST['lname'], 
+			'cell_no' => $_POST['cell_no'], 
+			'tell_no' => $_POST['tell_no'], 
+			'fax_no' => $_POST['fax_no'], 
+			'street' => $_POST['street'], 
+			'city_town' => $_POST['city_town'], 
+			'state_province' => $_POST['state_province'], 
+			'zip_code' => $_POST['zip_code']
+		);
+		//print_r($data);exit;
+		
+		$where = "user_credentials_id =".$user_login_credentials->user_credentials_id;
+		
+		$result = $db->update('user_profiles', $data, $where);
+		//print_r($result);exit;
+		
+		echo json_encode(array("success"=>true, "msg"=>"Personal Information updated." ));
+		exit;
+	}
 	public function logoutAction()
 	{
 		Zend_Session::namespaceUnset('user_login_credentials');

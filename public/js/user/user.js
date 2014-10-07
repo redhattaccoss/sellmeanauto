@@ -3,22 +3,19 @@ jQuery(document).ready(function() {
 		console.log(window.location.pathname);
 	});	
 	
+	jQuery('input[type=file]').on('change', function( event ) {
+    	jQuery("#form_img" ).submit();
+	});
 	jQuery("#form_personal_info").on( "submit", function( event ) {
-		event.preventDefault();
+    	event.preventDefault(); // Totally stop stuff happening
 		var formData = jQuery( this ).serialize();
 		console.log(formData);
-		alert("Under Construction");
-		/*
-		jQuery.post("/signin/", formData, function(data){
+		jQuery.post("/user/update-personal-info", formData, function(data){
 			data = jQuery.parseJSON(data);
 			console.log(data);
-			if(data.success){
-				location.href="/user/";
-			}else{
-				alert(data.msg);
-			}	
+			alert(data.msg);	
 		});
-		*/
+		
 	});
 	
 	jQuery("#form_credentials").on( "submit", function( event ) {

@@ -127,7 +127,8 @@ jQuery(document).ready(function() {
 			if(jQuery("#twitter_status").val()==""){
 				//do nothing
 			}else{
-				alert("Registered via Twitter. Landing page otw!");
+				//alert("Registered via Twitter. Landing page otw!");
+				location.href="/user/";
 			}
 		}
 	}
@@ -154,7 +155,8 @@ jQuery(document).ready(function() {
 					jQuery.post("/facebook-register/signin/", response, function(api_response){
 						api_response = jQuery.parseJSON(api_response);
 						if (api_response.status=="Registered via FB"){
-							alert("Registered via FB!")
+							//alert("Registered via FB!")
+							location.href="/user/";
 						}else{
 							alert(api_response.status)
 						}
