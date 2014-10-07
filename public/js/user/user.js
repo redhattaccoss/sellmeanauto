@@ -21,19 +21,15 @@ jQuery(document).ready(function() {
 	jQuery("#form_credentials").on( "submit", function( event ) {
 		event.preventDefault();
 		var formData = jQuery( this ).serialize();
-		console.log(formData);
-		alert("Under Construction");
-		/*
-		jQuery.post("/signin/", formData, function(data){
+		//console.log(formData);
+		//alert("Under Construction");
+		
+		jQuery.post("/user/update-password", formData, function(data){
 			data = jQuery.parseJSON(data);
 			console.log(data);
-			if(data.success){
-				location.href="/user/";
-			}else{
-				alert(data.msg);
-			}	
+			alert(data.msg);	
 		});
-		*/
+		
 	});
 	
 	

@@ -148,6 +148,56 @@ class UserController extends Zend_Controller_Action
 		echo json_encode(array("success"=>true, "msg"=>"Personal Information updated." ));
 		exit;
 	}
+	
+	
+	public function updatePasswordAction()
+	{
+		//echo "<pre>";
+		//print_r($_POST);
+		//echo "</pre>";
+		
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
+		
+		if(!$user_login_credentials->user_credentials_id){
+			echo json_encode(array("success"=>false, "msg"=>"Session expires. Please re-login" ));
+			exit;
+		}
+		
+		$sql = $db->select()
+			->from('user_credentials')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_credentials = $db->fetchRow($sql);
+		if($user_credentials['password'] != sha1($_POST['currentpassword'])){
+			echo json_encode(array("success"=>false, "msg"=>"Wrong current password." ));
+			exit;
+		}
+		
+		if($_POST['newpassword']==""){
+			echo json_encode(array("success"=>false, "msg"=>"Invalid password. Please try again." ));
+			exit;
+		}
+		
+		if(sha1($_POST['newpassword']) != sha1($_POST['confirmnewpassword']) ){
+			echo json_encode(array("success"=>false, "msg"=>"New password seems incorrect. Please try again." ));
+			exit;
+		}
+		
+		$data=array(
+			'password' => sha1($_POST['newpassword']),
+			'date_updated' => date("Y-m-d H:i:s")
+		);
+		//echo "<pre>";
+		//print_r($data);
+		//echo "</pre>";	
+		//exit;
+		$where = "id =".$user_login_credentials->user_credentials_id;
+		$db->update('user_credentials', $data, $where);
+		echo json_encode(array("success"=>true, "msg"=>"Password updated." ));
+		exit;
+	}
+	
+	
 	public function logoutAction()
 	{
 		Zend_Session::namespaceUnset('user_login_credentials');
