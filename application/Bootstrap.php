@@ -27,7 +27,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			
 		$layout->setLayoutPath(APPLICATION_PATH.DIRECTORY_SEPARATOR."views/layouts");
 		
-		
+		$this->__addRouter();
 		//defines the OAUTH_CALLBACK for twitter API
 		if (TEST){
 			define("OAUTH_CALLBACK", "http://dev.sellmeanauto.com/twitter/callback/");		
@@ -35,7 +35,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			define("OAUTH_CALLBACK", "http://sellmeanauto.com/twitter/callback/");
 		}
 		//echo OAUTH_CALLBACK;
+		
+		
 	}
+	
+	private function __addRouter(){
+		$ctrl  = Zend_Controller_Front::getInstance();
+		$router = $ctrl->getRouter();
+		$route = new Zend_Controller_Router_Route("cars/select/:makeName/:modelName/:modelId",
+					array("controller"=>"cars", "action"=>"select"));
+		$router->addRoute("cars/select", $route);
+	}
+	
 	
 	private function loadLibraries(){
 		$views = APPLICATION_PATH.DIRECTORY_SEPARATOR."views";
