@@ -1,4 +1,5 @@
 <input type="hidden" id="style_id" name="style_id" value="<?php echo $this->style_id;?>" />
+<input type="hidden" id="car_make" name="car_make" />
 <div class="row">
     <div class="col-md-6">
         <img id="car_main_image" src="/public/img/ajax-loader.gif" />
@@ -25,8 +26,8 @@
             </div>
             <div class="col-md-4">
                 <div style="border-radius: 50%; border: 6px solid #8BC43F; height: 180px; width: 180px; background-color: #EDF5E0; padding: 30px 25px 0 25px;">
-                    <p style=" text-align: center;">We’ve got <span id="number_of_dealers" style="font-weight: bold; color: #8BC43F;"><img src="/public/img/ajax-loader.gif" /> Dealers</span> near  you, and ready to bid.</p>
-                    <p id="number_of_dealers_result" style="border:1px solid #ccc; background-color: #fff; padding: 10px 10px; font-weight: bold; text-align: center; width: 80px; margin: 0 auto;"><img src="/public/img/ajax-loader.gif" /></p>
+                    <p style=" text-align: center;">We’ve got <span id="dealersCount" style="font-weight: bold; color: #8BC43F;"><img src="/public/img/ajax-loader.gif" /> Dealers</span> near  you, and ready to bid.</p>
+                    <input id="zipcode" type="text" style="padding: 8px 8px; font-weight: bold; text-align: center; width: 80px; margin: 0 auto; margin-left:18px;" value="90404" readonly="readonly" />
                 </div>
             </div>
         </div>
@@ -39,9 +40,10 @@
     <ul>
         <li>
             <h5>Color</h5>
-            <p class="color-con">&nbsp;</p>
-
+            <div id="color-box"></div>
+            <br clear="all" />
         </li>
+        
         <li class="icon-mpg">
             <h5>EPA Est. MPG</h5>
             <p id="mpg"><img src="/public/img/ajax-loader.gif" /> <span>City/Hwy</span></p>
@@ -62,7 +64,6 @@
     <h3>Exterior</h3>
 </div>
 
-
 <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -74,33 +75,10 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <table class="table table-hover">                             
-                                <tbody>
-                                    <tr>
-                                        <td><input type="checkbox" value=""></td>
-                                        <td><img src="img/moon_roof.jpg" /></td>
-                                        <td>Moonroof with Universal Garage Door Opener <span class="price">+ $356</span></td>
-                                        <td>Cum sociis natoque penatibus et magnis dis parturient. Vimus magna, accumsan a tortor et porttitor. Donec luctus hendrerit aliquam.ccumsan placerat nisl ac rutrum. Quisque ac egestas nisi. Etiam sed consequat dolor. In ultrices purus placerat massa</td>
-                          
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" value=""></td>
-                                        <td><img src="img/side_mirror.jpg" /></td>
-                                        <td>Cross Traffic Alert System <span class="price">+ $356</span></td>
-                                        <td> Vimus magna, accumsan a tortor et porttitor. Donec luctus hendrerit aliquam.ccumsan placerat niCum sociis natoque penatibus et magnis dis parturient.sl ac rutrum. Quisque ac egestas nisi. Etiam sed consequat dolor. In ultrices purus placerat massa</td>
-                                      
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" value=""></td>
-                                        <td><img src="img/moon_roof.jpg" /></td>
-                                        <td>Moonroof with Universal Garage Door Opener <span class="price">+ $356</span></td>
-                                        <td>Cum sociis natoque penatibus et magnis dis parturient. Vimus magna, accumsan a tortor et porttitor. Donec luctus hendrerit aliquam.ccumsan placerat nisl ac rutrum. Quisque ac egestas nisi. Etiam sed consequat dolor. In ultrices purus placerat massa</td>
-                                    </tr>
+                            <table id="exterior-options" class="table table-hover">                             
+                                <tbody>                                    
                                 </tbody>
                             </table>
-
-                            
-                           
                         </div>
                     </div>
                 </div>
@@ -123,9 +101,23 @@
                     </div>
                 </div>
             </div>
+
 <script type="text/x-handlebars-template" id="transmission-template">
 	<option>{{trim}} {{transmission.transmissionType}}</option>
 </script>
 <script type="text/x-handlebars-template" id="car-year-template">
 	<option>{{year.year}}</option>
 </script>
+<script type="text/x-handlebars-template" id="exterior-options-template">
+	<tr>
+		<td><input type="checkbox" value=""></td>
+		<td>{{name}} <span class="price">+ ${{price.baseMSRP}}</span></td>
+		<td>Cum sociis natoque penatibus et magnis dis parturient. Vimus magna, accumsan a tortor et porttitor. Donec luctus hendrerit aliquam.ccumsan placerat nisl ac rutrum. Quisque ac egestas nisi. Etiam sed consequat dolor. In ultrices purus placerat massa</td>
+	</tr>
+</script>
+
+<script type="text/x-handlebars-template" id="color-box-template">
+	<p class="color-con" style="float:left; margin-left:10px;  background:#{{colorChips.primary.hex}};" title="{{name}}">&nbsp;</p>
+</script>
+
+

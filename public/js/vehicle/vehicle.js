@@ -14,15 +14,16 @@ function getStyleDetailsById(){
 		type : "GET",
 		dataType : 'json',
 		success : function(response) {
-			console.log(response);
+			//console.log(response);
 			jQuery("#car_name").html(response.make.name+' '+response.model.name);
+			jQuery("#car_make").val(response.make.niceName);
 			jQuery("#baseMSRP").html("$"+response.price.baseMSRP);
 			jQuery("#baseInvoice").html("$"+response.price.baseInvoice);
 			jQuery("#mpg").html(response.MPG.city+"/"+response.MPG.highway);
 			jQuery("#horsepower").html(response.engine.horsepower);
 			jQuery("#numOfDoors").html(response.numOfDoors);
 			
-			var output=""
+
 			var src = jQuery("#transmission-template").html();
 			var template = Handlebars.compile(src);
 			jQuery("#transmission").html(template(response));
@@ -30,6 +31,32 @@ function getStyleDetailsById(){
 			var src = jQuery("#car-year-template").html();
 			var template = Handlebars.compile(src);
 			jQuery("#car-year").html(template(response));
+			
+			var output=""
+			var src = jQuery("#exterior-options-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.options, function(i, item) {
+				if(item.category == "Exterior"){
+					jQuery.each(item.options, function(k, v) {
+						output += template(v);							   
+						//console.log(v);
+					});															   
+				}
+			});											  
+			jQuery("#exterior-options tbody").html(output);
+			
+			var output=""
+			var src = jQuery("#color-box-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.colors, function(i, item) {
+				if(item.category == "Exterior"){
+					jQuery.each(item.options, function(k, v) {
+						output += template(v);							   
+						console.log(v);
+					});															   
+				}
+			});	
+			jQuery("#color-box").html(output);
 			
 			load_profile_image();
 		},
@@ -79,7 +106,6 @@ function load_profile_image() {
 
 function getEquipmentDetailsByStyleId(){
 	var style_id = jQuery('#style_id').val();
-	console.log(style_id);
 	var url = BASE_URL + "vehicle/v2/styles/" + style_id + "/equipment?availability=standard&equipmentType=OTHER&fmt=json&api_key=" + API_KEY;
 	jQuery.ajax({
 		url : url,
@@ -100,10 +126,30 @@ function getEquipmentDetailsByStyleId(){
 			});
 			//console.log(numOfSeats);
 			jQuery("#numOfSeats").html(numOfSeats);
+			getDealershipCount();
+		},
+		error : function(response) {
+			console.log(response);
+		}
+	});
+}
+
+
+function getDealershipCount(){
+	var make = jQuery("#car_make").val();
+	var zipcode = jQuery("#zipcode").val();
+	var url = BASE_URL + "dealer/v2/dealers/count?zipcode="+ zipcode +"&radius=100&make="+ make +"&state=new&api_key=" + API_KEY;
+	jQuery.ajax({
+		url : url,
+		type : "GET",
+		dataType : 'json',
+		success : function(response) {
+			jQuery("#dealersCount").html(response.dealersCount);
 			
 		},
 		error : function(response) {
 			console.log(response);
 		}
 	});
+	
 }
