@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <?php
+	echo $this->partial("elements/includes.phtml");
+	echo $this -> headTitle();
+	echo $this -> headLink();
+	?>
+
+</head>
+<body>
+    <?php
+		echo $this->partial("elements/vehicle/header.phtml", array("user_profiles"=>$this->user_profiles )  );
+		echo $this->partial("elements/login.phtml");
+	?>
+    <div class="container" style="padding-top: 100px;">
+    	<?php echo $this->layout()->content?>
+    </div>
+    <?php
+		echo $this->partial("elements/footer.phtml");
+	?>
+	<?php echo $this -> headScript();?>
+</body>
+</html>

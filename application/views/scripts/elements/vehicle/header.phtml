@@ -1,0 +1,78 @@
+<header>
+    <div class="navbar navbar-fixed-top head-wrap" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/img/sell_me_an_auto_logo.png" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right" role="form">
+                    <span class="contacts">
+                        <span>
+                            <img src="/img/message_icon.png" />
+                        </span><a href="/contact-us">Contact Us</a>
+                        <span>
+                            <img src="/img/chat_icon.png" />
+                        </span><a href="/live-chat">Live Chat</a>
+                    </span>
+                    <?php if ($this->user_profiles) { ?>  
+                        <div class="btn-group login-info">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="profile-pic"><img src="/user-image/" /></span><?php echo $this->user_profiles['fname']; ?> <?php echo $this->user_profiles['lname']; ?> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/user/">Edit My Profile</a></li>
+                                <li><a href="/user/">Bids</a></li>
+                                <li><a href="/user/">Account Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a href="/user/logout"><strong>Log Out</strong></a></li>
+                            </ul>
+                    	</div>
+                        <?php }else { ?>      
+                            <div class="btn-group login-info">
+                                <button type="button" class="btn btn-success btn-lg" style="height:50px;" data-toggle="modal" data-target="#Signin">
+                                    Login 
+                                </button>                            
+                            </div>
+                        <?php } ?>
+                </form>
+            </div><!--/.navbar-collapse -->
+
+        </div>
+        <section class="builder-con">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 car-choosen">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <h3 id="car_name"><img src="/public/img/ajax-loader.gif" /></h3>
+                        </div>
+
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">Style</a></li>
+                                <li><a href="#">Model</a></li>
+                                <li class="active"><a href="#">Exterior</a></li>
+                                <li><a href="#">Interior</a></li>
+                                <li><a href="#">Accessories</a></li>
+                                <li><a href="#">Summary</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</header>

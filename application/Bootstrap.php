@@ -73,6 +73,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$router->addRoute("about", $route);
 	}
 	
+	protected function _initRoutes()
+	{
+		$router = Zend_Controller_Front::getInstance()->getRouter();
+		$detailsRoute = new Zend_Controller_Router_Route("vehicle/style/:id", array(
+		   'controller' => 'vehicle',
+		   'action' => 'style'
+		));
+		$router->addRoute('vehicleDetail', $detailsRoute);
+
+	}
+	
 	private function loadNewClasses(){
 		$models = APPLICATION_PATH.DIRECTORY_SEPARATOR."models";
 		$forms = APPLICATION_PATH.DIRECTORY_SEPARATOR."forms";
