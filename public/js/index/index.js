@@ -186,6 +186,6 @@ jQuery(document).ready(function() {
 })
 
 jQuery(document).on("click", ".select-car", function(e){
-	window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+jQuery(this).attr("data-id")."/2013";
+	window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+jQuery(this).attr("data-id")+"/2013";
 	e.preventDefault();
 });

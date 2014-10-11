@@ -10,8 +10,9 @@ class CarsController extends Zend_Controller_Action
 		$this->view->makeName = $makeName;
 		$this->view->modelName = $modelName;
 		$this->view->year = $year;
-		
-		$this->_helper->layout->setLayout("register");
+		$this->view->headLink()->appendStylesheet("/public/css/cars/select.css");
+		$this->view->headScript()->appendFile("/public/js/cars/select.js");
+		$this->_helper->layout->setLayout("car-select");
 	}
 }
 	
