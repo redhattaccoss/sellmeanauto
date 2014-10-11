@@ -39,15 +39,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 	}
 	
-	private function __addRouter(){
-		$ctrl  = Zend_Controller_Front::getInstance();
-		$router = $ctrl->getRouter();
-		$route = new Zend_Controller_Router_Route("cars/select/:makeName/:modelName/:modelId",
-					array("controller"=>"cars", "action"=>"select"));
-		$router->addRoute("cars/select", $route);
-	}
-	
-	
 	private function loadLibraries(){
 		$views = APPLICATION_PATH.DIRECTORY_SEPARATOR."views";
 		$models = APPLICATION_PATH.DIRECTORY_SEPARATOR."models";
@@ -72,7 +63,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 					array("controller"=>"index", "action"=>"about"));
 		$router->addRoute("about", $route);
 	}
-	
 	protected function _initRoutes()
 	{
 		$router = Zend_Controller_Front::getInstance()->getRouter();
@@ -81,15 +71,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		   'action' => 'style'
 		));
 		$router->addRoute('vehicleDetail', $detailsRoute);
+		
+		//added cars selection 
+		$route = new Zend_Controller_Router_Route("cars/select/:makeName/:modelName/:year",
+					array("controller"=>"cars", "action"=>"select"));
+		$router->addRoute("cars/select", $route);
+		
 
 	}
-	
-	private function loadNewClasses(){
-		$models = APPLICATION_PATH.DIRECTORY_SEPARATOR."models";
-		$forms = APPLICATION_PATH.DIRECTORY_SEPARATOR."forms";
-		
-	}
-	
 	protected function _initView(){
 		// Initialize view
 		$view = new Zend_View();

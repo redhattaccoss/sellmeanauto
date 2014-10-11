@@ -15,7 +15,7 @@
 	</head>
 	<body>
 		<?php
-		echo $this->partial("elements/header_registration.phtml")
+		echo $this->partial("elements/header.phtml", array("register_page"=>true, "hide_wrapper"=>true))
 		?>
 		<!--Main Body starts-->
 		<div class="mainBody">

@@ -85,7 +85,7 @@
                     <p class="s-title">Profile Picture</p>
                     	<form name="form_img" id="form_img" method="post" enctype="multipart/form-data" action="/user/">
                         	
-                            <img src="/user-image/" class="col-sm-3 img-thumbnail" style="margin-right:10px;">
+                            <img src="<?php echo $this->user_image; ?>" class="col-sm-3 img-thumbnail" style="margin-right:10px;">
                             <div>
                                 <input type="file" name="file_upload" id="file_upload" >
                                 <p class="muted"><small><?php echo $this->error_msg;?></small></p>

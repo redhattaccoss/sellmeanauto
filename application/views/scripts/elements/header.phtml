@@ -25,7 +25,7 @@
                         <?php if ($this->user_profiles) { ?>  
                         <div class="btn-group login-info">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="profile-pic"><img src="/user-image/" /></span><?php echo $this->user_profiles['fname']; ?> <?php echo $this->user_profiles['lname']; ?> <span class="caret"></span>
+                                <span class="profile-pic"><img src="http://macutay.com/user-image/" /></span><?php echo $this->user_profiles['fname']; ?> <?php echo $this->user_profiles['lname']; ?> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/user/">Edit My Profile</a></li>
@@ -130,8 +130,13 @@
         </div>
 
     </header>
-    <section class="main-wrapper">
-        <div id="bg">
-            <img class="mainimage" src="/img/home_back_wrapper.jpg" />
-        </div>
-    </section>
+    <?php
+    if (!$this->hide_wrapper){
+		?>
+		<section class="main-wrapper">
+	        <div id="bg">
+	            <img class="mainimage" src="/img/home_back_wrapper.jpg" />
+	        </div>
+	    </section>
+		<?php    	
+    }?>

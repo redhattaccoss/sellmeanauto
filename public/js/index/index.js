@@ -182,11 +182,10 @@ jQuery(document).ready(function() {
 		loadModelList(SELECTED_NAME, SELECTED_MAKE);
 		e.preventDefault();
 	});
-	
-	
+
 })
 
 jQuery(document).on("click", ".select-car", function(e){
-	window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+jQuery(this).attr("data-id");
+	window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+jQuery(this).attr("data-id")."/2013";
 	e.preventDefault();
 });
