@@ -23,7 +23,7 @@ function loadModelStylesAvailable(){
 				jQuery.each(year.styles, function(j, item){
 					
 					load_image(item.id, item);
-					
+					load_style_details(item.id);
 					output += template(item);
 				});
 			}
@@ -33,6 +33,24 @@ function loadModelStylesAvailable(){
 	});
 }
 
+function load_style_details(styleid){
+	var url = BASE_URL+"vehicle/v2/styles/"+styleid+"?view=full&fmt=json&api_key="+API_KEY;
+	
+	
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : 'json',
+		success : function(response) {
+			jQuery("#ms_"+styleid).html(response.price.baseMSRP);
+			jQuery("#city_"+styleid).html(response.MPG.city);
+			jQuery("#hwy_"+styleid).html(response.MPG.highway);
+		},
+		error:function(){
+			load_style_details(styleid);
+		}
+	});
+}
 
 function load_image(first_style, item) {
 	var image_api = BASE_URL_V1 + "vehiclephoto/service/findphotosbystyleid?styleId=" + first_style + "&fmt=json&api_key=" + API_KEY;
