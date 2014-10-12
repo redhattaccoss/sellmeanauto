@@ -1,13 +1,13 @@
 jQuery(document).ready(function() {
 	jQuery(window).load(function (e) {
-		console.log(window.location.pathname);
+		//console.log(window.location.pathname);
 		getStyleDetailsById();		
 	});
 });	
 
 function getStyleDetailsById(){
 	var style_id = jQuery('#style_id').val();
-	console.log(style_id);
+	//console.log(style_id);
 	var url = BASE_URL + "vehicle/v2/styles/" + style_id + "?view=full&fmt=json&api_key=" + API_KEY;
 	jQuery.ajax({
 		url : url,
@@ -19,7 +19,7 @@ function getStyleDetailsById(){
 			jQuery("#car_make").val(response.make.niceName);
 			jQuery("#baseMSRP").html("$"+response.price.baseMSRP);
 			jQuery("#baseInvoice").html("$"+response.price.baseInvoice);
-			jQuery("#mpg").html(response.MPG.city+"/"+response.MPG.highway);
+			jQuery("#mpg").html(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
 			jQuery("#horsepower").html(response.engine.horsepower);
 			jQuery("#numOfDoors").html(response.numOfDoors);
 			
@@ -32,6 +32,7 @@ function getStyleDetailsById(){
 			var template = Handlebars.compile(src);
 			jQuery("#car-year").html(template(response));
 			
+			//Exterior
 			var output=""
 			var src = jQuery("#exterior-options-template").html();
 			var template = Handlebars.compile(src);
@@ -45,6 +46,22 @@ function getStyleDetailsById(){
 			});											  
 			jQuery("#exterior-options tbody").html(output);
 			
+			//Interior
+			var output=""
+			var src = jQuery("#exterior-options-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.options, function(i, item) {
+				if(item.category == "Interior"){
+					jQuery.each(item.options, function(k, v) {
+						output += template(v);							   
+						//console.log(v);
+					});															   
+				}
+			});											  
+			jQuery("#interior-options tbody").html(output);
+			
+			
+			
 			var output=""
 			var src = jQuery("#color-box-template").html();
 			var template = Handlebars.compile(src);
@@ -52,7 +69,7 @@ function getStyleDetailsById(){
 				if(item.category == "Exterior"){
 					jQuery.each(item.options, function(k, v) {
 						output += template(v);							   
-						console.log(v);
+						//console.log(v);
 					});															   
 				}
 			});	
@@ -145,11 +162,29 @@ function getDealershipCount(){
 		dataType : 'json',
 		success : function(response) {
 			jQuery("#dealersCount").html(response.dealersCount);
+			newtotalcashpricebystyleidandzip();
+		},
+		error : function(response) {
+			console.log(response);
+		}
+	});	
+}
+
+
+function newtotalcashpricebystyleidandzip(){
+	var style_id = jQuery('#style_id').val();
+	var zipcode = jQuery("#zipcode").val();
+	var url = BASE_URL + "tco/newtotalcashpricebystyleidandzip/"+ style_id +"/"+ zipcode +"?fmt=json&api_key=" + API_KEY;
+	jQuery.ajax({
+		url : url,
+		type : "GET",
+		dataType : 'json',
+		success : function(response) {
+			jQuery("#financing").html(response.value);
 			
 		},
 		error : function(response) {
 			console.log(response);
 		}
-	});
-	
+	});	
 }

@@ -21,7 +21,7 @@ class VehicleController extends Zend_Controller_Action
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/vehicle/vehicle.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
-		
+		$this->view->headLink()->appendStylesheet("/public/css/vehicle/vehicle.css");
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		if($user_login_credentials->user_credentials_id){
 			$db = Zend_Registry::get("main_db");
@@ -33,6 +33,9 @@ class VehicleController extends Zend_Controller_Action
 		}
 		
 		
+		$car_select = new Zend_Session_Namespace("car_select");
+		$this->view->zipcode=$car_select->zipcode;
+		//echo $car_select->zipcode;exit;
 		$this->_helper->layout->setLayout("vehicle");
 	}
 

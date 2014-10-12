@@ -1,0 +1,15 @@
+#nav-tabs li.active{
+	background:#000 !important;
+}
+
+#tab-content h4{
+	color: #19537A;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 10px 15px;
+	background-color: #DDDDDD;
+border-color: #ddd;
+margin-top: 0;
+margin-bottom: 0;
+}
+
