@@ -1,8 +1,58 @@
 jQuery(document).ready(function() {
 	jQuery(window).load(function (e) {
 		//console.log(window.location.pathname);
-		getStyleDetailsById();		
+		//getStyleDetailsById();
 	});
+	
+	jQuery(".proceed_to").on("click", function(e) {
+	    e.preventDefault();
+		var proceed_to = jQuery(this).attr("data-proceed");
+		//console.log(proceed_to);
+		jQuery("#proceed_btn").attr("href", "#"+proceed_to);
+		jQuery("#proceed_btn").html("<span>Proceed to</span> "+proceed_to)
+		
+	});
+	jQuery("#proceed_btn").on("click", function(e) {
+		e.preventDefault();
+		var proceed_to = jQuery("#nav-tabs li.active").children('a').eq(0).attr("data-proceed");
+		jQuery("#proceed_btn").attr("href", "#"+proceed_to);
+		//jQuery("#proceed_btn").html("<span>Proceed to</span> "+proceed_to)
+		
+		
+		
+		var lookup = jQuery(this).attr("href");
+		//var obj = jQuery(this);	
+		//console.log(lookup);
+		if(lookup != '#Post'){	
+			jQuery("#nav-tabs li a").each(function( index ) {													   
+				jQuery("a").parent("li").removeClass("active");
+				if(lookup == jQuery(this).attr("href") ){
+					jQuery(this).parent("li").addClass("active");
+					
+					var proceed_to = jQuery(this).attr("data-proceed");
+					//console.log(proceed_to);
+					//jQuery("#proceed_btn").attr("href", "#"+proceed_to);
+					jQuery("#proceed_btn").html("<span>Proceed to</span> "+proceed_to)
+					return false;
+				}
+				
+			});
+		}else{
+			alert("Under Construction");
+		}
+	});
+	
+	/*
+	jQuery("#proceed_btn").on("click", function(e) {
+	    e.preventDefault();
+		var proceed_to = jQuery(this).attr("href");
+		if(proceed_to == "#Post"){
+			alert("Under Construction");
+		}
+		
+		
+	});
+	*/
 });	
 
 function getStyleDetailsById(){
