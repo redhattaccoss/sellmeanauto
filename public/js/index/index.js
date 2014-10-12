@@ -68,6 +68,7 @@ function load_image(first_style, item) {
 var BODY_TYPE = "";
 var SELECTED_MAKE = "";
 var SELECTED_NAME = "";
+var SELECTED_MODEL = "";
 
 
 //load Model List
@@ -182,10 +183,23 @@ jQuery(document).ready(function() {
 		loadModelList(SELECTED_NAME, SELECTED_MAKE);
 		e.preventDefault();
 	});
+	
+	jQuery(".enter-zip-code").on("click", function(e){
+		var zip = jQuery("#inputZZIPcode").val();
+		jQuery.get("/index/set-zipcode/?zip="+zip, function(response){
+			response = jQuery.parseJSON(response);
+			if (response.success){
+				window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+SELECTED_MODEL+"/2013";
+			}
+		})
+		e.preventDefault();
+	})
 
 })
 
 jQuery(document).on("click", ".select-car", function(e){
-	window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+jQuery(this).attr("data-id")+"/2013";
-	e.preventDefault();
+	SELECTED_MODEL = jQuery(this).attr("data-id");
+	jQuery("#ZIPcode").modal({backdrop:"static", keyboard:false})
+	//
+	//e.preventDefault();
 });

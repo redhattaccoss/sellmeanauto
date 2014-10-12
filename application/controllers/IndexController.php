@@ -30,6 +30,14 @@ class IndexController extends Zend_Controller_Action
 		
 		$this->view->user_profiles= $user_profiles;
     }
+	
+	public function setZipcodeAction(){
+		$code = $this->getRequest()->getQuery("zip");
+		$car_select = new Zend_Session_Namespace("car_select");
+		$car_select->zipcode = $code;
+		echo json_encode(array("success"=>true));
+		exit;
+	}
 
 }
 
