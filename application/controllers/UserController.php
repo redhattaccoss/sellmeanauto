@@ -97,22 +97,9 @@ class UserController extends Zend_Controller_Action
 			->from('user_profiles')
 			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
 		$user_profiles = $db->fetchRow($sql);
-		
-		$this->view->user_image="/img/no-profile-icon.jpg";
-		if($user_profiles['img_path']){
-			$this->view->user_image=sprintf('/public/uploads/%s/%s', $user_login_credentials->user_credentials_id, $user_profiles['img_path'] );
-		}
-		
-		
 		$this->view->user_profiles= $user_profiles;		
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
         $this->_helper->layout->setLayout("user");
-		
-		
-		
-		
-		
-		
 		
     }
 	

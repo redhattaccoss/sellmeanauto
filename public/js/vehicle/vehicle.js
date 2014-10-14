@@ -1,7 +1,7 @@
 jQuery(document).ready(function() {
 	jQuery(window).load(function (e) {
 		//console.log(window.location.pathname);
-		//getStyleDetailsById();
+		getStyleDetailsById();
 	});
 	
 	jQuery(".proceed_to").on("click", function(e) {
@@ -42,17 +42,6 @@ jQuery(document).ready(function() {
 		}
 	});
 	
-	/*
-	jQuery("#proceed_btn").on("click", function(e) {
-	    e.preventDefault();
-		var proceed_to = jQuery(this).attr("href");
-		if(proceed_to == "#Post"){
-			alert("Under Construction");
-		}
-		
-		
-	});
-	*/
 });	
 
 function getStyleDetailsById(){
@@ -70,6 +59,7 @@ function getStyleDetailsById(){
 			jQuery("#baseMSRP").html("$"+response.price.baseMSRP);
 			jQuery("#baseInvoice").html("$"+response.price.baseInvoice);
 			jQuery("#mpg").html(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
+			console.log(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
 			jQuery("#horsepower").html(response.engine.horsepower);
 			jQuery("#numOfDoors").html(response.numOfDoors);
 			
@@ -224,13 +214,14 @@ function getDealershipCount(){
 function newtotalcashpricebystyleidandzip(){
 	var style_id = jQuery('#style_id').val();
 	var zipcode = jQuery("#zipcode").val();
-	var url = BASE_URL + "tco/newtotalcashpricebystyleidandzip/"+ style_id +"/"+ zipcode +"?fmt=json&api_key=" + API_KEY;
+	//https://api.edmunds.com/v1/api/tco/newtotalcashpricebystyleidandzip/200477465/90404?fmt=json&api_key=f95n2h2rf96b5vtybw6xat4z
+	var url = BASE_URL_V1 + "tco/newtotalcashpricebystyleidandzip/"+ style_id +"/"+ zipcode +"?fmt=json&api_key=" + API_KEY;
 	jQuery.ajax({
 		url : url,
 		type : "GET",
 		dataType : 'json',
 		success : function(response) {
-			jQuery("#financing").html(response.value);
+			jQuery("#financing").html("$"+response.value);
 			
 		},
 		error : function(response) {
