@@ -28,6 +28,13 @@ class IndexController extends Zend_Controller_Action
 			$this->view->twitter_status = "";
 		}
 		
+		//REDIRECT URL from CAR SPECIFICATION PAGE
+		if ($_REQUEST["q"]){
+			$q = $_REQUEST["q"];
+		}else{
+			$q = "";
+		}
+		$this->view->q = $q;
 		$this->view->user_profiles= $user_profiles;
     }
 	

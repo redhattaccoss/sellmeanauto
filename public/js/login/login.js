@@ -30,7 +30,11 @@ jQuery(document).ready(function() {
 			data = jQuery.parseJSON(data);
 			console.log(data);
 			if(data.success){
-				location.href="/user/";
+				if (jQuery("#q-car-select").val()!=""){
+					location.href = jQuery("#q-car-select").val();
+				}else{
+					location.href="/user/";
+				}
 			}else{
 				alert(data.msg);
 			}	

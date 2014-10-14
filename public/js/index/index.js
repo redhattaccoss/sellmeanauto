@@ -121,15 +121,29 @@ function loadModelList(name, make){
 
 jQuery(document).ready(function() {
 	
+	if (jQuery("#q-car-select").val()!=""){
+		jQuery("#SignIn").modal({backdrop:"static", keyboard:false});
+	}
+	
+	
 	if (jQuery("#twitter_status").val()!=undefined){
 		if (jQuery("#twitter_status").val()=="already_registered"){
-			alert("Already Registered via Twitter. Landing page otw!");
+			//alert("Already Registered via Twitter. Landing page otw!");
+			if (jQuery("#q-car-select").val()!=""){
+				location.href = jQuery("#q-car-select").val();
+			}else{
+				location.href="/user/";
+			}
 		}else{
 			if(jQuery("#twitter_status").val()==""){
 				//do nothing
 			}else{
 				//alert("Registered via Twitter. Landing page otw!");
-				location.href="/user/";
+				if (jQuery("#q-car-select").val()!=""){
+					location.href = jQuery("#q-car-select").val();
+				}else{
+					location.href="/user/";
+				}
 			}
 		}
 	}
@@ -157,7 +171,13 @@ jQuery(document).ready(function() {
 						api_response = jQuery.parseJSON(api_response);
 						if (api_response.status=="Registered via FB"){
 							//alert("Registered via FB!")
-							location.href="/user/";
+							
+							if (jQuery("#q-car-select").val()!=""){
+								location.href = jQuery("#q-car-select").val();
+							}else{
+								location.href="/user/";	
+							}
+							
 						}else{
 							alert(api_response.status)
 						}
