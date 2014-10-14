@@ -61,20 +61,23 @@
                         </div>
 
                         <div class="navbar-collapse collapse">
-                        	<!--
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="active"><a href="#" class="vehicle_link" data-view="exterior">Exterior</a></li>
-                                <li><a href="#">Interior</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Summary</a></li>
+                        	<?php if($this->summary) { ?>
+                        	
+                            <ul id="nav-tabs" class="nav navbar-nav navbar-right">
+                              <li><a href="/vehicle/style/<?php echo $this->style_id;?>">Exterior</a></li>
+                              <li><a href="/vehicle/style/<?php echo $this->style_id;?>">Interior</a></li>
+                              <li><a href="/vehicle/style/<?php echo $this->style_id;?>">Accessories</a></li>
+                              <li class="active"><a href="/vehicle/summary/<?php echo $this->style_id;?>">Summary</a></li>
                             </ul>
-                            -->
+
+                            <?php } else { ?>
                             <ul id="nav-tabs" class="nav navbar-nav navbar-right" role="tablist">
                               <li class="active"><a href="#Exterior" class="proceed_to" data-proceed="Interior" role="tab" data-toggle="tab">Exterior</a></li>
                               <li><a href="#Interior" class="proceed_to" data-proceed="Accessories"  role="tab" data-toggle="tab">Interior</a></li>
                               <li><a href="#Accessories" class="proceed_to" data-proceed="Summary" role="tab" data-toggle="tab">Accessories</a></li>
-                              <li><a href="#Summary" class="proceed_to" data-proceed="Post"  role="tab" data-toggle="tab">Summary</a></li>
+                              <li><a href="#Summary" class="summary-page">Summary</a></li>
                             </ul>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

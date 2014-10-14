@@ -10,7 +10,7 @@
 </head>
 <body>
     <?php
-		echo $this->partial("elements/vehicle/header.phtml", array("user_profiles"=>$this->user_profiles )  );
+		echo $this->partial("elements/vehicle/header.phtml", array("user_profiles"=>$this->user_profiles, "summary"=>$this->summary, "style_id"=>$this->style_id )  );
 		echo $this->partial("elements/login.phtml");
 	?>
     <div class="container" style="padding-top: 100px;">

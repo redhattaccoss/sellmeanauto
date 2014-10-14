@@ -4,6 +4,11 @@ jQuery(document).ready(function() {
 		getStyleDetailsById();
 	});
 	
+	jQuery(".summary-page").on("click", function(e) {
+		e.preventDefault();												 
+		proceedToSummaryPage();
+	});
+	
 	jQuery(".proceed_to").on("click", function(e) {
 	    e.preventDefault();
 		var proceed_to = jQuery(this).attr("data-proceed");
@@ -23,7 +28,7 @@ jQuery(document).ready(function() {
 		var lookup = jQuery(this).attr("href");
 		//var obj = jQuery(this);	
 		//console.log(lookup);
-		if(lookup != '#Post'){	
+		if(lookup != '#Summary'){	
 			jQuery("#nav-tabs li a").each(function( index ) {													   
 				jQuery("a").parent("li").removeClass("active");
 				if(lookup == jQuery(this).attr("href") ){
@@ -38,12 +43,24 @@ jQuery(document).ready(function() {
 				
 			});
 		}else{
-			alert("Under Construction");
+			proceedToSummaryPage()
 		}
+	});
+	
+	
+	
+	jQuery("#form-style").on( "submit", function( event ) {
+		event.preventDefault();
+		var formData = jQuery( this ).serialize();
+		console.log(formData);		
 	});
 	
 });	
 
+function proceedToSummaryPage(){
+	//console.log("proceed to summary page.");
+	jQuery("#form-style" ).submit();
+}
 function getStyleDetailsById(){
 	var style_id = jQuery('#style_id').val();
 	//console.log(style_id);
@@ -59,7 +76,7 @@ function getStyleDetailsById(){
 			jQuery("#baseMSRP").html("$"+response.price.baseMSRP);
 			jQuery("#baseInvoice").html("$"+response.price.baseInvoice);
 			jQuery("#mpg").html(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
-			console.log(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
+			//console.log(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
 			jQuery("#horsepower").html(response.engine.horsepower);
 			jQuery("#numOfDoors").html(response.numOfDoors);
 			
@@ -88,7 +105,7 @@ function getStyleDetailsById(){
 			
 			//Interior
 			var output=""
-			var src = jQuery("#exterior-options-template").html();
+			var src = jQuery("#interior-options-template").html();
 			var template = Handlebars.compile(src);
 			jQuery.each(response.options, function(i, item) {
 				if(item.category == "Interior"){
@@ -118,7 +135,7 @@ function getStyleDetailsById(){
 			load_profile_image();
 		},
 		error : function(response) {
-			console.log(response);
+			getStyleDetailsById();
 		}
 	});
 	
@@ -154,7 +171,7 @@ function load_profile_image() {
 			getEquipmentDetailsByStyleId();
 		},
 		error : function() {
-			console.log("error");
+			load_profile_image()
 		}
 	});
 
@@ -186,7 +203,7 @@ function getEquipmentDetailsByStyleId(){
 			getDealershipCount();
 		},
 		error : function(response) {
-			console.log(response);
+			getEquipmentDetailsByStyleId()
 		}
 	});
 }
@@ -205,7 +222,7 @@ function getDealershipCount(){
 			newtotalcashpricebystyleidandzip();
 		},
 		error : function(response) {
-			console.log(response);
+			getDealershipCount();
 		}
 	});	
 }
@@ -222,10 +239,9 @@ function newtotalcashpricebystyleidandzip(){
 		dataType : 'json',
 		success : function(response) {
 			jQuery("#financing").html("$"+response.value);
-			
 		},
 		error : function(response) {
-			console.log(response);
+			newtotalcashpricebystyleidandzip();
 		}
 	});	
 }
