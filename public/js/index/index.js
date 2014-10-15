@@ -217,7 +217,7 @@ jQuery(document).ready(function() {
 
 })
 
-jQuery(document).on("click", ".select-car", function(e){
+jQuery(document).on("click", ".select-car-model", function(e){
 	SELECTED_MODEL = jQuery(this).attr("data-id");
 	jQuery("#ZIPcode").modal({backdrop:"static", keyboard:false})
 	//
