@@ -188,17 +188,24 @@ function getEquipmentDetailsByStyleId(){
 		success : function(response) {
 			var numOfSeats=0;
 			jQuery.each(response.equipment, function(j, equipment) {
-				if(equipment.name == "Seating Configuration") {				
-					
+				if(equipment.name == "Seating Configuration") {									
 					jQuery.each(equipment.attributes, function(k, v) {
 						numOfSeats = parseInt(numOfSeats) + parseInt(v['value']);
-						//console.log(v['value']);
 					})
 					return false;
-				}
-				
+				}				
 			});
-			//console.log(numOfSeats);
+			
+			var output=""
+			var src = jQuery("#accessories-options-template").html();
+			var template = Handlebars.compile(src);
+			
+			//jQuery.each(response.equipment, function(j, equipment) {
+			//	output += template(equipment);													 
+			//});
+			//console.log(response.equipment);
+			jQuery("#accessories-options tbody").html(template(response) );
+
 			jQuery("#numOfSeats").html(numOfSeats);
 			getDealershipCount();
 		},

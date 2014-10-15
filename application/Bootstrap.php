@@ -27,7 +27,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			
 		$layout->setLayoutPath(APPLICATION_PATH.DIRECTORY_SEPARATOR."views/layouts");
 		
-		$this->__addRouter();
+		//$this->__addRouter();
 		//defines the OAUTH_CALLBACK for twitter API
 		if (TEST){
 			define("OAUTH_CALLBACK", "http://dev.sellmeanauto.com/twitter/callback/");		

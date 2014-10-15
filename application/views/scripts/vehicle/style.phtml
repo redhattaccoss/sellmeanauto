@@ -86,7 +86,6 @@
     <div class="tab-pane fade" id="Accessories">
 	    <div class="col-lg-12 d-info-con"><h3>Accessories</h3></div>
         <br clear="all" />
-        <h4>Options</h4> 
         <table id="accessories-options" class="table table-hover">                             
         	<tbody></tbody>
         </table>  
@@ -123,6 +122,21 @@
 
 <script type="text/x-handlebars-template" id="color-box-template">
 	<p class="color-con" style="float:left; margin-left:10px;  background:#{{colorChips.primary.hex}};" title="{{name}}">&nbsp;</p>
+</script>
+
+
+<script type="text/x-handlebars-template" id="accessories-options-template">
+{{#each equipment}}	
+	<tr>
+		<td>{{this.name}}
+			<ul>
+				{{#each attributes}}	
+					<li>{{this.name}} : {{this.value}}</li>
+				{{/each}}
+			</ul>
+		</td>
+	</tr>
+{{/each}}
 </script>
 
 
