@@ -4,6 +4,7 @@ jQuery(document).ready(function() {
 		getStyleDetailsById();
 	});
 	
+	
 	jQuery(".summary-page").on("click", function(e) {
 		e.preventDefault();												 
 		proceedToSummaryPage();
@@ -52,11 +53,32 @@ jQuery(document).ready(function() {
 	jQuery("#form-style").on( "submit", function( event ) {
 		event.preventDefault();
 		var formData = jQuery( this ).serialize();
-		console.log(formData);		
+		console.log(formData);
+		jQuery.post("/vehicle/process-vehicle-options", formData, function(data){
+			data = jQuery.parseJSON(data);
+			if(data.success){
+				location.href="/vehicle/summary/"+data.style_id;
+			}else{
+				alert("There's a problem in processing vehicle options.");
+			}
+		});
 	});
+	
+	
+	
+	
 	
 });	
 
+jQuery(function ($) {
+	var $active = $('#accordion .panel-collapse.in').prev().addClass('active');
+	$active.find('a').prepend('<i class="glyphicon glyphicon-minus"></i>');
+	$('#accordion .panel-heading').not($active).find('a').prepend('<i class="glyphicon glyphicon-plus"></i>');
+	$('#accordion').on('show.bs.collapse', function (e) {
+		$('#accordion .panel-heading.active').removeClass('active').find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
+		$(e.target).prev().addClass('active').find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
+	})
+});
 function proceedToSummaryPage(){
 	//console.log("proceed to summary page.");
 	jQuery("#form-style" ).submit();
@@ -71,7 +93,7 @@ function getStyleDetailsById(){
 		dataType : 'json',
 		success : function(response) {
 			//console.log(response);
-			jQuery("#car_name").html(response.make.name+' '+response.model.name);
+			jQuery(".car_name").html(response.make.name+' '+response.model.name);
 			jQuery("#car_make").val(response.make.niceName);
 			jQuery("#baseMSRP").html("$"+response.price.baseMSRP);
 			jQuery("#baseInvoice").html("$"+response.price.baseInvoice);
@@ -131,6 +153,27 @@ function getStyleDetailsById(){
 				}
 			});	
 			jQuery("#color-box").html(output);
+			
+			var output=""
+			var src = jQuery("#interior-color-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.colors, function(i, item) {
+				if(item.category == "Interior"){
+					jQuery.each(item.options, function(k, v) {
+						output += template(v);							   
+					});															   
+				}
+			});	
+			var h= "<tr><td colspan=2 class='interior-color-options'>Color Options</td></tr>"
+			jQuery("#interior-options tbody").append(h + output);
+			
+			jQuery(".color-con").on("click", function(e) {
+				jQuery(".color-con").removeClass("selected_color");
+				var color_id = jQuery(this).attr("data-value");
+				jQuery(this).addClass("selected_color");
+				console.log(color_id);
+				jQuery("#color_id").val(color_id);
+			});
 			
 			load_profile_image();
 		},
@@ -213,6 +256,11 @@ function getEquipmentDetailsByStyleId(){
 			getEquipmentDetailsByStyleId()
 		}
 	});
+	
+	
+	
+	
+	
 }
 
 

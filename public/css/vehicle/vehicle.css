@@ -8,8 +8,23 @@
 	font-weight: bold;
 	padding: 10px 15px;
 	background-color: #DDDDDD;
-border-color: #ddd;
-margin-top: 0;
-margin-bottom: 0;
+	border-color: #ddd;
+	margin-top: 0;
+	margin-bottom: 0;
 }
+
+.interior-color-options{
+	background-color: #dddddd;
+    border-color: #ddd;
+    color: #19537a;
+    font-size: 13px;
+    font-weight: bold;
+}
+.color-con{
+	cursor:pointer;
+}
+.selected_color{
+	border:#000 solid 3px;
+}
+
 

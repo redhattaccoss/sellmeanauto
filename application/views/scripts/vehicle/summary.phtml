@@ -1,3 +1,203 @@
-<input type="hidden" id="style_id" name="style_id" value="<?php echo $this->style_id;?>" />
+<input type="hidden" id="style_id" name="style_id" value="<?php echo $this->car_select->style_id;?>" />
 <input type="hidden" id="car_make" name="car_make" />
-This is for the Summary Page
+<input type="hidden" id="color_id" name="color_id" value="<?php echo $this->car_select->color_id;?>" />
+<input type="hidden" id="interior_color" name="interior_color" value="<?php echo $this->car_select->interior_color[0];?>" />
+<input id="zipcode" name="zipcode" type="hidden" value="<?php echo $this->car_select->zipcode;?>" />
+
+
+<div class="row">
+    <div class="container">
+        <div class="dis-over">
+            <div class="row">
+                <div class="col-md-6">
+                    <img id="car_main_image" src="/public/img/ajax-loader.gif" />
+                    <div class="d-info">
+                        <ul>
+
+                            <li class="icon-mpg">
+
+                                <h5>EPA Est. MPG</h5>
+                                <p id="mpg">... <span>City/Hwy</span></p>
+                            </li>
+                            <li class="icon-hp">
+                                <h5>Horsepower</h5>
+                                <p id="horsepower">...</p>
+                            </li>
+                            <li class="icon-seat">
+                                <h5>Seating</h5>
+                                <p id="numOfSeats">...</p>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                    <div class="sp-details">
+                        <h4>Standard Package</h4>
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active"><a href="#engine_tab" data-toggle="tab">Engine</a></li>
+                            <li><a href="#transmission_tab" data-toggle="tab">Transmission</a></li>
+                            <li><a href="#steering_tab" data-toggle="tab">Steering</a></li>
+                            <li><a href="#chasis_tab" data-toggle="tab">Chasis</a></li>
+                            <li><a href="#dimensions_tab" data-toggle="tab">Dimensions</a></li>
+                        </ul>
+
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade active in" id="engine_tab">
+                                <table class="table table-striped table-condensed">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="transmission_tab">
+                                <p>&nbsp;</p>
+                            </div>
+                            <div class="tab-pane fade" id="steering_tab">
+                                <p>&nbsp;</p>
+                            </div>
+                            <div class="tab-pane fade" id="chasis_tab">
+                                <p>&nbsp;</p>
+                            </div>
+                            <div class="tab-pane fade" id="dimensions_tab">
+                               <p>&nbsp;</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 c-info">
+                            
+                            
+                            <h3 class="car_name">...</h3>
+                            <h5 id="transmission" style="margin-bottom: 20px;">...</h5>
+                            
+                            <div class="white-wrap b-price-dis">
+                                <form class="form-horizontal" role="form">
+                                	
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="text-align:left;">As Configured</label>
+                                        <div class="col-sm-8">
+                                            <p>$28,546</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="text-align:left;">Invoice Price</label>
+                                        <div class="col-sm-8">
+                                            <p id="baseInvoice" class="c-bid">...</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label" style="text-align:left;">FINANCE ESTIMATE</label>
+                                        <div class="col-sm-8">
+                                            <p id="financing">...</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+
+                                            <button class="btn btn-warning btn-lg">POST</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="">
+                                <h5>Your Additional Selections</h5>
+                                <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel1"> Exterior</a>
+            </h4>
+        </div>
+        <div id="panel1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table id="exterior-options" class="table table-hover table-condensed">                             
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel2"> Interror</a>
+            </h4>
+        </div>
+        <div id="panel2" class="panel-collapse collapse">
+            <div class="panel-body">
+                Contents panel 2
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel3"> Accessories</a>
+            </h4>
+        </div>
+        <div id="panel3" class="panel-collapse collapse">
+            <div class="panel-body">
+                Contents panel 3
+            </div>
+        </div>
+    </div>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-handlebars-template" id="transmission-template">
+	<span>{{trim}} {{transmission.transmissionType}}</span>
+</script>
+
+<script type="text/x-handlebars-template" id="car-year-template">
+	<option>{{year.year}}</option>
+</script>
+<script type="text/x-handlebars-template" id="exterior-options-template">
+	<tr>
+		<td>{{name}}</td>
+		<td><span class="price">+ ${{price.baseMSRP}}</span></td>		
+	</tr>
+</script>
+
+<script type="text/x-handlebars-template" id="interior-options-template">
+	<tr>
+		<td><input type="checkbox" name="interior[]" value="{{id}}"></td>
+		<td>{{name}} <span class="price">+ ${{price.baseMSRP}}</span></td>
+	</tr>
+</script>
+
+<script type="text/x-handlebars-template" id="interior-color-template">
+	
+	<tr>
+		<td><input type="radio" name="interior-color[]" value="{{id}}"></td>
+		<td>{{name}}</td>
+	</tr>
+</script>
+
+
+<script type="text/x-handlebars-template" id="color-box-template">
+	<p class="color-con" data-value="{{id}}" style="float:left; margin-left:10px;  background:#{{colorChips.primary.hex}};" title="{{name}}">&nbsp;</p>
+</script>
+
+
+<script type="text/x-handlebars-template" id="accessories-options-template">
+{{#each equipment}}	
+	<tr>
+		<td>{{this.name}}
+			<ul>
+				{{#each attributes}}	
+					<li>{{this.name}} : {{this.value}}</li>
+				{{/each}}
+			</ul>
+		</td>
+	</tr>
+{{/each}}
+</script>
