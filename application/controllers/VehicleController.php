@@ -43,7 +43,7 @@ class VehicleController extends Zend_Controller_Action
 	
 	public function processVehicleOptionsAction()
 	{
-		
+		Zend_Session::namespaceUnset('car_select');
 		$car_select = new Zend_Session_Namespace("car_select");
 		$car_select->style_id = $_POST['style_id'];
 		$car_select->color_id = $_POST['color_id'];
@@ -71,7 +71,7 @@ class VehicleController extends Zend_Controller_Action
 		
 		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
-		$this->view->headScript()->appendFile("/public/js/vehicle/vehicle.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/vehicle/summary.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
 		$this->view->headLink()->appendStylesheet("/public/css/vehicle/vehicle.css");
 		
@@ -94,6 +94,25 @@ class VehicleController extends Zend_Controller_Action
 		
 	}
 	
+	
+	public function getCarSelectSessionAction()
+	{
+		
+		$car_select = new Zend_Session_Namespace("car_select");
+		//var_dump($car_select->exterior);
+		//exit;
+		$data=array(
+			'style_id' => $car_select->style_id,
+			'color_id' => $car_select->color_id,
+			'exterior' => $car_select->exterior,
+			'interior' => $car_select->interior,
+			'interior_color' => $car_select->interior_color,
+		);
+		
+		echo json_encode(array("success"=>true, "car_select"=>$data));
+		exit;
+		exit;
+	}
 
 }
 
