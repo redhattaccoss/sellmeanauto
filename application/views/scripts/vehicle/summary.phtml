@@ -37,27 +37,25 @@
                             <li class="active"><a href="#engine_tab" data-toggle="tab">Engine</a></li>
                             <li><a href="#transmission_tab" data-toggle="tab">Transmission</a></li>
                             <li><a href="#steering_tab" data-toggle="tab">Steering</a></li>
-                            <li><a href="#chasis_tab" data-toggle="tab">Chasis</a></li>
+                            <li><a href="#chasis_tab" data-toggle="tab">Chassis</a></li>
                             <li><a href="#dimensions_tab" data-toggle="tab">Dimensions</a></li>
                         </ul>
 
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade active in" id="engine_tab">
-                                <table class="table table-striped table-condensed">
-                                    <tbody></tbody>
-                                </table>
+                                <ol id="engine-options" style="text-transform:capitalize;"></ol>
                             </div>
                             <div class="tab-pane fade" id="transmission_tab">
-                                <p>&nbsp;</p>
+                                <ol id="transmission-options" style="text-transform:capitalize;"></ol>
                             </div>
                             <div class="tab-pane fade" id="steering_tab">
-                                <p>&nbsp;</p>
+                                <ol id="steering-options" style="text-transform:capitalize;"></ol>
                             </div>
                             <div class="tab-pane fade" id="chasis_tab">
-                                <p>&nbsp;</p>
+                                <ol id="chasis-options" style="text-transform:capitalize;"></ol>
                             </div>
                             <div class="tab-pane fade" id="dimensions_tab">
-                               <p>&nbsp;</p>
+                               <ol id="dimensions-options" style="text-transform:capitalize;"></ol>
                             </div>
                         </div>
                     </div>
@@ -96,7 +94,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-4 col-sm-8">
 
-                                            <button class="btn btn-warning btn-lg">POST</button>
+                                            <button id="summary-post-btn" class="btn btn-warning btn-lg" disabled="disabled">POST</button>
                                         </div>
                                     </div>
                                 </form>
@@ -137,7 +135,7 @@
         </div>
         <div id="panel3" class="panel-collapse collapse">
             <div class="panel-body">
-                Contents panel 3
+                <ol id="accessories-options"></ol>
             </div>
         </div>
     </div>
@@ -166,3 +164,42 @@
 <script type="text/x-handlebars-template" id="interior-options-template">
 	<li style="margin-top:10px;">{{name}} <span class="price" style="float:right; margin-right:20px;">+ ${{price.baseMSRP}}</span></li>
 </script>
+
+<script type="text/x-handlebars-template" id="accessories-options-template">
+{{#each equipment}}	
+	<li>{{this.name}}
+		<ul>
+			{{#each attributes}}	
+				<li>{{this.name}} : {{this.value}}</li>
+			{{/each}}
+		</ul>
+	</li>
+{{/each}}
+</script>
+
+
+<script type="text/x-handlebars-template" id="engine-options-template">
+{{#each engine}}	
+	 <li> {{@key}}: {{this}}</li>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="transmission-options-template">
+{{#each transmission}}	
+	 <li> {{@key}}: {{this}}</li>
+{{/each}}
+</script>
+
+
+<script type="text/x-handlebars-template" id="steering-options-template">
+	<li>{{this.name}}
+		<ul>
+			{{#each attributes}}	
+				<li>{{this.name}} : {{this.value}}</li>
+			{{/each}}
+		</ul>
+	</li>
+
+</script>
+
+

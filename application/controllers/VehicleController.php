@@ -43,7 +43,7 @@ class VehicleController extends Zend_Controller_Action
 	
 	public function processVehicleOptionsAction()
 	{
-		Zend_Session::namespaceUnset('car_select');
+		//Zend_Session::namespaceUnset('car_select');
 		$car_select = new Zend_Session_Namespace("car_select");
 		$car_select->style_id = $_POST['style_id'];
 		$car_select->color_id = $_POST['color_id'];
@@ -109,10 +109,37 @@ class VehicleController extends Zend_Controller_Action
 			'interior_color' => $car_select->interior_color,
 		);
 		
-		echo json_encode(array("success"=>true, "car_select"=>$data));
+		echo json_encode(array("car_select"=>$data));
 		exit;
 		exit;
 	}
+	
+	
+	public function summaryPostAction()
+	{
+		$car_select = new Zend_Session_Namespace("car_select");
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		
+		
+		if($user_login_credentials->user_credentials_id == NULL){
+			$url = '/?q=/vehicle/summary-post/';
+			echo json_encode(array("success"=>false, "url"=>$url, "msg"=> "Please login.", "style_id"=>$car_select->style_id ));	
+			exit;
+		}
+		
+		$db = Zend_Registry::get("main_db");
+		$sql = $db->select()
+			->from('user_profiles')
+			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+		$user_profiles = $db->fetchRow($sql);
+		echo json_encode(array("success"=>true, "user_profiles"=>$user_profiles, "msg"=>"Under construction saving of selected car details in the databse" ));
+		exit;
+		
+	}
 
+	public function postResponseAction()
+	{
+		echo "This has bee posted";exit;
+	}
 }
 
