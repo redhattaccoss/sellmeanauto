@@ -30,8 +30,10 @@ class SigninController extends Zend_Controller_Action
 		}
 		
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$car_select = new Zend_Session_Namespace("car_select");
+		
 		$user_login_credentials->user_credentials_id = $user_credentials_id;
-		echo json_encode(array("success"=>true, "msg"=>'ok' , "user_credentials_id"=>$user_login_credentials->user_credentials_id ));
+		echo json_encode(array("success"=>true, "msg"=>'ok' , "user_credentials_id"=>$user_login_credentials->user_credentials_id, "post_url"=>$car_select->post_url ));
 		exit;
     }
 

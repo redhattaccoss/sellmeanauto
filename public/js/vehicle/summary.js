@@ -9,14 +9,21 @@ jQuery(document).ready(function() {
 		var url = "/vehicle/summary-post";
 		jQuery.ajax({
 			url : url,
-			type : "GET",
+			type : "POST",
 			dataType : 'json',
 			success : function(response) {
-				alert(response.msg);
+				
 				if(response.success){
+					//TODO forward it to dashboard
 					location.href="/vehicle/post-response";
 				}else{
-					location.href=response.url;
+					//location.href=response.url;
+					//alert(response.msg);
+					//jQuery('#Signin').modal('show');
+					jQuery('#Signin').modal({ 
+						backdrop: 'static',
+						keyboard: false
+					});
 				}
 			},
 			error : function(response) {

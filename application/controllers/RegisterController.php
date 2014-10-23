@@ -6,9 +6,9 @@ class RegisterController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
-		$this->view->headScript()->appendFile("/controllers/register/js/register.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/register/register.js", "text/javascript");
 		$this->view->register_page=true;
     }
 
@@ -239,7 +239,7 @@ class RegisterController extends Zend_Controller_Action
 	}
 	
 	public function activateAccountAction(){
-		//print_r($_GET['h_key']); exit;
+		
 		$ran = $_GET['h_key'];
 		if(!isset($_GET['h_key'])){
 			header("Location:/");
@@ -249,6 +249,10 @@ class RegisterController extends Zend_Controller_Action
 			header("Location:/");
 			exit;
 		}
+		
+		
+		
+		
 		$db = Zend_Registry::get("main_db");
 		$sql = $db->select()
 			->from('temp_registration')
@@ -260,6 +264,7 @@ class RegisterController extends Zend_Controller_Action
 			header("Location:/");
 			exit;
 		}
+		
 		
 		
 		//print_r($temp_registration); exit;
@@ -307,15 +312,16 @@ class RegisterController extends Zend_Controller_Action
 		
 		
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
-		$user_login_credentials->user_credentials_id = $user_credentials_id;
+		$user_login_credentials->user_credentials_id = $user_credentials_id;	
 		
-		//print_r($user_login_credentials->user_credentials_id);exit;
-		//echo "<pre>";
-		//print_r($data); 
-		//echo "</pre>";
-		//exit;
+		$car_select = new Zend_Session_Namespace("car_select");
+		if($car_select->post_url){
+			$url = $car_select->post_url;
+			header("Location:$url");
+			exit;
+		}
 		
-		//die("Insert record in user_credentials and user_profiles");		
+		
 		header("Location:/user/");
 		exit;
 	}

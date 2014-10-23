@@ -119,10 +119,11 @@ class VehicleController extends Zend_Controller_Action
 	{
 		$car_select = new Zend_Session_Namespace("car_select");
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
-		
+		$car_select->post_url = NULL;
 		
 		if($user_login_credentials->user_credentials_id == NULL){
-			$url = '/?q=/vehicle/summary-post/';
+			$url = "/vehicle/summary-post/?q=true";
+			$car_select->post_url = $url;
 			echo json_encode(array("success"=>false, "url"=>$url, "msg"=> "Please login.", "style_id"=>$car_select->style_id ));	
 			exit;
 		}
@@ -132,6 +133,11 @@ class VehicleController extends Zend_Controller_Action
 			->from('user_profiles')
 			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
 		$user_profiles = $db->fetchRow($sql);
+		
+		if(isset($_GET['q'])){
+			header("Location:/vehicle/post-response");
+			exit;
+		}
 		echo json_encode(array("success"=>true, "user_profiles"=>$user_profiles, "msg"=>"Under construction saving of selected car details in the databse" ));
 		exit;
 		
