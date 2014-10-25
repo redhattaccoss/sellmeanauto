@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 				
 				if(response.success){
 					//TODO forward it to dashboard
-					location.href="/vehicle/post-response";
+					location.href="/user/post-response";
 				}else{
 					//location.href=response.url;
 					//alert(response.msg);

@@ -128,24 +128,58 @@ class VehicleController extends Zend_Controller_Action
 			exit;
 		}
 		
+		//TODO
+		//Save orders
+		//print_r($user_profiles);
 		$db = Zend_Registry::get("main_db");
-		$sql = $db->select()
-			->from('user_profiles')
-			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
-		$user_profiles = $db->fetchRow($sql);
+		$data=array(
+			'user_credentials_id' => $user_login_credentials->user_credentials_id, 
+			'order_date' => date("Y-m-d H:i:s")
+		);
+		$db->insert('orders', $data);
+		$order_id = $db->lastInsertId();	
 		
+		$car_select = new Zend_Session_Namespace("car_select");		
+		unset($car_select->post_url);
+		unset($car_select->zipcode);
+		//print_r($order_id);exit;
+		//echo "<pre>";
+		foreach($car_select as $key => $value ){	
+			if(is_array($value)){
+				foreach($value as $v ){	
+					if($v){
+						$data=array(
+							'order_id' => $order_id,
+							'item_id' => $v,
+							'item_type' => $key
+						);
+						//print_r($data);
+						//$db->insert('order_items', $data);
+					}
+				}
+			}else{
+				if($value){
+					$data=array(
+						'order_id' => $order_id,
+						'item_id' => $value,
+						'item_type' => $key
+					);
+					//print_r($data);
+					//$db->insert('order_items', $data);
+				}
+			}
+			
+		}
+		//echo "</pre>";
+		//exit;
 		if(isset($_GET['q'])){
-			header("Location:/vehicle/post-response");
+			header("Location:/user/post-response");
 			exit;
 		}
-		echo json_encode(array("success"=>true, "user_profiles"=>$user_profiles, "msg"=>"Under construction saving of selected car details in the databse" ));
+		echo json_encode(array("success"=>true, "msg"=>"order saved." ));
 		exit;
 		
 	}
 
-	public function postResponseAction()
-	{
-		echo "This has bee posted";exit;
-	}
 }
 
