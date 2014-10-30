@@ -91,15 +91,26 @@ class UserController extends Zend_Controller_Action
 		}
 
 		
-
+		$sql = $db->select()
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
 
 		$sql = $db->select()
 			->from('user_profiles')
 			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
 		$user_profiles = $db->fetchRow($sql);
+		
+		$user_profiles['type'] = $user_type;
 		$this->view->user_profiles= $user_profiles;		
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
-        $this->_helper->layout->setLayout("user");
+		$this->view->account_active="panel-active";
+		if($user_type == "consumer"){
+			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
+			$this->_helper->layout->setLayout("user");
+		}else{
+			$this->_helper->layout->setLayout("dealer");
+		}
 		
     }
 	
@@ -174,10 +185,7 @@ class UserController extends Zend_Controller_Action
 			'password' => sha1($_POST['newpassword']),
 			'date_updated' => date("Y-m-d H:i:s")
 		);
-		//echo "<pre>";
-		//print_r($data);
-		//echo "</pre>";	
-		//exit;
+		
 		$where = "id =".$user_login_credentials->user_credentials_id;
 		$db->update('user_credentials', $data, $where);
 		echo json_encode(array("success"=>true, "msg"=>"Password updated." ));
@@ -189,28 +197,89 @@ class UserController extends Zend_Controller_Action
 		$db = Zend_Registry::get("main_db");
 		
 		$sql = $db->select()
-			->from('user_profiles')
-			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
-		$user_profiles = $db->fetchRow($sql);
-		$this->view->user_profiles= $user_profiles;		
-		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
-        $this->_helper->layout->setLayout("user");
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
 		
-	}
-	
-	public function dashboardAction()
-	{
-		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
-		$db = Zend_Registry::get("main_db");
 		
 		$sql = $db->select()
 			->from('user_profiles')
 			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
 		$user_profiles = $db->fetchRow($sql);
+		
+		$user_profiles['type'] = $user_type;
 		$this->view->user_profiles= $user_profiles;		
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
+        
+		
+		if($user_type == "consumer"){
+			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
+			$this->_helper->layout->setLayout("user");
+		}else{
+			$this->_helper->layout->setLayout("dealer");
+		}
+		
+	}
+	
+	public function postedAction()
+	{
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
+		
+		$sql = $db->select()
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
+		
+		
+		$sql = $db->select()
+			->from('user_profiles')
+			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+		$user_profiles = $db->fetchRow($sql);
+		
+		$user_profiles['type'] = $user_type;
+		$this->view->user_profiles= $user_profiles;		
+		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
+        
+		$this->view->posted_active="panel-active";
+		
+		if($user_type == "consumer"){
+			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
+			$this->_helper->layout->setLayout("user");
+		}else{
+			$this->_helper->layout->setLayout("dealer");
+		}
+	}
+	
+	
+	public function dashboardAction()
+	{
+		
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
+		
+		$sql = $db->select()
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
+		if($user_type == "consumer"){
+			header("Location:/user/");
+			exit;
+		}
+		
+		$sql = $db->select()
+			->from('user_profiles')
+			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+		$user_profiles = $db->fetchRow($sql);
+		
+		$user_profiles['type'] = $user_type;
+		$this->view->user_profiles= $user_profiles;	
+		
+		
+		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/dashboard.js", "text/javascript");
-        $this->_helper->layout->setLayout("user");
+        $this->_helper->layout->setLayout("dealer");
 	}
 	
 	

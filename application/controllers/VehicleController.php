@@ -154,7 +154,7 @@ class VehicleController extends Zend_Controller_Action
 							'item_type' => $key
 						);
 						//print_r($data);
-						//$db->insert('order_items', $data);
+						$db->insert('order_items', $data);
 					}
 				}
 			}else{
@@ -165,7 +165,7 @@ class VehicleController extends Zend_Controller_Action
 						'item_type' => $key
 					);
 					//print_r($data);
-					//$db->insert('order_items', $data);
+					$db->insert('order_items', $data);
 				}
 			}
 			

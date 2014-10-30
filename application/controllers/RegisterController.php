@@ -95,7 +95,6 @@ class RegisterController extends Zend_Controller_Action
 		//echo strlen($ran);
 		
 		//Check if email if existing
-		
 		$sql = $db->select()
 			->from('temp_registration', 'email')
 			->where('email =?', $_POST['email']);
@@ -125,6 +124,7 @@ class RegisterController extends Zend_Controller_Action
 			'email' => $_POST['email'],
 			'password' => sha1($_POST['password']),
 			'ran' =>  $ran,
+			'type' => $_POST['type'],
 			'date_registered' => date("Y-m-d H:i:s")
 		);
 		//echo "<pre>";
@@ -284,7 +284,8 @@ class RegisterController extends Zend_Controller_Action
 			'password' => $temp_registration['password'], 
 			'registration_type' => 'manual', 
 			'date_created' => date("Y-m-d H:i:s"), 
-			'date_updated' => date("Y-m-d H:i:s")
+			'date_updated' => date("Y-m-d H:i:s"),
+			'type' => $temp_registration['type'],
 		);
 		
 		$db->insert('user_credentials', $data);

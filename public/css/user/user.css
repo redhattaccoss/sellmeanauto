@@ -1,0 +1,84 @@
+.page-content {
+	background-color:#fff;
+}
+
+.page-content-wrapper .page-content {
+    padding-top: 0px !important;
+	margin-left:270px !important;
+}
+
+.page-sidebar{
+	background:#fff;
+	width:247px;
+}
+
+.panel-heading{
+	background:#19537A !important;
+	color:#FFF !important;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.panel-user-details{
+	padding-left:18px;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(119,119,119);
+	text-align:left;
+	background:#eee;
+}
+
+.panel-user-details img{
+	float:left;
+	margin-right:10px;
+}
+
+.panel-user-details span{
+	font-size:15px;
+	font-weight:bold;
+	line-height:120%;
+	color:rgb(119,119,119);
+	text-align:left;
+}
+
+.panel-user-details p{
+	margin-top:20px !important;
+	margin-bottom:5px !important;
+}
+
+.panel-user-details a{
+	font-size:13px;
+	font-weight:bold;
+	line-height:120%;
+	color:rgb(25,82,121);
+	text-align:left;
+}
+.panel-body{
+	background:#eee;
+}
+
+.list-group-item{
+	height:50px;
+	line-height:26px;
+	background:#eee;
+}
+
+.list-group-item img{
+	margin-right:10px;
+}
+
+
+.list-group-item a{
+	font-size:13px;
+	color:rgb(25,82,121);
+	text-align:left;
+	display:block;
+}
+
+.panel-active{
+	background:#FFF;
+}
+
+.list-group-item a:hover{
+	text-decoration:none;
+}
