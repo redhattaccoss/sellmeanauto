@@ -115,6 +115,18 @@ class UserController extends Zend_Controller_Action
     }
 	
 	
+	public function consumerAction()
+	{
+		echo "consumer";exit;
+	}
+	
+	public function dealerAction()
+	{
+		echo "dealer";exit;
+	}
+	
+	
+	
 	public function updatePersonalInfoAction()
 	{
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
@@ -230,7 +242,10 @@ class UserController extends Zend_Controller_Action
 			->from('user_credentials', 'type')
 			->where('id=?', $user_login_credentials->user_credentials_id );
 		$user_type = $db->fetchOne($sql);
-		
+		if($user_type == "dealer"){
+			header("Location:/user/");
+			exit;
+		}
 		
 		$sql = $db->select()
 			->from('user_profiles')
@@ -242,14 +257,51 @@ class UserController extends Zend_Controller_Action
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
         
 		$this->view->posted_active="panel-active";
-		
+		$this->view->headScript()->appendFile("/public/js/user/dashboard.js", "text/javascript");
 		if($user_type == "consumer"){
 			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
 			$this->_helper->layout->setLayout("user");
-		}else{
-			$this->_helper->layout->setLayout("dealer");
 		}
 	}
+	
+	public function accountSettingsAction()
+	{
+		
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
+		
+		$sql = $db->select()
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
+		if($user_type == "dealer"){
+			header("Location:/user/");
+			exit;
+		}
+		
+		$sql = $db->select()
+			->from('user_profiles')
+			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+		$user_profiles = $db->fetchRow($sql);
+		
+		$user_profiles['type'] = $user_type;
+		$this->view->user_profiles= $user_profiles;		
+		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
+        
+		$this->view->account_settings_active="panel-active";
+		$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
+		$this->_helper->layout->setLayout("user");
+	
+	}
+	
+	
+	public function bidsAction()
+	{
+		
+		echo "Under Construction";exit;
+	
+	}
+	
 	
 	
 	public function dashboardAction()
@@ -282,6 +334,16 @@ class UserController extends Zend_Controller_Action
         $this->_helper->layout->setLayout("dealer");
 	}
 	
+	public function checkUserSessionAction()
+	{
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		if(!$user_login_credentials->user_credentials_id){
+			echo json_encode(array("success"=>false, "msg"=>"Plese login" ));
+			exit;
+		}
+		echo json_encode(array("success"=>true, "msg"=>"ok" ));
+		exit;
+	}
 	
 	public function logoutAction()
 	{

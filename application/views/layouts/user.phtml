@@ -20,7 +20,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">My Account</div>
               <div class="panel-body panel-user-details <?php echo $this->account_active;?>">
-                <img src="/user-image/" /> <span><?php echo $this->user_profiles['fname']; ?> <?php echo $this->user_profiles['lname']; ?></span><br><?php echo $this->user_profiles['city_town']; ?>, <?php echo $this->user_profiles['state_province']; ?>
+                <img src="/user-image/" class="col-sm-5 img-thumbnail" /> <span><?php echo $this->user_profiles['fname']; ?> <?php echo $this->user_profiles['lname']; ?></span><br><?php echo $this->user_profiles['city_town']; ?>, <?php echo $this->user_profiles['state_province']; ?>
                 
                 <br clear="all">
                 <p><a href="/user/">Edit Profile</a></p>
@@ -29,12 +29,12 @@
               <!-- List group -->
               <ul class="list-group">
                 <li class="list-group-item <?php echo $this->posted_active;?>" ><a href="/user/posted"><img src="/public/img/posted-icon.fw.png" border="0" > Posted</a></li>
-                <li class="list-group-item"><a href="/user/"><img src="/public/img/account-settings-icon.fw.png" border="0" > Account Settings</a></li>
+                <li class="list-group-item <?php echo $this->account_settings_active;?>" ><a href="/user/account-settings"><img src="/public/img/account-settings-icon.fw.png" border="0" > Account Settings</a></li>
               </ul>
             </div>
             
             
-            
+            <p align="center"><a href="/"  class="btn btn-warning btn-lg btn-shadow enter-zip-code">Build a Car</a></p>
         </div>
         <div class="page-content-wrapper">
             <div class="page-content">
