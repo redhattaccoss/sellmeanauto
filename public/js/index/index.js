@@ -124,6 +124,11 @@ jQuery(document).ready(function() {
 	if (jQuery("#q-car-select").val()!=""){
 		jQuery("#SignIn").modal({backdrop:"static", keyboard:false});
 	}
+	jQuery("#register_btn").on("click", function(e) {
+		jQuery('#Register').modal('show');
+	});
+	
+	
 	
 	
 	if (jQuery("#twitter_status").val()!=undefined){

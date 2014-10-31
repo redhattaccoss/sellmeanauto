@@ -3,6 +3,15 @@ jQuery(document).ready(function() {
 		console.log(window.location.pathname);
 	});	
 	
+	
+	jQuery("#car_select_button").on("click", function(e){
+		e.preventDefault();													  
+		var car_make_id = jQuery('#car_make_selection').val();
+		var name = jQuery("#car_make_selection option:selected").text();
+		if(car_make_id){
+			jQuery("<input type='hidden' name='car_make[]' value="+car_make_id+"><input type='text' class='car_make' readonly value="+name+">").appendTo(jQuery("#selected_car"));
+		}
+	});
 	//Step 1
 	jQuery("#form_step1").on( "submit", function( event ) {
 		event.preventDefault();
@@ -10,6 +19,7 @@ jQuery(document).ready(function() {
 		var email = jQuery('#email').val();
 		var password = jQuery('#password').val();
 		var confirmpassword = jQuery('#confirmpassword').val();
+		var type = jQuery('#type').val();
 		
 		if(email == ""){
 			alert("Plese enter your email address.");
@@ -26,6 +36,12 @@ jQuery(document).ready(function() {
 			return false;
 		}
 		
+		if(type == "dealer"){
+			if(jQuery(".car_make").length == 0){
+				alert("Please select car make");
+				return false;
+			}
+		}
 		
 		var formData = jQuery( this ).serialize();
 		jQuery.post("/register/process-step1", formData, function(data){

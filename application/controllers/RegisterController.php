@@ -15,7 +15,7 @@ class RegisterController extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
-		header("Location:/register/step1");
+		header("Location:/register/step1?type=consumer");
 		
     }
 
@@ -23,9 +23,15 @@ class RegisterController extends Zend_Controller_Action
 	public function step1Action()
     {
         // action body
+		if(!isset($_GET['type'])){
+			header("Location:/register/step1?type=consumer");
+			exit;
+		}
+		//echo $_GET['type'];exit;
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		$db = Zend_Registry::get("main_db");
 		if($user_login_credentials->step1){
-			$db = Zend_Registry::get("main_db");
+			
 			$sql = $db->select()
 				->from('temp_registration')
 				->where('ran =?', $user_login_credentials->ran );
@@ -33,11 +39,14 @@ class RegisterController extends Zend_Controller_Action
 			$this->view->temp_registration = $temp_registration;
 			$this->view->disabled = "disabled='disabled'";
 			$this->view->dummy_password_str = "hello world";
-			//print_r($temp_registration);exit;
+			
 		}
 		
-		//$this->_helper->layout->setLayout("register");
+		$sql="SELECT * FROM car_makes";
 		
+		$car_makes = $db->fetchAll($sql);
+		$this->view->car_makes = $car_makes;
+		$this->view->user_type = $_GET['type'];
     }
 	
 	public function step2Action()
@@ -127,6 +136,16 @@ class RegisterController extends Zend_Controller_Action
 			'type' => $_POST['type'],
 			'date_registered' => date("Y-m-d H:i:s")
 		);
+		
+		if($_POST['type'] == "dealer"){
+			$car_make_str="";
+			foreach($_POST['car_make'] as $car_id) {
+				if($car_id){
+					$car_make_str .= $car_id.",";
+				}				
+			}
+			$data['car_makes'] = $car_make_str;
+		}
 		//echo "<pre>";
 		//print_r($data);
 		//echo "</pre>";
@@ -265,18 +284,7 @@ class RegisterController extends Zend_Controller_Action
 			exit;
 		}
 		
-		
-		
-		//print_r($temp_registration); exit;
-		$data=array(
-			'account_activated' => 'Y',
-			'date_activated' => date("Y-m-d H:i:s")
-		);
-		$where = "ran = '".$ran."'";
-		$db->update('temp_registration', $data, $where);
-		
-		
-		
+
 		#TODO
 		//isnert new record in user_credentials 
 		$data=array(
@@ -310,7 +318,29 @@ class RegisterController extends Zend_Controller_Action
 		$db->insert('user_profiles', $data);
 		
 		
+		//Save the car_make_id if the user type is dealer
+		if($temp_registration['type'] == "dealer"){
+			$car_makes = explode(',', $temp_registration['car_makes']);
+			foreach($car_makes as $car){
+				if($car){
+					$data=array(
+						'user_credentials_id' => $user_credentials_id, 
+						'car_makes_id' => $car, 
+						'date_selected' => date("Y-m-d H:i:s")		
+					);
+					$db->insert('selected_car_makes', $data);
+				}
+			}
+		}
 		
+		
+		//print_r($temp_registration); exit;
+		$data=array(
+			'account_activated' => 'Y',
+			'date_activated' => date("Y-m-d H:i:s")
+		);
+		$where = "ran = '".$ran."'";
+		$db->update('temp_registration', $data, $where);
 		
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		$user_login_credentials->user_credentials_id = $user_credentials_id;	

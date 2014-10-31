@@ -864,3 +864,29 @@ height: 15px;
          font-size: 13px;   
     }
 }
+
+
+.choose-option{
+	text-align:center;
+	background:#0E4C75;
+	color:#FFF !important;
+	padding:10px;
+}
+
+.i_am{
+	font-size: 30px;
+	margin-top: 0;
+}
+
+.i-am-border{
+	margin:5px;
+	padding:5px;
+	border:dashed #AAC86E 1px;
+	height:116px;
+}
+.car_make{
+	background:none !important;
+	border:none !important;
+	text-transform:capitalize !important;
+	width:170px;
+}

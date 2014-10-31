@@ -236,6 +236,12 @@ class UserController extends Zend_Controller_Action
 	public function postedAction()
 	{
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		
+		if(!$user_login_credentials->user_credentials_id){
+			header("Location:/");
+			exit;
+		}
+		
 		$db = Zend_Registry::get("main_db");
 		
 		$sql = $db->select()

@@ -18,33 +18,69 @@
 <input type="hidden" name="twitter_status" id="twitter_status" value="<?php echo $this->twitter_status?>"/>
 
 <div class="modal fade" id="Signin" tabindex="-1" role="dialog" aria-labelledby="Signup" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="myModalLabel" style="font-family: 'Open Sans'; font-weight: 300;">Login to your Account</h3>
-                </div>
-                <div class="modal-body">
-                	<form id="login_form" method="post">
-                        <input class="form-control" type="email" placeholder="Email Address" name="username" id="username">
-                        <input class="form-control" type="password" placeholder="Password" name="login_password" id="login_password">
-                        
-                        <button class="btn btn-success" style="float: right;">Sign In</button>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Remember me
-                            </label>
-                        </div>
-                    </form>
-                    <br />
-                    <hr />
-                    <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Open Sans'; font-weight: 300;">Or Sign in  &amp; Connect with</h3>
-                    <img src="/img/sign-fb.jpg" style="display: block; margin: 10px auto;" id="sign-in-fb" />
-                    <img src="/img/sign-twitter.jpg" style="display: block; margin: 10px auto;" />
-                    <h3 style="text-align: center; margin: 30px 0 0 0; font-family: 'Open Sans'; font-weight: 300;">Forgot your password?</h3>
-                    <p style="text-align: center; margin-bottom: 30px;">no worries, <a href="/forgot-password/">click here</a> to reset your password.</p>
-                    <hr />
-                    <p style="text-align: center;">Don't have an account yet? <span><a href="/register/step1">Create an Account</a></span></p>
-                </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel" style="font-family: 'Open Sans'; font-weight: 300;">Login to your Account</h3>
+            </div>
+            <div class="modal-body">
+                <form id="login_form" method="post">
+                    <input class="form-control" type="email" placeholder="Email Address" name="username" id="username">
+                    <input class="form-control" type="password" placeholder="Password" name="login_password" id="login_password">
+                    
+                    <button class="btn btn-success" style="float: right;">Sign In</button>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                    </div>
+                </form>
+                <br />
+                <hr />
+                <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Open Sans'; font-weight: 300;">Or Sign in  &amp; Connect with</h3>
+                <img src="/img/sign-fb.jpg" style="display: block; margin: 10px auto;" id="sign-in-fb" />
+                <img src="/img/sign-twitter.jpg" style="display: block; margin: 10px auto;" />
+                <h3 style="text-align: center; margin: 30px 0 0 0; font-family: 'Open Sans'; font-weight: 300;">Forgot your password?</h3>
+                <p style="text-align: center; margin-bottom: 30px;">no worries, <a href="/forgot-password/">click here</a> to reset your password.</p>
+                <hr />
+                <p style="text-align: center;">Don't have an account yet? <span>
+                    <!--<a href="/register/step1">Create an Account</a>-->
+                    <a id="register_btn" href="#" data-dismiss="modal" data-target="#Signin">Create an Account</a>
+                </span></p>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="Register" tabindex="-1" role="dialog" aria-labelledby="Register" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title choose-option">Let's Get Started Choose an Option</h3>
+            </div>
+            <div class="modal-body">
+               
+               <table width="100%" cellspacing="2">
+               		<tr>
+                    	<td width="50%" align="center" valign="top">
+                        	<h3 class="i_am">I am a Dealer</h3>
+                            <div class="i-am-border">
+                                <p>Create a <strong>Free Profile</strong> - Search and join<br> our thousands of<br> car bidding</p>
+                                <a class="btn btn-success" href="/register/step1?type=dealer">Create an Account</a>
+                            </div>
+                        </td>
+                        	
+                        <td width="50%" align="center" valign="top">
+                        	<h3 class="i_am">I am a User</h3>
+                            <div class="i-am-border">
+                                <p>It's <strong>FREE</strong> - Build your own car and get the<br> lowest price from our trusted dealers<br> near you.</p>
+                                <a class="btn btn-warning" href="/register/step1?type=consumer">Create an Account</a>
+                            </div>
+                        </td>
+                    </tr>
+               </table>
+               
+            </div>
+        </div>
+    </div>
+</div>
