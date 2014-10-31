@@ -54,6 +54,10 @@ class RegisterController extends Zend_Controller_Action
         // action body
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		if(!$user_login_credentials->step1){
+			if(isset($_GET['type'])){
+				header("Location:/register/step1?type=".$_GET['type']);
+				exit;				
+			}
 			header("Location:/register/step1");
 			exit;
 		}
@@ -64,7 +68,7 @@ class RegisterController extends Zend_Controller_Action
 			->where('ran =?', $user_login_credentials->ran );
 		$temp_registration = $db->fetchRow($sql);
 		$this->view->temp_registration = $temp_registration;
-		
+		$this->view->user_type = $_GET['type'];
 		
 		//$this->_helper->layout->setLayout("register");
     }
@@ -74,9 +78,14 @@ class RegisterController extends Zend_Controller_Action
         // action body
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		if(!$user_login_credentials->step1){
+			if(isset($_GET['type'])){
+				header("Location:/register/step1?type=".$_GET['type']);
+				exit;				
+			}
 			header("Location:/register/step1");
 			exit;
 		}
+		$this->view->user_type = $_GET['type'];
 		//$this->_helper->layout->setLayout("register");
     }
 	
