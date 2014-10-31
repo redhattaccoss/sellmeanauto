@@ -10,5 +10,23 @@
         </thead>
         <tbody></tbody>
     </table>
-    Under Construction
 </div>
+
+<script type="text/x-handlebars-template" id="dashboard-list-template">
+	<tr>
+		<td>
+			{{order_id}}<br />
+			{{order_date}}
+		</td>
+		<td>
+			<h4 id="car_name_{{order_id}}">-</h4>
+			<p>Engine: <span id="engine_{{order_id}}">-</span></p>
+			<p>Transmission: <span id="transmission_{{order_id}}">-</span></p>
+			<p>Exterior Color: <span id="exterior_color_{{order_id}}">-</span></p>
+			<p>Interior Color: <span id="interior_color_{{order_id}}">-</span></p>
+			<button type="submit" class="btn btn-primary">View Details</button>
+		</td>
+		<td><p class="con-bid">-</p></td>
+		<td><p class="c-bid"><span>-</span></p></td>
+	</tr>
+</script>

@@ -260,10 +260,12 @@ class UserController extends Zend_Controller_Action
 		
 		$user_profiles['type'] = $user_type;
 		$this->view->user_profiles= $user_profiles;		
+		
+		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
         
 		$this->view->posted_active="panel-active";
-		$this->view->headScript()->appendFile("/public/js/user/dashboard.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
 		if($user_type == "consumer"){
 			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
 			$this->_helper->layout->setLayout("user");
@@ -336,19 +338,8 @@ class UserController extends Zend_Controller_Action
 		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
-		$this->view->headScript()->appendFile("/public/js/user/dashboard.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
         $this->_helper->layout->setLayout("dealer");
-	}
-	
-	public function checkUserSessionAction()
-	{
-		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
-		if(!$user_login_credentials->user_credentials_id){
-			echo json_encode(array("success"=>false, "msg"=>"Plese login" ));
-			exit;
-		}
-		echo json_encode(array("success"=>true, "msg"=>"ok" ));
-		exit;
 	}
 	
 	public function logoutAction()
