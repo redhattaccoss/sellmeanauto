@@ -69,14 +69,14 @@ var BODY_TYPE = "";
 var SELECTED_MAKE = "";
 var SELECTED_NAME = "";
 var SELECTED_MODEL = "";
-
+var SELECTED_YEAR = 2013;
 
 //load Model List
 function loadModelList(name, make){
 	
 	jQuery("#make-model-list").html("Loading Model List for " + name);
 	jQuery("#make-name-link").html(name);
-	var url = BASE_URL + "vehicle/v2/" + make + "/models?year=2013&fmt=json&api_key=" + API_KEY;
+	var url = BASE_URL + "vehicle/v2/" + make + "/models?year="+SELECTED_YEAR+"&fmt=json&api_key=" + API_KEY;
 	jQuery.get(url, function(response) {
 		var output = "";
 		var src = jQuery("#loaded-model-template").html();
@@ -157,6 +157,13 @@ jQuery(document).ready(function() {
 		jQuery("#select-car-default").html(jQuery(this).attr("data-label"));
 		loadModelList(SELECTED_NAME, SELECTED_MAKE);
 	});
+	
+	jQuery(".select-year").on("click", function(e){
+		SELECTED_YEAR = parseInt(jQuery(this).attr("data-value"));
+		jQuery("#select-car-year-default").html(jQuery(this).attr("data-value"));
+		loadModelList(SELECTED_NAME, SELECTED_MAKE);
+	});
+	
 	jQuery("#sign-in-twitter").on("click", function(e) {
 		window.location.href = "/twitter/redirect/"
 		e.preventDefault();
@@ -215,10 +222,15 @@ jQuery(document).ready(function() {
 		jQuery.get("/index/set-zipcode/?zip="+zip, function(response){
 			response = jQuery.parseJSON(response);
 			if (response.success){
-				window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+SELECTED_MODEL+"/2013";
+				window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+SELECTED_MODEL+"/"+SELECTED_YEAR;
 			}
 		})
 		e.preventDefault();
+	})
+	
+	jQuery("#enter-zip-form").on("submit", function(){
+		jQuery(".enter-zip-code").trigger("click");
+		return false;
 	})
 
 })
@@ -229,3 +241,4 @@ jQuery(document).on("click", ".select-car-model", function(e){
 	//
 	//e.preventDefault();
 });
+
