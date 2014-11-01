@@ -184,7 +184,8 @@ jQuery(document).ready(function() {
 							}
 							
 						}else{
-							alert(api_response.status)
+							//alert(api_response.status)
+							location.href="/user/";	
 						}
 					})
 					

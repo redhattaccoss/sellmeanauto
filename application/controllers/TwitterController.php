@@ -17,6 +17,8 @@ class TwitterController extends Zend_Controller_Action{
 		$credentials = $twitter->get_account_credentials();
 		$creds = $db->fetchRow($db->select()->from("user_credentials")->where("twitter = ?", $credentials->id)->where("username = ?",$credentials->screen_name)->where("registration_type = ?", "twitter"));
 		if ($creds){
+			$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+			$user_login_credentials->user_credentials_id = $creds["id"];
 			header("Location:/?twitter_status=already_registered");
 		
 		}else{

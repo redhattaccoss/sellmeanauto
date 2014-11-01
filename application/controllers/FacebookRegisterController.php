@@ -9,6 +9,9 @@ class FacebookRegisterController extends Zend_Controller_Action
 		$creds = $db->fetchRow($db->select()->from("user_credentials")->where("facebook_id = ?", $_REQUEST["id"])->where("username = ?", $_REQUEST["email"]));
 		
 		if ($creds){
+			$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+			$user_login_credentials->user_credentials_id = $creds["id"];
+			
 			$this->view->result = array("success"=>true,"status"=>"Already Registered");
 		}else{
 			$user_credentials = array(
@@ -30,6 +33,7 @@ class FacebookRegisterController extends Zend_Controller_Action
 			$db->insert("user_profiles", $user_profile);
 			$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 			$user_login_credentials->user_credentials_id = $user_credential_id;
+			
 			$this->view->result = array("success"=>true,"status"=>"Registered via FB");
 		}
 		
