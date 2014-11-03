@@ -210,13 +210,11 @@ class RegisterController extends Zend_Controller_Action
 		$db->update('temp_registration', $data, $where);
 		
 		
-		/*
-		echo "<pre>";
-		echo $user_login_credentials->ran;
-		echo "<br>";
-		print_r($_POST);
-		echo "</pre>";
-		*/
+		
+		//echo "<pre>";
+		//print_r($_POST);
+		//echo "</pre>";
+		//exit;
 		echo json_encode(array("success"=>true, "ran"=>$user_login_credentials->ran, "msg"=> "Contact Information updated."   ));
 		exit;
 		
@@ -263,6 +261,7 @@ class RegisterController extends Zend_Controller_Action
 		$mail->send();
 		
 		$this->view->temp_registration = $temp_registration;
+		Zend_Session::namespaceUnset('user_login_credentials');
 		//$this->_helper->layout->setLayout("register");
 	}
 	

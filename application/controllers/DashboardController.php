@@ -31,7 +31,10 @@ class DashboardController extends Zend_Controller_Action
 	{
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");		
 		$db = Zend_Registry::get("main_db");
-		
+		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
+		//$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), '2014-11-01' );
+		//echo json_encode(array("date_diff"=> $date_diff));
+		//exit;
 		$sql = $db->select()
 			->from('orders', Array('id', 'order_date'))
 			->where('user_credentials_id =?', $user_login_credentials->user_credentials_id);
@@ -45,10 +48,14 @@ class DashboardController extends Zend_Controller_Action
 				->where('order_id =?', $order['id']);
 			$items = $db->fetchAll($sql);
 			
+			$order_date = date("Y-m-d", strtotime($order['order_date']));
+			$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $order_date );
+			
 			$data=array(
 				'order_id'=>$order['id'],
 				'order_date'=>$order['order_date'],
-				'items'=>$items 
+				'items'=>$items,
+				'date_diff'=>$date_diff
 				
 			);
 			$user_orders[] = $data;

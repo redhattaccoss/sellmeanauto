@@ -52,10 +52,10 @@ class VehicleController extends Zend_Controller_Action
 		$car_select->interior_color = $_POST['interior-color'];
 		echo json_encode(array("success"=>true, "style_id"=>$car_select->style_id));
 		exit;
-		//echo "<pre>";
-		//print_r($car_select->exterior);
-		//echo "</pre>";
-		//exit;
+		echo "<pre>";
+		print_r($car_select->exterior);
+		echo "</pre>";
+		exit;
 	}
 	
 	
@@ -134,7 +134,10 @@ class VehicleController extends Zend_Controller_Action
 		$db = Zend_Registry::get("main_db");
 		$data=array(
 			'user_credentials_id' => $user_login_credentials->user_credentials_id, 
-			'order_date' => date("Y-m-d H:i:s")
+			'order_date' => date("Y-m-d H:i:s"),
+			'status' => 'active',
+			'zipcode' => $user_login_credentials->zipcode,
+			'car_make' => "test"
 		);
 		$db->insert('orders', $data);
 		$order_id = $db->lastInsertId();	

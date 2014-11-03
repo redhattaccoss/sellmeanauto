@@ -128,7 +128,9 @@ jQuery(document).ready(function() {
 		jQuery('#Register').modal('show');
 	});
 	
-	
+	if(jQuery("#build").val()){
+		jQuery("#select_a_brand_btn").addClass("open");
+	}
 	
 	
 	if (jQuery("#twitter_status").val()!=undefined){
@@ -237,6 +239,9 @@ jQuery(document).ready(function() {
 
 jQuery(document).on("click", ".select-car-model", function(e){
 	SELECTED_MODEL = jQuery(this).attr("data-id");
+	if(jQuery("#inputZZIPcode").val()){
+		jQuery("#inputZZIPcode").attr("disabled", "disabled");
+	}
 	jQuery("#ZIPcode").modal({backdrop:"static", keyboard:false})
 	//
 	//e.preventDefault();
