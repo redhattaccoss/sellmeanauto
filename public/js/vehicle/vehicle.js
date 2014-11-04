@@ -54,6 +54,7 @@ jQuery(document).ready(function() {
 		event.preventDefault();
 		var formData = jQuery( this ).serialize();
 		console.log(formData);
+		//return false;
 		jQuery.post("/vehicle/process-vehicle-options", formData, function(data){
 			data = jQuery.parseJSON(data);
 			if(data.success){
