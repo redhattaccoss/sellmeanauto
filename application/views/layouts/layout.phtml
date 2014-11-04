@@ -14,7 +14,6 @@
 		?>
 	</head>
 	<body>
-    	<input type="text" name="build" id="build" value="<?php echo $this->build;?>">
 		<?php
 		echo $this->partial("elements/header.phtml", array("user_profiles"=>$this->user_profiles, "register_page"=>$this->register_page, "hide_wrapper"=>false)  );
 		echo $this->partial("elements/select_a_brand.phtml", array("years"=>$this->years));

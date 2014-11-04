@@ -4,6 +4,22 @@
         <div id="make-item" class="container modal fade">
             <div class="choose-make ">
                 <div class="maker-con body-type">
+                	<div class="btn-group pull-right" style=" margin: 10px; ">
+                        <button type="button" class="btn btn-default" id="select-car-year-default">Select Model Year</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu " role="menu">
+                            <?php
+                            	foreach($this->years as $year){
+                            		?>
+                            		<li><a href="#" class="select-year" data-value="<?php echo $year?>"><?php echo $year;?></a></li>
+                            		<?php
+                            	}
+                            ?>
+                        </ul>
+                    </div>
                     <div class="btn-group pull-right" style=" margin: 10px; ">
                         <button type="button" class="btn btn-default" id="select-car-default">Select Body Type</button>
                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
