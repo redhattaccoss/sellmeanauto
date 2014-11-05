@@ -33,10 +33,19 @@ class IndexController extends Zend_Controller_Action
 		}else{
 			$q = "";
 		}
+		
+		//load model years
+		$years = array();
+		for($i=2013;$i<=(intval(date("Y"))+1);$i++){
+			$years[] = $i;
+		}
+		
+		
 		$this->view->build=false;
 		if(isset($_GET['build'])){
 			$this->view->build=true;
 		}
+		$this->view->years = $years;
 		$this->view->q = $q;
 		$this->view->user_profiles= $user_profiles;
     }
