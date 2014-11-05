@@ -50,6 +50,7 @@ class VehicleController extends Zend_Controller_Action
 		$car_select->exterior = $_POST['exterior'];
 		$car_select->interior = $_POST['interior'];
 		$car_select->interior_color = $_POST['interior-color'];
+		$car_select->car_make = $_POST['car_make'];
 		echo json_encode(array("success"=>true, "style_id"=>$car_select->style_id));
 		exit;
 		//echo "<pre>";
@@ -87,7 +88,7 @@ class VehicleController extends Zend_Controller_Action
 		
 		
 		$car_select = new Zend_Session_Namespace("car_select");
-		//print_r($car_select->interior_color[0]);exit;
+		//print_r($car_select->car_make);exit;
 		$this->view->car_select= $car_select;
 		$this->view->summary=true;
 		$this->_helper->layout->setLayout("vehicle");
@@ -107,6 +108,7 @@ class VehicleController extends Zend_Controller_Action
 			'exterior' => $car_select->exterior,
 			'interior' => $car_select->interior,
 			'interior_color' => $car_select->interior_color,
+			'car_make' => $car_select->car_make,
 		);
 		
 		echo json_encode(array("car_select"=>$data));
@@ -120,6 +122,7 @@ class VehicleController extends Zend_Controller_Action
 		$car_select = new Zend_Session_Namespace("car_select");
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
 		$car_select->post_url = NULL;
+		$db = Zend_Registry::get("main_db");
 		
 		if($user_login_credentials->user_credentials_id == NULL){
 			$url = "/vehicle/summary-post/?q=true";
@@ -128,20 +131,35 @@ class VehicleController extends Zend_Controller_Action
 			exit;
 		}
 		
+		if($user_login_credentials->user_credentials_id){
+			$sql = $db->select()
+				->from('user_profiles')
+				->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+			$user_profiles = $db->fetchRow($sql);
+		}
+		
 		//TODO
 		//Save orders
-		//print_r($user_profiles);
-		$db = Zend_Registry::get("main_db");
+		//print_r($user_profiles);exit;
+		
 		$data=array(
 			'user_credentials_id' => $user_login_credentials->user_credentials_id, 
-			'order_date' => date("Y-m-d H:i:s")
+			'order_date' => date("Y-m-d H:i:s"),
+			'status' => 'active',
+			'zipcode' => $user_profiles['zip_code'],
+			'car_make' => $car_select->car_make,
+			'style_id' => $car_select->style_id,
 		);
+		
+		//print_r($data);exit;
 		$db->insert('orders', $data);
 		$order_id = $db->lastInsertId();	
 		
-		$car_select = new Zend_Session_Namespace("car_select");		
+		//$car_select = new Zend_Session_Namespace("car_select");		
 		unset($car_select->post_url);
 		unset($car_select->zipcode);
+		unset($car_select->car_make);
+		unset($car_select->style_id);
 		//print_r($order_id);exit;
 		//echo "<pre>";
 		foreach($car_select as $key => $value ){	
@@ -172,6 +190,7 @@ class VehicleController extends Zend_Controller_Action
 		}
 		//echo "</pre>";
 		//exit;
+		Zend_Session::namespaceUnset('car_select');
 		if(isset($_GET['q'])){
 			header("Location:/user/post-response");
 			exit;

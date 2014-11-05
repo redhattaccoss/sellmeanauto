@@ -206,13 +206,23 @@ class UserController extends Zend_Controller_Action
 	public function postResponseAction()
 	{
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		
+		if(!$user_login_credentials->user_credentials_id){
+			header("Location:/");
+			exit;
+		}
+		
+		
 		$db = Zend_Registry::get("main_db");
 		
 		$sql = $db->select()
 			->from('user_credentials', 'type')
 			->where('id=?', $user_login_credentials->user_credentials_id );
 		$user_type = $db->fetchOne($sql);
-		
+		if($user_type == "dealer"){
+			header("Location:/user/");
+			exit;
+		}
 		
 		$sql = $db->select()
 			->from('user_profiles')
@@ -338,7 +348,7 @@ class UserController extends Zend_Controller_Action
 		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
-		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/dashboard/dealer-dashboard.js", "text/javascript");
         $this->_helper->layout->setLayout("dealer");
 	}
 	

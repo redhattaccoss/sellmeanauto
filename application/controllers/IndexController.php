@@ -42,6 +42,7 @@ class IndexController extends Zend_Controller_Action
 			$years[] = $i;
 		}
 		
+		$this->view->build=false;
 		if(isset($_GET['build'])){
 			$this->view->build=true;
 		}
