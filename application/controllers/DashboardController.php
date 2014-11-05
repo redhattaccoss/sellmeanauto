@@ -28,6 +28,7 @@ class DashboardController extends Zend_Controller_Action
 
 	public function getDealerDashboardAction()
 	{
+		
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");		
 		$db = Zend_Registry::get("main_db");
 		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
@@ -36,6 +37,8 @@ class DashboardController extends Zend_Controller_Action
 			echo json_encode(array("success"=>false, "msg"=>"Plese login" ));
 			exit;
 		}
+		
+		
 		$sql = $db->select()
 			->from('user_profiles')
 			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
@@ -56,16 +59,20 @@ class DashboardController extends Zend_Controller_Action
 		}
 		
 		$sql="SELECT * FROM orders o WHERE zipcode='".$user_profiles['zip_code']."' AND car_make IN('".implode("','",$car_makes)."');";
+		
 		$orders = $db->fetchAll($sql);
+		
 		$user_orders=array();
 		foreach($orders as $order){
+			//echo $order['id'];
 			
 			$sql = $db->select()
 				->from('order_items', Array('item_id', 'item_type'))
 				->where('order_id =?', $order['id']);
 			$items = $db->fetchAll($sql);
 			
-			$order_date = date("Y-m-d", strtotime($order['order_date']));
+			$date_diff = "";
+			$order_date = date("Y-m-d", strtotime($order['order_date']));			
 			$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $order_date );
 			
 			$data=array(
@@ -77,12 +84,11 @@ class DashboardController extends Zend_Controller_Action
 				'status'=>$order['status'],
 				'duration'=>$order['duration'],
 				'items'=>$items,
-				
-				
 			);
 			$user_orders[] = $data;
+			
 		}			
-		
+		//print_r($user_orders);exit;
 		
 		echo json_encode(array("success"=>true, "user_orders"=>$user_orders ));
 		exit;
