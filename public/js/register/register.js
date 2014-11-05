@@ -92,14 +92,8 @@ jQuery(document).ready(function() {
 	jQuery("#form_step3").on( "submit", function( event ) {
 		event.preventDefault();
 		var formData = jQuery( this ).serialize();
-		console.log(formData);
-		var zip_code = jQuery("#zip_code").val();
-		if(zip_code == ""){
-			alert("Plese enter your zipcode.");
-			return false;
-		}
+		//console.log(formData);
 		
-
 		jQuery.post("/register/process-step3", formData, function(data){
 			data = jQuery.parseJSON(data);
 			console.log(data);

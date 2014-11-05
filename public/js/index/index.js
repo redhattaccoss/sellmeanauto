@@ -69,14 +69,14 @@ var BODY_TYPE = "";
 var SELECTED_MAKE = "";
 var SELECTED_NAME = "";
 var SELECTED_MODEL = "";
-
+var SELECTED_YEAR = 2013;
 
 //load Model List
 function loadModelList(name, make){
 	
 	jQuery("#make-model-list").html("Loading Model List for " + name);
 	jQuery("#make-name-link").html(name);
-	var url = BASE_URL + "vehicle/v2/" + make + "/models?year=2013&fmt=json&api_key=" + API_KEY;
+	var url = BASE_URL + "vehicle/v2/" + make + "/models?year="+SELECTED_YEAR+"&fmt=json&api_key=" + API_KEY;
 	jQuery.get(url, function(response) {
 		var output = "";
 		var src = jQuery("#loaded-model-template").html();
@@ -127,11 +127,8 @@ jQuery(document).ready(function() {
 	jQuery("#register_btn").on("click", function(e) {
 		jQuery('#Register').modal('show');
 	});
-	//
-	if(jQuery("#build").val()){
-		jQuery("#select_a_brand_btn").addClass("open");
-		//console.log("here"+jQuery("#build").val());
-	}
+	
+	
 	
 	
 	if (jQuery("#twitter_status").val()!=undefined){
@@ -160,6 +157,13 @@ jQuery(document).ready(function() {
 		jQuery("#select-car-default").html(jQuery(this).attr("data-label"));
 		loadModelList(SELECTED_NAME, SELECTED_MAKE);
 	});
+	
+	jQuery(".select-year").on("click", function(e){
+		SELECTED_YEAR = parseInt(jQuery(this).attr("data-value"));
+		jQuery("#select-car-year-default").html(jQuery(this).attr("data-value"));
+		loadModelList(SELECTED_NAME, SELECTED_MAKE);
+	});
+	
 	jQuery("#sign-in-twitter").on("click", function(e) {
 		window.location.href = "/twitter/redirect/"
 		e.preventDefault();
@@ -187,7 +191,8 @@ jQuery(document).ready(function() {
 							}
 							
 						}else{
-							alert(api_response.status)
+							//alert(api_response.status)
+							location.href="/user/";	
 						}
 					})
 					
@@ -217,20 +222,23 @@ jQuery(document).ready(function() {
 		jQuery.get("/index/set-zipcode/?zip="+zip, function(response){
 			response = jQuery.parseJSON(response);
 			if (response.success){
-				window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+SELECTED_MODEL+"/2013";
+				window.location.href = "/cars/select/"+SELECTED_MAKE+"/"+SELECTED_MODEL+"/"+SELECTED_YEAR;
 			}
 		})
 		e.preventDefault();
+	})
+	
+	jQuery("#enter-zip-form").on("submit", function(){
+		jQuery(".enter-zip-code").trigger("click");
+		return false;
 	})
 
 })
 
 jQuery(document).on("click", ".select-car-model", function(e){
 	SELECTED_MODEL = jQuery(this).attr("data-id");
-	if(jQuery("#inputZZIPcode").val()){
-		jQuery("#inputZZIPcode").attr("disabled", "disabled");
-	}
-	jQuery("#ZIPcode").modal({backdrop:"static", keyboard:false});
+	jQuery("#ZIPcode").modal({backdrop:"static", keyboard:false})
 	//
 	//e.preventDefault();
 });
+

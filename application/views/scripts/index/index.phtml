@@ -1,51 +1,4 @@
-<div class="mod-make">
 
-
-        <div id="make-item" class="container modal fade">
-            <div class="choose-make ">
-                <div class="maker-con body-type">
-                    <div class="btn-group pull-right" style=" margin: 10px; ">
-                        <button type="button" class="btn btn-default" id="select-car-default">Select Body Type</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu " role="menu">
-                            <li><a href="#" class="select-car" data-label="Hatchback" data-value="Hatchback"><i class="icon-hatchback"></i>Hatchback</a></li>
-                            <li><a href="#" class="select-car" data-label="Sedan" data-value="Sedan"><i class="icon-sedan"></i>Sedan</a></li>
-                            <li><a href="#" class="select-car" data-label="Convertible" data-value="Convertible"><i class="icon-convertable"></i>Convertible</a></li>
-                            <li><a href="#" class="select-car" data-label="Coupe" data-value="Coupe"><i class="icon-coupe"></i>Coupe</a></li>
-                            <li><a href="#" class="select-car" data-label="Luxury" data-value="Luxury"><i class="icon-luxury"></i>Luxury</a></li>
-                            <li><a href="#" class="select-car" data-label="Hybrid" data-value="Hybrid"><i class="icon-hybrid"></i>Hybrid</a></li>
-                            <li><a href="#" class="select-car" data-label="SUV" data-value="SUV"><i class="icon-suv"></i>SUV</a></li>
-                            <li><a href="#" class="select-car" data-label="Trucks" data-value="Trucks"><i class="icon-truck"></i>Truck</a></li>
-                            <li><a href="#" class="select-car" data-label="Wagon" data-value="Wagons"><i class="icon-wagons"></i>Wagons</a></li>
-                            <li><a href="#" class="select-car" data-label="Van" data-value="Van"><i class="icon-van"></i>Van</a></li>
-                        </ul>
-                    </div>
-                    <h4 class="">Choose your <span><a href="" id="make-name-link">Hyundai</a></span></h4>
-                </div>
-
-                <div class="make-av" id="make-model-list">
-                    <ul>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Accent</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Azera</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal" v><img src="img/genesis_car.png" /> <span>Elantra</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal" v><img src="img/genesis_car.png" /> <span>Elantra Coupe</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Elantra GT</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Equus</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Genesis</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Genesis Coupe</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Santa Fe</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Santa Fe Sport</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Sonata</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Tucson</span></a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#ZIPcode" data-dismiss="modal"><img src="img/genesis_car.png" /> <span>Veloster</span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
     <!--
     <div class="modal fade" id="Signup" tabindex="-1" role="dialog" aria-labelledby="Signup" aria-hidden="true">
         <div class="modal-dialog">
@@ -83,14 +36,14 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" id="enter-zip-form">
                         <div class="form-group">
                             <div class="col-sm-8">
                                 <label class="control-label" style="color: #0D4B72; font-size: 16px; padding-top: 0px;">NOW ENTER YOUR ZIP CODE:</label>
                                 <span style="font-size: 12px; display: block;">ZIP code is used to find dealers near you.</span>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control input-lg" id="inputZZIPcode" placeholder="" value="<?php echo $this->user_profiles['zip_code'];?>">
+                                <input type="text" class="form-control input-lg" id="inputZZIPcode" placeholder="">
                             </div>
                         </div>
                     </form>
