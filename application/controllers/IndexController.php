@@ -5,7 +5,8 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body    	
+        // action body
+    	//echo "<p>hello world</p>";exit;
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/login/login.js", "text/javascript");
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
@@ -33,6 +34,7 @@ class IndexController extends Zend_Controller_Action
 		}else{
 			$q = "";
 		}
+		$this->view->q = $q;
 		
 		//load model years
 		$years = array();
@@ -40,17 +42,13 @@ class IndexController extends Zend_Controller_Action
 			$years[] = $i;
 		}
 		
-		
-		$this->view->build=false;
 		if(isset($_GET['build'])){
 			$this->view->build=true;
 		}
 		$this->view->years = $years;
-		$this->view->q = $q;
 		$this->view->user_profiles= $user_profiles;
     }
 	
-
 	public function setZipcodeAction(){
 		$code = $this->getRequest()->getQuery("zip");
 		$car_select = new Zend_Session_Namespace("car_select");
