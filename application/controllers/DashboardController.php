@@ -109,9 +109,7 @@ class DashboardController extends Zend_Controller_Action
 		$db = Zend_Registry::get("main_db");
 		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
 
-		$sql = $db->select()
-			->from('orders', Array('id', 'order_date'))
-			->where('user_credentials_id =?', $user_login_credentials->user_credentials_id);
+		$sql="SELECT * FROM orders o WHERE user_credentials_id=".$user_login_credentials->user_credentials_id;	
 		$orders = $db->fetchAll($sql);
 		
 		$user_orders=array();
@@ -122,15 +120,31 @@ class DashboardController extends Zend_Controller_Action
 				->where('order_id =?', $order['id']);
 			$items = $db->fetchAll($sql);
 			
-			$order_date = date("Y-m-d", strtotime($order['order_date']));
+			$date_diff = "";
+			$order_date = date("Y-m-d", strtotime($order['order_date']));			
 			$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $order_date );
+			
+			if($date_diff){
+				$date_diff=sprintf('- %s ago', $date_diff);
+			}
+			
+			$order_date_str = date("M d, Y", strtotime($order['order_date']));
+			
+			$num_days = sprintf('+%s days', $order['duration']);
+			$new_date = date('Y-m-d', strtotime($num_days,strtotime($order_date)));
+			$days_left = Utilities::dateDiff($new_date, $order_date );
 			
 			$data=array(
 				'order_id'=>$order['id'],
 				'order_date'=>$order['order_date'],
+				'order_date_str' => $order_date_str,
+				'date_diff'=>$date_diff,
+				'style_id'=>$order['style_id'],
+				'zipcode'=>$order['zipcode'],
+				'status'=>$order['status'],
+				'duration'=>$order['duration'],
+				'days_left'=>sprintf('%s left', $days_left), 
 				'items'=>$items,
-				'date_diff'=>$date_diff
-				
 			);
 			$user_orders[] = $data;
 		}

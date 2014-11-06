@@ -8,6 +8,9 @@ function get_user_dashboard(){
 			var template = Handlebars.compile(src);
 			jQuery.each(response.user_orders, function(o, order) {
 				output += template(order);
+				var result= configure_order_items(order);
+				displayOrders(result, order.order_id);
+				load_image(order.style_id, order.order_id)
 			});
 		}else{
 			output="<tr><td colspan='4'>There's an error in parsing dashboard list.</td></tr>"

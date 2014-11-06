@@ -276,11 +276,9 @@ class UserController extends Zend_Controller_Action
         
 		$this->view->posted_active="panel-active";
 		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
-		$this->view->headScript()->appendFile("/public/js/dashboard/user-dashboard.js", "text/javascript");
-		if($user_type == "consumer"){
-			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
-			$this->_helper->layout->setLayout("user");
-		}
+		$this->view->headScript()->appendFile("/public/js/dashboard/userr-dashboard.js", "text/javascript");
+		$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
+		$this->_helper->layout->setLayout("user");
 	}
 	
 	public function accountSettingsAction()
@@ -363,7 +361,42 @@ class UserController extends Zend_Controller_Action
 	public function orderAction()
 	{
 		$order_id = $this->getRequest()->getParam('id');
-		print_r("Under Construction<br>Order Id: ".$order_id);exit;
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
+		if(!$user_login_credentials->user_credentials_id){
+			header("Location:/");
+			exit;
+		}
+		
+		$db = Zend_Registry::get("main_db");		
+		$sql = $db->select()
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
+		
+		$sql = $db->select()
+			->from('user_profiles')
+			->where('user_credentials_id=?', $user_login_credentials->user_credentials_id );
+		$user_profiles = $db->fetchRow($sql);
+		
+		$user_profiles['type'] = $user_type;
+		$this->view->user_profiles= $user_profiles;	
+		
+		
+		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
+		
+		if($user_type == "consumer"){
+			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
+			$this->view->headScript()->appendFile("/public/js/dashboard/userr-dashboard.js", "text/javascript");
+			$this->_helper->layout->setLayout("user");
+		}else{
+			$this->view->headScript()->appendFile("/public/js/dashboard/dealer-dashboard.js", "text/javascript");
+        	$this->_helper->layout->setLayout("dealer");
+		}
+		
+		
+		
 	}
 	
 	
