@@ -22,7 +22,14 @@ class DashboardController extends Zend_Controller_Action
 			echo json_encode(array("success"=>false, "msg"=>"Plese login" ));
 			exit;
 		}
-		echo json_encode(array("success"=>true, "msg"=>"ok" ));
+		
+		$db = Zend_Registry::get("main_db");
+		$sql = $db->select()
+			->from('user_credentials', 'type')
+			->where('id=?', $user_login_credentials->user_credentials_id );
+		$user_type = $db->fetchOne($sql);
+		
+		echo json_encode(array("success"=>true, "msg"=>"ok", "type"=>$user_type ));
 		exit;
 	}
 
@@ -69,6 +76,7 @@ class DashboardController extends Zend_Controller_Action
 			$sql = $db->select()
 				->from('order_items', Array('item_id', 'item_type'))
 				->where('order_id =?', $order['id']);
+			//echo $sql;exit;	
 			$items = $db->fetchAll($sql);
 			
 			$date_diff = "";

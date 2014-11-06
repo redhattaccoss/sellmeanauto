@@ -12,11 +12,16 @@
     </table>
 </div>
 
-<script type="text/x-handlebars-template" id="dashboard-list-template">
+<script type="text/x-handlebars-template" id="user-dashboard-list-template">
 	<tr>
 		<td>
 			{{order_id}}<br />
-			{{order_date}}
+			{{order_date}}<br />
+			{{style_id}}<br />
+			{{zipcode}}<br />
+			{{status}}<br />
+			{{date_diff}}<br />
+			{{duration}}
 		</td>
 		<td>
 			<h4 id="car_name_{{order_id}}">-</h4>

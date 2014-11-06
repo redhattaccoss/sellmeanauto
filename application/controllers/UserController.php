@@ -276,6 +276,7 @@ class UserController extends Zend_Controller_Action
         
 		$this->view->posted_active="panel-active";
 		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/dashboard/user-dashboard.js", "text/javascript");
 		if($user_type == "consumer"){
 			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
 			$this->_helper->layout->setLayout("user");
@@ -352,9 +353,19 @@ class UserController extends Zend_Controller_Action
 		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
+		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/dashboard/dealer-dashboard.js", "text/javascript");
+		$this->view->headLink()->appendStylesheet("/public/css/user/dealer-dashboard.css");
         $this->_helper->layout->setLayout("dealer");
 	}
+	
+	
+	public function orderAction()
+	{
+		$order_id = $this->getRequest()->getParam('id');
+		print_r("Under Construction<br>Order Id: ".$order_id);exit;
+	}
+	
 	
 	public function logoutAction()
 	{

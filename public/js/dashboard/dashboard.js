@@ -11,55 +11,33 @@ jQuery(document).ready(function() {
 function check_user_session(){
 	jQuery.get(DASHBOARD_API+"/check-user-session", function(response){
 		response = jQuery.parseJSON(response);
-		//console.log(response);		
+		//console.log(response);				
 		if(response.success){
-			get_user_dashboard();
+			if(response.type=="dealer"){
+				get_dealer_dashboard();
+			}else if(response.type=="consumer"){
+				get_user_dashboard();
+			}else{
+				alert("Error: Unknown user type");				
+			}
+			
 		}else{
 			location.href='/user/logout';
 		}
+		
 	});	
 }
 
 
-function get_user_dashboard(){
-	jQuery.get(DASHBOARD_API + "/get-user-dashboard", function(response){
-		response = jQuery.parseJSON(response);
-		//console.log(response);
-		if(response.success){
-			var output=""
-			var src = jQuery("#dashboard-list-template").html();
-			var template = Handlebars.compile(src);
-			
-			jQuery.each(response.user_orders, function(o, order) {
-				output += template(order);
-				
-				if(order.items){
-					//jQuery.each(order.items, function(i, item) {
-					//	getStyleDetailsById(item, order.order_id);						
-					//});
-					var result= configure_order_items(order.items);
-					//console.log(result);
-					displayOrders(result, order.order_id);
-				}
-				
-				
-			});
-			jQuery("#dahsboard_tb tbody").html(output);
-		}
-	});	
-}
-
-function configure_order_items(items){
-	//console.log(items);
+function configure_order_items(order){	
+	
 	var data=new Array();
 	var exterior=new Array();
 	var interior=new Array();
-	jQuery.each(items, function(i, item) {
-		if(item.item_type == 'style_id'){		
-			var style_id = item.item_id;
-			data["style_id"]=style_id;	
-		}	
-		
+	
+	data["style_id"]=order.style_id;	
+	
+	jQuery.each(order.items, function(i, item) {
 		if(item.item_type == 'color_id'){		
 			var color_id = item.item_id;
 			data["color_id"]=color_id;	
@@ -82,6 +60,7 @@ function configure_order_items(items){
 	});
 	
 	return data
+	
 }
 
 function displayOrders(data, order_id){
@@ -91,6 +70,7 @@ function displayOrders(data, order_id){
 		type : "GET",
 		dataType : 'json',
 		success : function(response) {
+			total_price = response.price.baseInvoice;
 			jQuery("#car_name_"+order_id).html(response.make.name+' '+response.model.name);
 			jQuery("#engine_"+order_id).html(response.engine.name);
 			jQuery("#transmission_"+order_id).html(response.trim+' '+response.transmission.transmissionType);
@@ -126,6 +106,62 @@ function displayOrders(data, order_id){
 				});
 			}
 			
+			var exterior = new Array();
+			var interior = new Array();
+			jQuery.each(response.options, function(i, item) {
+				if(item.category == "Exterior"){
+					jQuery.each(item.options, function(k, v) {
+						exterior.push(v);
+					});
+				}
+				if(item.category == "Interior"){
+					jQuery.each(item.options, function(k, v) {
+						interior.push(v);
+					});
+				}
+			});
+			
+			if(data['exterior']){
+				var output=""
+				var src = jQuery("#exterior-options-template").html();
+				var template = Handlebars.compile(src);
+				
+				jQuery.each(exterior, function(i, item) {
+					
+					var num = item.id
+					num = num.toString();
+					jQuery.each(data['exterior'], function(i, v) {
+						if(num == v){
+							output += template(item);
+							total_price = total_price + item.price.baseMSRP
+						}
+					});	
+					
+				});
+				jQuery("#exterior-options_"+order_id).html(output);
+			}
+			
+			if(data['interior']){
+				var output=""
+				var src = jQuery("#interior-options-template").html();
+				var template = Handlebars.compile(src);
+				
+				jQuery.each(exterior, function(i, item) {
+					
+					var num = item.id
+					num = num.toString();
+					jQuery.each(data['interior'], function(i, v) {
+						if(num == v){
+							output += template(item);
+							total_price = total_price + item.price.baseMSRP
+						}
+					});	
+					
+				});
+				jQuery("#exterior-options_"+order_id).html(output);
+			}
+			jQuery("#total_baseInvoice_"+order_id).html("$"+total_price);
+			
 		},
 		error : function(response) {
 			displayOrders(data, order_id);
@@ -133,50 +169,38 @@ function displayOrders(data, order_id){
 	});
 }
 
-/*
-function getStyleDetailsById(items, order_id){
-	
-	if(item.item_type == 'style_id'){		
-		var style_id = item.item_id;
-	}
-	
-	if(item.item_type == 'color_id'){
-		var color_id = +item.item_id;
-	}
-	
-	
-	if(style_id){
-		//console.log(order_id+" => "+style_id);
-		var url = BASE_URL + "vehicle/v2/styles/" + style_id + "?view=full&fmt=json&api_key=" + API_KEY;
-		jQuery.ajax({
-			url : url,
-			type : "GET",
-			dataType : 'json',
-			success : function(response) {
-				jQuery("#car_name_"+order_id).html(response.make.name+' '+response.model.name);
-				jQuery("#engine_"+order_id).html(response.engine.name);
-				jQuery("#transmission_"+order_id).html(response.trim+' '+response.transmission.transmissionType);
-				//jQuery("#car_name_"+order_id).html(response.make.name+' '+response.model.name);
-				//jQuery("#car_name_"+order_id).html(response.make.name+' '+response.model.name);
-					if(color_id){
-						console.log("exterior color => "+color_id);
+
+function load_image(style_id, order_id) {
+	var image_api = BASE_URL_V1 + "vehiclephoto/service/findphotosbystyleid?styleId=" + style_id + "&fmt=json&api_key=" + API_KEY;
+
+	jQuery.ajax({
+		url : image_api,
+		type : "GET",
+		dataType : 'json',
+		success : function(response_image) {
+			
+			//console.log(response_image);
+			
+			jQuery.each(response_image, function(j, image) {
+				if(image.shotTypeAbbreviation == "FQ") {
+					var image_photo_small = "";
+					jQuery.each(image.photoSrcs, function(k, photo) {
+						if(photo.indexOf("_400.jpg") > -1) {
+							image_photo_small = photo;
+						}
+					})
+					if(image_photo_small == "") {
+						jQuery("#car_main_image_" + order_id).attr("src", MEDIA + image.photoSrcs[0]);
+					} else {
+						jQuery("#car_main_image_" + order_id).attr("src", MEDIA + image_photo_small);
 					}
-				
-				//jQuery.each(response.colors, function(i, item) {
-				//	if(item.category == "Exterior"){
-				//		jQuery.each(item.options, function(k, v) {
-							//output += template(v);							   
-				//			console.log(v);
-				//		});															   
-				//	}
-				//});
-				
-				
-			},
-			error : function(response) {
-				getStyleDetailsById(item, order_id);
-			}
-		});
-	}
+				}
+			});
+			
+		},
+		error : function() {
+			load_image(style_id, order_id);
+		}
+	});
+
 }
-*/

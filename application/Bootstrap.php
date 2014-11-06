@@ -78,6 +78,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		));
 		$router->addRoute('vehicleSummary', $detailsRoute);
 		
+		//user order page
+		$detailsRoute = new Zend_Controller_Router_Route("user/order/:id", array(
+		   'controller' => 'user',
+		   'action' => 'order'
+		));
+		$router->addRoute('userOrderSummary', $detailsRoute);
 		
 		//added cars selection 
 		$route = new Zend_Controller_Router_Route("cars/select/:makeName/:modelName/:year",
