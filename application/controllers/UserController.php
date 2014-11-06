@@ -326,8 +326,12 @@ class UserController extends Zend_Controller_Action
 	{
 		
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");
-		$db = Zend_Registry::get("main_db");
+		if(!$user_login_credentials->user_credentials_id){
+			header("Location:/");
+			exit;
+		}
 		
+		$db = Zend_Registry::get("main_db");		
 		$sql = $db->select()
 			->from('user_credentials', 'type')
 			->where('id=?', $user_login_credentials->user_credentials_id );
