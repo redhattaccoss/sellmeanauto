@@ -20,3 +20,12 @@ function get_dealer_dashboard(){
 		jQuery("#dahsboard_tb tbody").html(output);
 	});	
 }
+
+function get_user_order_details(){
+	var order_id=jQuery("#order_id").val();
+	//console.log(order_id);
+	jQuery.get(DASHBOARD_API + "/get-user-order-details/?order_id="+order_id, function(response){
+		response = jQuery.parseJSON(response);
+		console.log(response);				
+	});
+}

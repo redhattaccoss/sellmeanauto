@@ -372,6 +372,10 @@ class UserController extends Zend_Controller_Action
 			->from('user_credentials', 'type')
 			->where('id=?', $user_login_credentials->user_credentials_id );
 		$user_type = $db->fetchOne($sql);
+		if($user_type == "consumer"){
+			header("Location:/user/");
+			exit;
+		}
 		
 		$sql = $db->select()
 			->from('user_profiles')
@@ -380,20 +384,14 @@ class UserController extends Zend_Controller_Action
 		
 		$user_profiles['type'] = $user_type;
 		$this->view->user_profiles= $user_profiles;	
-		
+		$this->view->order_id= $order_id;
 		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
-		
-		if($user_type == "consumer"){
-			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
-			$this->view->headScript()->appendFile("/public/js/dashboard/userr-dashboard.js", "text/javascript");
-			$this->_helper->layout->setLayout("user");
-		}else{
-			$this->view->headScript()->appendFile("/public/js/dashboard/dealer-dashboard.js", "text/javascript");
-        	$this->_helper->layout->setLayout("dealer");
-		}
+		$this->view->headLink()->appendStylesheet("/public/css/user/dealer-dashboard.css");
+		$this->view->headScript()->appendFile("/public/js/dashboard/dealer-dashboard.js", "text/javascript");
+        $this->_helper->layout->setLayout("dealer");
 		
 		
 		

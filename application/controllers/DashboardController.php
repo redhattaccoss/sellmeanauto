@@ -153,5 +153,41 @@ class DashboardController extends Zend_Controller_Action
 		echo json_encode(array("success"=>true, "user_orders"=>$user_orders, "user_credentials_id"=>$user_login_credentials->user_credentials_id ));
 		exit;
 	}
+	
+	public function getUserOrderDetailsAction()
+	{
+		$order_id = $_GET['order_id'];
+		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");		
+		$db = Zend_Registry::get("main_db");
+		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
+
+		$sql="SELECT * FROM orders o WHERE id=".$order_id;	
+		$order = $db->fetchRow($sql);
+		
+		$user_orders=array();
+		$date_diff = "";
+		$order_date = date("Y-m-d", strtotime($order['order_date']));			
+		$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $order_date );
+		
+		if($date_diff){
+			$date_diff=sprintf('- %s ago', $date_diff);
+		}
+		
+		$order['date_diff'] = $date_diff; 
+		$order['order_date_str'] = date("M d, Y", strtotime($order['order_date']));
+		
+		$num_days = sprintf('+%s days', $order['duration']);
+		$new_date = date('Y-m-d', strtotime($num_days,strtotime($order_date)));
+		$order['days_left'] = Utilities::dateDiff($new_date, $order_date );
+		
+		$sql = $db->select()
+			->from('order_items', Array('item_id', 'item_type'))
+			->where('order_id =?', $order_id);
+		$items = $db->fetchAll($sql);
+		
+		echo json_encode(array("success"=>true, "order"=>$order, "items"=>$items ));
+		exit;
+	}
+	
 }
 

@@ -11,16 +11,22 @@ jQuery(document).ready(function() {
 function check_user_session(){
 	jQuery.get(DASHBOARD_API+"/check-user-session", function(response){
 		response = jQuery.parseJSON(response);
-		//console.log(response);				
+		var user_page = jQuery("#user_page").val();				
 		if(response.success){
 			if(response.type=="dealer"){
-				get_dealer_dashboard();
+				if(user_page == "dashboard"){
+					get_dealer_dashboard();
+				}
+				if(user_page == "order"){
+					get_user_order_details();
+				}
 			}else if(response.type=="consumer"){
-				get_user_dashboard();
+				if(user_page == "dashboard"){
+					get_user_dashboard();
+				}
 			}else{
 				alert("Error: Unknown user type");				
 			}
-			
 		}else{
 			location.href='/user/logout';
 		}
