@@ -1,5 +1,11 @@
-function get_dealer_dashboard(){
-	jQuery.get(DASHBOARD_API + "/get-dealer-dashboard", function(response){
+function get_dealer_dashboard(params){
+	if (typeof params == "undefined"){
+		params = "";
+	}else{
+		params = "?"+params;
+	}
+	
+	jQuery.get(DASHBOARD_API + "/get-dealer-dashboard/"+params, function(response){
 		response = jQuery.parseJSON(response);
 		//console.log(response);		
 		var output=""
@@ -22,6 +28,12 @@ function get_dealer_dashboard(){
 		jQuery("#dahsboard_tb tbody").html(output);
 	});	
 }
+
+jQuery(document).on("submit", "#search-car-form", function(){
+	var params = jQuery(this).serialize();
+	get_dealer_dashboard(params);	
+	return false;
+});
 
 /**
  * Add event for Place a bid

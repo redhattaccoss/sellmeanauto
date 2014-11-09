@@ -1,53 +1,81 @@
 <input type="hidden" name="user_page" id="user_page" value="dashboard"/>
-<div class="car-list dealer-car-list" >
-    <table id="dahsboard_tb" class="table table-striped">
-        <thead style="background-color: #808080; color: #fff;">
-            <tr>
-                <th class="col-md-2">Item</th>
-                <th class="col-md-4">Details</th>
-                <th class="col-md-2">Configured Price</th>
-                <th class="col-md-2">Ending</th>
-                <th class="col-md-2">Action</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+
+<div class="search-wrapper">
+	<form class="form-inline" role="form" id="search-car-form">
+		<div class="form-group">
+			<label style="margin-right: 20px;"> Search </label>
+		</div>
+		<div class="form-group">
+			<select class="form-control" name="car_make">
+				<option value="">View All</option>
+				<?php
+				foreach($this->car_makes as $car_make){
+					?>
+					<option value="<?php echo $car_make["value"]?>"><?php echo $car_make["name"]?></option>
+					<?php
+				}
+				?>
+			</select>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-2">
+				<input type="text" class="form-control" placeholder="- ZIP Code -" name="zipcode">
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-success">
+			Go
+		</button>
+	</form>
 </div>
 
+<div class="car-list dealer-car-list" >
+	<table id="dahsboard_tb" class="table table-striped">
+		<thead style="background-color: #808080; color: #fff;">
+			<tr>
+				<th class="col-md-2">Item</th>
+				<th class="col-md-4">Details</th>
+				<th class="col-md-2">Configured Price</th>
+				<th class="col-md-2">Ending</th>
+				<th class="col-md-2">Action</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
 
 <script type="text/x-handlebars-template" id="dealer-dashboard-list-template">
 	<tr>
-		<td valign="top">
-			<img id="car_main_image_{{order_id}}" />
-			<!--
-			{{order_id}}<br />
-			{{order_date}}<br />
-			{{style_id}}<br />
-			{{zipcode}}<br />
-			{{status}}<br />
-			{{date_diff}}<br />
-			{{duration}}
-			-->
-		</td>
-		<td valign="top">
-			<h4 id="car_name_{{order_id}}">-</h4>
-			<p>Engine: <span id="engine_{{order_id}}">-</span></p>
-			<p>Transmission: <span id="transmission_{{order_id}}">-</span></p>
-			<p>Exterior Color: <span id="exterior_color_{{order_id}}">-</span></p>
-			<p>Interior Color: <span id="interior_color_{{order_id}}">-</span></p>
-			<a href="/user/order/{{order_id}}" class="btn btn-default">View Details</a>
-		</td>
-		<td valign="top"><p id="total_baseInvoice_{{order_id}}" class="con-bid">$0</p></td>
-		<td valign="top">{{ending}}</td>
-		<td valign="top">
-			<p class="c-bid">${{current_lowest_bid}}<span>{{current_bid_count}} Bids</span></p>
-			<a href="/user/order/{{order_id}}" class="btn btn-warning btn-lg place-bid" data-order_id="{{order_id}}">Place a Bid</a>
-		</td>
+	<td valign="top">
+	<img id="car_main_image_{{order_id}}" />
+	<!--
+	{{order_id}}<br />
+	{{order_date}}<br />
+	{{style_id}}<br />
+	{{zipcode}}<br />
+	{{status}}<br />
+	{{date_diff}}<br />
+	{{duration}}
+	-->
+	</td>
+	<td valign="top">
+	<h4 id="car_name_{{order_id}}">-</h4>
+	<p>Engine: <span id="engine_{{order_id}}">-</span></p>
+	<p>Transmission: <span id="transmission_{{order_id}}">-</span></p>
+	<p>Exterior Color: <span id="exterior_color_{{order_id}}">-</span></p>
+	<p>Interior Color: <span id="interior_color_{{order_id}}">-</span></p>
+	<a href="/user/order/{{order_id}}" class="btn btn-default">View Details</a>
+	</td>
+	<td valign="top"><p id="total_baseInvoice_{{order_id}}" class="con-bid">$0</p></td>
+	<td valign="top">{{ending}}</td>
+	<td valign="top">
+	<p class="c-bid">${{current_lowest_bid}}<span>{{current_bid_count}} Bids</span></p>
+	<a href="/user/order/{{order_id}}" class="btn btn-warning btn-lg place-bid" data-order_id="{{order_id}}">Place a Bid</a>
+	</td>
 	</tr>
 </script>
 
-
-<?php echo $this->partial("elements/user/place-bid-modal.phtml");?>
+<?php echo $this -> partial("elements/user/place-bid-modal.phtml"); ?>
 
 <script type="text/x-handlebars-template" id="exterior-options-template">
 	<li style="margin-top:10px;">{{name}} <span class="price" style="float:right; margin-right:20px;">+ ${{price.baseMSRP}}</span></li>

@@ -22,3 +22,12 @@
 .dis-over .d-info ul li:first-child {
 	padding: 0 10px 0 57px;
 }
+
+.white-wrap, .search-con{
+	background:transparent!important;
+	box-shadow:none!important;
+}
+.search-wrapper{
+	margin-bottom:50px;
+	
+}

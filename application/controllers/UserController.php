@@ -348,6 +348,7 @@ class UserController extends Zend_Controller_Action
 		$user_profiles['type'] = $user_type;
 		$this->view->user_profiles= $user_profiles;	
 		
+		$this->view->car_makes = $db->fetchAll($db->select()->from("car_makes")->order("name"));
 		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");

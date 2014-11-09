@@ -35,6 +35,14 @@ class DashboardController extends Zend_Controller_Action
 
 	public function getDealerDashboardAction()
 	{
+		$car_make = "";
+		$zipcode = "";
+		if (isset($_REQUEST["car_make"])){
+			$car_make = $_REQUEST["car_make"];
+		}
+		if (isset($_REQUEST["zipcode"])){
+			$zipcode = $_REQUEST["zipcode"];
+		}
 		
 		$user_login_credentials = new Zend_Session_Namespace("user_login_credentials");		
 		$db = Zend_Registry::get("main_db");
@@ -53,6 +61,7 @@ class DashboardController extends Zend_Controller_Action
 		
 		
 		//Get selected car makes of Dealer
+	
 		$sql="SELECT c.value  FROM selected_car_makes s JOIN car_makes c ON c.id=s.car_makes_id WHERE s.user_credentials_id=".$user_login_credentials->user_credentials_id.";";
 		$cars = $db->fetchAll($sql);
 		$car_makes=array();
@@ -60,12 +69,26 @@ class DashboardController extends Zend_Controller_Action
 			array_push($car_makes, $car['value']);
 		}
 		
-		if(!$car_makes){
-			echo json_encode(array("success"=>false, "msg"=>"Dealer has no selected car makes." ));
-			exit;
+		
+		
+		$sql = $db->select()->from("orders");
+		
+		if ($car_make==""){
+			if(!$car_makes){
+				echo json_encode(array("success"=>false, "msg"=>"Dealer has no selected car makes." ));
+				exit;
+			}	
+			
+			$sql->where("car_make IN ('".implode("','", $car_makes)."')");
+		}else{
+			$sql->where("car_make = ?", $car_make);
 		}
 		
-		$sql="SELECT * FROM orders o WHERE zipcode='".$user_profiles['zip_code']."' AND car_make IN('".implode("','",$car_makes)."');";
+		if ($zipcode==""){
+			$sql->where("zipcode = ?", $user_profiles["zip_code"]);
+		}else{
+			$sql->where("zipcode = ?", $zipcode);
+		}
 		
 		$orders = $db->fetchAll($sql);
 		
