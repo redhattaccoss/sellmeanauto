@@ -1,0 +1,82 @@
+<div class="modal fade" id="place-bid-modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h3 class="modal-title" id="myModalLabel">Place a Bid</h3>
+			</div>
+			<div class="modal-body">
+				<h5><span id="place-bid-modal-consumer-address"></span></h5>
+				<h4><span id="place-bid-modal-model"></span></h4>
+				<h5 style="margin-bottom: 20px;"><span id="place-bid-modal-transmission"></span></h5>
+				<table class="table table-condensed">
+					<colgroup>
+						<col class="col-xs-2">
+						<col class="col-xs-6">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td> Price </td>
+							<td><span id="place-bid-modal-price"></span></td>
+						</tr>
+						<tr>
+							<td> FINANCE ESTIMATE </td>
+							<td><span id="place-bid-modal-finance-estimate"></span> for 72 months</td>
+						</tr>
+						<tr>
+							<td> Current Bid </td>
+							<td><span id="place-bid-modal-current-bid-expire-days"></span></td>
+						</tr>
+						<tr>
+							<td> Current Low FINANCE ESTIMATE </td>
+							<td><span id="place-bid-modal-low-finance"></span> for 72 months</td>
+						</tr>						
+					</tbody>
+				</table>
+				<div class="bid-a-con">
+					<form class="form-horizontal" role="form" id="bid-form">
+						<input type="hidden" name="order_id" id="bid-form-order-id"/>
+						<div class="form-group">
+							<div class="col-sm-4 ">
+								<label for="inputBidprice" class="control-label">Bid Price</label>
+								<span class="note">cash price</span>
+							</div>
+							<div class="col-sm-6">
+								<input type="text" name="bid_price" class="form-control input-lg" id="inputBidprice" placeholder="">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4 ">
+								<label for="inputFinanceprice" class="control-label">Finance Price</label>
+								<span class="note">estimante</span>
+							</div>
+							<div class="col-sm-6">
+								<input type="text" class="form-control input-lg" name="finance_estimate" id="inputFinanceprice" placeholder="">
+								<span class="note">per month for 72 months</span>
+							</div>
+						</div>
+						<!--
+						<div class="form-group">
+							<div class="col-sm-4 ">
+								<label for="inputAdditionaloffer" class="control-label">Additional Offer</label>
+							</div>
+							<div class="col-sm-6">
+								<input type="text" class="form-control input-lg" id="inputAdditionaloffer" placeholder="Auto Search box">
+							</div>
+						</div>
+						-->
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-6">
+								<button class="btn btn-warning btn-lg" type="submit">Place a Bid</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<span class="note"> <span style="color:red;">*</span> Aenean consequat sagittis nibh quis euismod. Donec interdum ultricies leo, at placerat eros vestibulum vitae. Nullam sit amet adipiscing.
+					Phasellus rhoncus. Integer at neque aliquet, lobortis arcu id, consectetur mauris. Duis accumsan ut ultricies. Quisque commodo, sem vitae ornare lacinia, ante orci rutrum.Nam vitae porta felis, ut vulputate justo. Proin eu risus eros. Pellentesque viverra neque nec turpis vestibulum, vitae tempus velit eleifend. </span>
+			</div>
+		</div>
+	</div>
+</div>

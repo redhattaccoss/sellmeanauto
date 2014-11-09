@@ -83,6 +83,11 @@ class DashboardController extends Zend_Controller_Action
 			$order_date = date("Y-m-d", strtotime($order['order_date']));			
 			$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $order_date );
 			
+			Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));
+			
+			$current_lowest_bid = BidUtilities::getCurrentLowestBid($order["id"]);
+			$current_lowest_finance_bid = BidUtilities::getCurrentLowestFinanceBid($order["id"]);
+			$count = BidUtilities::getCountBid($order["id"]);
 			$data=array(
 				'order_id'=>$order['id'],
 				'order_date'=>$order['order_date'],
@@ -92,7 +97,17 @@ class DashboardController extends Zend_Controller_Action
 				'status'=>$order['status'],
 				'duration'=>$order['duration'],
 				'items'=>$items,
+				"current_lowest_bid"=>$current_lowest_bid,
+				"current_lowest_finance_bid"=>$current_lowest_finance_bid,
+				"current_bid_count"=>$count
+				
 			);
+			
+			
+			$today = strtotime(date("Y-m-d H:i:s"));
+			$data["ending"] = $today - strtotime($order["order_date"]);
+			
+			
 			$user_orders[] = $data;
 			
 		}			

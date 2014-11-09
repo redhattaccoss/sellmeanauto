@@ -8,6 +8,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		define("MODELS_PATH", APPLICATION_PATH.DIRECTORY_SEPARATOR."models");
 		define("COMPONENTS_PATH", APPLICATION_PATH.DIRECTORY_SEPARATOR."components");
 		define("EMAILS_LAYOUT_PATH", APPLICATION_PATH.DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."emaillayouts");
+		define("EDMUNDS_API_KEY", "f95n2h2rf96b5vtybw6xat4z");
+		define("EDMUNDS_BASE_URL", "https://api.edmunds.com/api/");
+		define("EDMUNDS_BASE_URL_V1", "https://api.edmunds.com/v1/api/");
+		define("EDMUNDS_MEDIA_URL", "https://media.ed.edmunds-media.com/");
+		
 		
 		$connectionParameters = array("host" => "localhost",
 								"username" => "sellmeanauto",

@@ -4,8 +4,9 @@
             <tr>
                 <th class="col-md-2">Item</th>
                 <th class="col-md-4">Details</th>
-                <th class="col-md-2">Starting Price</th>
-                <th class="col-md-2">Bids</th>
+                <th class="col-md-2">Configured Price</th>
+                <th class="col-md-2">Ending</th>
+                <th class="col-md-2">Action</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -36,13 +37,16 @@
 			<a href="/user/order/{{order_id}}" class="btn btn-default">View Details</a>
 		</td>
 		<td valign="top"><p id="total_baseInvoice_{{order_id}}" class="con-bid">$0</p></td>
+		<td valign="top">{{ending}}</td>
 		<td valign="top">
-			<p class="c-bid">$0<span>0 Bids</span></p>
-			<p class="ends">0d left</p>
-			<a href="/user/order/{{order_id}}" class="btn btn-warning btn-lg">Place a Bid</a>
+			<p class="c-bid">${{current_lowest_bid}}<span>{{current_bid_count}} Bids</span></p>
+			<a href="/user/order/{{order_id}}" class="btn btn-warning btn-lg place-bid" data-order_id="{{order_id}}">Place a Bid</a>
 		</td>
 	</tr>
 </script>
+
+
+<?php echo $this->partial("elements/user/place-bid-modal.phtml");?>
 
 <script type="text/x-handlebars-template" id="exterior-options-template">
 	<li style="margin-top:10px;">{{name}} <span class="price" style="float:right; margin-right:20px;">+ ${{price.baseMSRP}}</span></li>
