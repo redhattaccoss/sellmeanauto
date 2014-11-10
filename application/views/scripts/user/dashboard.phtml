@@ -67,7 +67,7 @@
 	<a href="/user/order/{{order_id}}" class="btn btn-default">View Details</a>
 	</td>
 	<td valign="top"><p id="total_baseInvoice_{{order_id}}" class="con-bid">$0</p></td>
-	<td valign="top">{{ending}}</td>
+	<td valign="top">{{order_date_str}} <br> {{date_diff}} ago <br>{{days_left}}</td>
 	<td valign="top">
 	<p class="c-bid">${{current_lowest_bid}}<span>{{current_bid_count}} Bids</span></p>
 	<a href="/user/order/{{order_id}}" class="btn btn-warning btn-lg place-bid" data-order_id="{{order_id}}">Place a Bid</a>

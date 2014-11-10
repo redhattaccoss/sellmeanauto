@@ -104,19 +104,32 @@ class DashboardController extends Zend_Controller_Action
 			//echo $sql;exit;	
 			$items = $db->fetchAll($sql);
 			
+			$order_date_str = date("M d, Y", strtotime($order['order_date']));
 			$date_diff = "";
 			$order_date = date("Y-m-d", strtotime($order['order_date']));			
 			$date_diff = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $order_date );
 			
-			Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));
 			
+			$num_days = sprintf('+%s days', $order['duration']);
+			$new_date = date('Y-m-d', strtotime($num_days, strtotime($order_date)));			
+			$days_left = Utilities::dateDiff($new_date, sprintf('%s', date("Y-m-d")) );
+			if($days_left){
+				$days_left = sprintf('%s left', $days_left);
+			}
+			
+			
+			Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));			
 			$current_lowest_bid = BidUtilities::getCurrentLowestBid($order["id"]);
 			$current_lowest_finance_bid = BidUtilities::getCurrentLowestFinanceBid($order["id"]);
 			$count = BidUtilities::getCountBid($order["id"]);
+			
+			
 			$data=array(
 				'order_id'=>$order['id'],
 				'order_date'=>$order['order_date'],
 				'date_diff'=>$date_diff,
+				'days_left'=>$days_left,
+				'order_date_str'=>$order_date_str,
 				'style_id'=>$order['style_id'],
 				'zipcode'=>$order['zipcode'],
 				'status'=>$order['status'],
@@ -171,8 +184,18 @@ class DashboardController extends Zend_Controller_Action
 			$order_date_str = date("M d, Y", strtotime($order['order_date']));
 			
 			$num_days = sprintf('+%s days', $order['duration']);
-			$new_date = date('Y-m-d', strtotime($num_days,strtotime($order_date)));
-			$days_left = Utilities::dateDiff($new_date, $order_date );
+			$new_date = date('Y-m-d', strtotime($num_days, strtotime($order_date)));
+			
+			$days_left = Utilities::dateDiff($new_date, sprintf('%s', date("Y-m-d")) );
+			if($days_left){
+				$days_left = sprintf('%s left', $days_left);
+			}
+			//echo $order_date." | ".$new_date." ".$days_left;exit;
+			
+			Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));			
+			$current_lowest_bid = BidUtilities::getCurrentLowestBid($order["id"]);
+			$current_lowest_finance_bid = BidUtilities::getCurrentLowestFinanceBid($order["id"]);
+			$count = BidUtilities::getCountBid($order["id"]);
 			
 			$data=array(
 				'order_id'=>$order['id'],
@@ -183,8 +206,11 @@ class DashboardController extends Zend_Controller_Action
 				'zipcode'=>$order['zipcode'],
 				'status'=>$order['status'],
 				'duration'=>$order['duration'],
-				'days_left'=>sprintf('%s left', $days_left), 
+				'days_left'=> $days_left, 
 				'items'=>$items,
+				'current_lowest_bid'=>$current_lowest_bid,
+				'current_lowest_finance_bid'=>$current_lowest_finance_bid,
+				'current_bid_count'=>$count
 			);
 			$user_orders[] = $data;
 		}
