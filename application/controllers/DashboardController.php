@@ -35,6 +35,8 @@ class DashboardController extends Zend_Controller_Action
 
 	public function getDealerDashboardAction()
 	{
+		
+			
 		$car_make = "";
 		$zipcode = "";
 		if (isset($_REQUEST["car_make"])){
@@ -49,7 +51,7 @@ class DashboardController extends Zend_Controller_Action
 		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
 		
 		if(!$user_login_credentials->user_credentials_id){
-			echo json_encode(array("success"=>false, "msg"=>"Plese login" ));
+			echo json_encode(array("success"=>false, "msg"=>"Please login" ));
 			exit;
 		}
 		
@@ -202,6 +204,12 @@ class DashboardController extends Zend_Controller_Action
 		$sql="SELECT * FROM orders o WHERE id=".$order_id;	
 		$order = $db->fetchRow($sql);
 		
+		//consumer info
+		$sql=$db->select()
+			->from('user_profiles', Array('street', 'city_town', 'state_province'))
+			->where('user_credentials_id=?', $order['user_credentials_id']);
+		$user_profiles=$db->fetchRow($sql);	
+		$order['consumer'] = $user_profiles;
 		$user_orders=array();
 		$date_diff = "";
 		$order_date = date("Y-m-d", strtotime($order['order_date']));			
@@ -218,12 +226,23 @@ class DashboardController extends Zend_Controller_Action
 		$new_date = date('Y-m-d', strtotime($num_days,strtotime($order_date)));
 		$order['days_left'] = Utilities::dateDiff($new_date, $order_date );
 		
+		
+		Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));
+			
+		$current_lowest_bid = BidUtilities::getCurrentLowestBid($order_id);
+		$current_lowest_finance_bid = BidUtilities::getCurrentLowestFinanceBid($order_id);
+		$count = BidUtilities::getCountBid($order_id);
+		
+		$order['current_lowest_bid']=$current_lowest_bid;
+		$order['current_lowest_finance_bid']=$current_lowest_finance_bid;
+		$order['current_bid_count']=$count;
+		
 		$sql = $db->select()
 			->from('order_items', Array('item_id', 'item_type'))
 			->where('order_id =?', $order_id);
 		$items = $db->fetchAll($sql);
-		
-		echo json_encode(array("success"=>true, "order"=>$order, "items"=>$items ));
+		$order['items'] = $items;
+		echo json_encode(array("success"=>true, "order"=>$order ));
 		exit;
 	}
 	

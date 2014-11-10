@@ -112,7 +112,11 @@ function displayOrders(data, order_id){
 			total_price = response.price.baseInvoice;
 			jQuery("#car_name_"+order_id).html(response.make.name+' '+response.model.name);
 			jQuery("#engine_"+order_id).html(response.engine.name);
-			jQuery("#transmission_"+order_id).html(response.trim+' '+response.transmission.transmissionType);
+			jQuery("#transmission_"+order_id).html(response.year.year+" "+response.trim+' '+response.transmission.transmissionType);
+			
+			jQuery("#mpg_"+order_id).html(response.MPG.city+"/"+response.MPG.highway+" <span>City/Hwy</span>");
+			jQuery("#horsepower_"+order_id).html(response.engine.horsepower);
+			jQuery("#numOfDoors_"+order_id).html(response.numOfDoors);
 			
 			if(data['color_id']){
 				//console.log("color_id => "+data['color_id']);
@@ -159,7 +163,7 @@ function displayOrders(data, order_id){
 					});
 				}
 			});
-			
+			//console.log(data['exterior']);
 			if(data['exterior']){
 				var output=""
 				var src = jQuery("#exterior-options-template").html();
@@ -185,7 +189,7 @@ function displayOrders(data, order_id){
 				var src = jQuery("#interior-options-template").html();
 				var template = Handlebars.compile(src);
 				
-				jQuery.each(exterior, function(i, item) {
+				jQuery.each(interior, function(i, item) {
 					
 					var num = item.id
 					num = num.toString();
@@ -197,7 +201,24 @@ function displayOrders(data, order_id){
 					});	
 					
 				});
-				jQuery("#exterior-options_"+order_id).html(output);
+				jQuery("#interior-options_"+order_id).html(output);
+			}
+			
+			
+			//Engine Tab
+			if(jQuery("#engine-options-template").html()){
+				var output=""
+				var src = jQuery("#engine-options-template").html();
+				var template = Handlebars.compile(src);
+				jQuery("#engine-options-"+order_id+" tbody").html(template(response) );
+			}
+			
+			//Transmission
+			if(jQuery("#engine-options-template").html()){
+				var output=""
+				var src = jQuery("#transmission-options-template").html();
+				var template = Handlebars.compile(src);
+				jQuery("#transmission-options-"+order_id+" tbody").html(template(response) );
 			}
 			jQuery("#total_baseInvoice_"+order_id).html("$"+total_price);
 			
@@ -208,6 +229,71 @@ function displayOrders(data, order_id){
 	});
 }
 
+function getEquipmentDetailsByStyleId(){
+	var style_id = jQuery('#style_id').val();
+	var order_id = jQuery('#order_id').val();
+	var url = BASE_URL + "vehicle/v2/styles/" + style_id + "/equipment?availability=standard&equipmentType=OTHER&fmt=json&api_key=" + API_KEY;
+	jQuery.ajax({
+		url : url,
+		type : "GET",
+		dataType : 'json',
+		success : function(response) {
+			var numOfSeats=0;
+			jQuery.each(response.equipment, function(j, equipment) {
+				if(equipment.name == "Seating Configuration") {									
+					jQuery.each(equipment.attributes, function(k, v) {
+						numOfSeats = parseInt(numOfSeats) + parseInt(v['value']);
+					})
+					return false;
+				}				
+			});
+			
+			var output=""
+			var src = jQuery("#accessories-options-template").html();
+			var template = Handlebars.compile(src);
+			jQuery("#accessories-options_"+order_id).html(template(response) );
+			jQuery("#numOfSeats_"+order_id).html(numOfSeats);
+			
+			//Steering
+			var output=""
+			var src = jQuery("#steering-options-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.equipment, function(j, equipment) {
+				if(equipment.name.indexOf("Steering") > -1) {									
+					output += template(equipment);
+				}				
+			});
+			jQuery("#steering-options-"+order_id+" tbody").html(output );
+			
+			
+			//Chassis
+			var output=""
+			var src = jQuery("#steering-options-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.equipment, function(j, equipment) {
+				if(equipment.name.indexOf("Chassis") > -1) {									
+					output += template(equipment);
+				}				
+			});
+			jQuery("#chasis-options-"+order_id+" tbody").html(output );
+			
+			//Dimesions
+			var output=""
+			var src = jQuery("#steering-options-template").html();
+			var template = Handlebars.compile(src);
+			jQuery.each(response.equipment, function(j, equipment) {
+				if(equipment.name.indexOf("Dimensions") > -1) {									
+					output += template(equipment);
+				}				
+			});
+			jQuery("#dimensions-options-"+order_id+" tbody").html(output );
+
+		},
+		error : function(response) {
+			getEquipmentDetailsByStyleId()
+		}
+	});	
+}
 
 function load_image(style_id, order_id) {
 	var image_api = BASE_URL_V1 + "vehiclephoto/service/findphotosbystyleid?styleId=" + style_id + "&fmt=json&api_key=" + API_KEY;
@@ -239,6 +325,41 @@ function load_image(style_id, order_id) {
 		},
 		error : function() {
 			load_image(style_id, order_id);
+		}
+	});
+
+}
+
+function load_main_image() {
+	var style_id = jQuery('#style_id').val();
+	var order_id = jQuery('#order_id').val();
+	var image_api = BASE_URL_V1 + "vehiclephoto/service/findphotosbystyleid?styleId=" + style_id + "&fmt=json&api_key=" + API_KEY;
+	var image_photo_small = "";
+	jQuery.ajax({
+		url : image_api,
+		type : "GET",
+		dataType : 'json',
+		success : function(response_image) {
+			//console.log(response_image);
+			
+			jQuery.each(response_image, function(j, image) {
+				if(image.shotTypeAbbreviation == "FQ") {				
+					jQuery.each(image.photoSrcs, function(k, photo) {
+						if(photo.indexOf("_600.jpg") > -1) {
+							image_photo_small = photo;
+							//jQuery("#car_main_image_"+order_id).attr("src", MEDIA + image_photo_small);
+							//jQuery("#car_main_image_"+order_id).width("500");
+							var img="<img src='"+MEDIA+image_photo_small+"' style='width: 500px;'>";
+							jQuery("#car-main-image-"+order_id).html(img);
+							return false;
+						}
+					})
+					return false;
+				}
+			});
+		},
+		error : function() {
+			load_main_image()
 		}
 	});
 

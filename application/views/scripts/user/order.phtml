@@ -1,24 +1,25 @@
 <input type="hidden" name="user_page" id="user_page" value="order"/>
 <input type="hidden" name="order_id" id="order_id" value="<?php echo $this->order_id;?>"/>
+<input type="hidden" name="style_id" id="style_id" />
 <div class="dis-over">
     <div class="row">
         <div class="col-md-6">
-            <img src="/img/genesis_coupe.png" />
+            <div id="car-main-image-<?php echo $this->order_id;?>"><img src="/public/img/ajax-loader.gif" /></div>
             <div class="d-info">
                 <ul>
 
                     <li class="icon-mpg">
 
                         <h5>EPA Est. MPG</h5>
-                        <p id="mpg">-<span>City/Hwy</span></p>
+                        <p id="mpg_<?php echo $this->order_id;?>">-<span>City/Hwy</span></p>
                     </li>
                     <li class="icon-hp">
                         <h5>Horsepower</h5>
-                        <p id="horsepower">-</p>
+                        <p id="horsepower_<?php echo $this->order_id;?>">-</p>
                     </li>
                     <li class="icon-seat">
                         <h5>Seating</h5>
-                        <p id="numOfSeats">-</p>
+                        <p id="numOfSeats_<?php echo $this->order_id;?>">-</p>
                     </li>
                 </ul>
 
@@ -35,28 +36,28 @@
                 </ul>
 
                 <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade active in" id="engine">
-                        <table id="engine-options" class="table table-striped table-condensed">
+                    <div class="tab-pane fade active in additional-selections" id="engine">
+                        <table id="engine-options-<?php echo $this->order_id;?>" class="table table-striped table-condensed">
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="transmission">
-                        <table id="transmission-options" class="table table-striped table-condensed">
+                    <div class="tab-pane fade additional-selections" id="transmission">
+                        <table id="transmission-options-<?php echo $this->order_id;?>" class="table table-striped table-condensed">
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="steering">
-                        <table id="steering-options" class="table table-striped table-condensed">
+                    <div class="tab-pane fade additional-selections" id="steering">
+                        <table id="steering-options-<?php echo $this->order_id;?>" class="table table-striped table-condensed">
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="chasis">
-                        <table id="chasis-options" class="table table-striped table-condensed">
+                    <div class="tab-pane fade additional-selections" id="chasis">
+                        <table id="chasis-options-<?php echo $this->order_id;?>" class="table table-striped table-condensed">
                             <tbody></tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="dimensions">
-                        <table id="dimensions-options" class="table table-striped table-condensed">
+                    <div class="tab-pane fade additional-selections" id="dimensions">
+                        <table id="dimensions-options-<?php echo $this->order_id;?>" class="table table-striped table-condensed">
                             <tbody></tbody>
                         </table>
                     </div>
@@ -78,15 +79,16 @@
                             <p>Address</p>
                         </div>
                     </div>
-                    <h3 class="car_name">-</h3>
-                    <h5 id="transmission" style="margin-bottom: 20px;"></h5>
+                    <h3 id="car_name_<?php echo $this->order_id;?>">-</h3>
+                    <h5 id="transmission_<?php echo $this->order_id;?>"></h5>
+                    <br clear="all" />
                     <div class="row">
-                        <div class="col-md-3">
-                            <p>Exterior Color: <span id="exterior_color">-</span></p>
+                        <div class="col-md-4">
+                            <p>Exterior Color: <span id="exterior_color_<?php echo $this->order_id;?>">-</span></p>
 
                         </div>
                         <div class="col-md-8">
-                            <p>Interior Color: <span id="interior_color">-</span></p>
+                            <p>Interior Color: <span id="interior_color_<?php echo $this->order_id;?>">-</span></p>
                         </div>
                     </div>
                     <div class="white-wrap b-price-dis">
@@ -94,7 +96,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" style="text-align:left;">Price</label>
                                 <div class="col-sm-8">
-                                    <p id="total_price">$0</p>
+                                    <p id="total_baseInvoice_<?php echo $this->order_id;?>">$0</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -113,7 +115,7 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
 
-                                    <a class="btn btn-warning btn-lg" data-toggle="modal" data-target="#basicModal">Place a Bid</a>
+                                    <a class="btn btn-warning btn-lg place-bid" data-order_id="<?php echo $this->order_id;?>">Place a Bid</a>
                                 </div>
                             </div>
                         </form>
@@ -129,8 +131,8 @@
                                     </h4>
                                 </div>
                                 <div id="panel1" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <ol id="exterior-options"></ol>
+                                    <div class="panel-body additional-selections">
+                                        <ol id="exterior-options_<?php echo $this->order_id;?>"></ol>
                                     </div>
                                 </div>
                             </div>
@@ -141,8 +143,8 @@
                                     </h4>
                                 </div>
                                 <div id="panel2" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ol id="interior-options"></ol>
+                                    <div class="panel-body additional-selections">
+                                        <ol id="interior-options_<?php echo $this->order_id;?>"></ol>
                                     </div>
                                 </div>
                             </div>
@@ -153,8 +155,8 @@
                                     </h4>
                                 </div>
                                 <div id="panel3" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ol id="accessories-options"></ol>
+                                    <div class="panel-body additional-selections">
+                                        <ol id="accessories-options_<?php echo $this->order_id;?>"></ol>
                                     </div>
                                 </div>
                             </div>
@@ -166,6 +168,7 @@
     </div>
 </div>
                         
+<?php echo $this->partial("elements/user/place-bid-modal.phtml"); ?>
                         
 <script type="text/x-handlebars-template" id="exterior-options-template">
 	<li style="margin-top:10px;">{{name}} <span class="price" style="float:right; margin-right:20px;">+ ${{price.baseMSRP}}</span></li>
@@ -191,7 +194,7 @@
 <script type="text/x-handlebars-template" id="engine-options-template">
 {{#each engine}}	
 	 <tr>
-	 	<td>{{@key}} </td> 
+	 	<td class="name-capitalize">{{@key}} </td> 
 		<td>: {{this}}</td>
 	</tr>
 {{/each}}
@@ -200,7 +203,7 @@
 <script type="text/x-handlebars-template" id="transmission-options-template">
 {{#each transmission}}	
 	 <tr>
-	 	<td>{{@key}} </td> 
+	 	<td class="name-capitalize">{{@key}} </td> 
 		<td>: {{this}}</td>
 	 </tr>
 {{/each}}
@@ -209,11 +212,11 @@
 
 <script type="text/x-handlebars-template" id="steering-options-template">
 	<tr>
-	 	<td colspan="2">{{this.name}}</td> 
+	 	<td colspan="2"><strong>{{this.name}}</strong></td> 
 	</tr>
 	{{#each attributes}}	
 		<tr>
-			<td>{{this.name}} </td> 
+			<td class="name-capitalize">{{this.name}} </td> 
 			<td>: {{this.value}}</td>
 		 </tr>		
 	{{/each}}

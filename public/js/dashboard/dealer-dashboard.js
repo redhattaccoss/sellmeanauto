@@ -16,11 +16,11 @@ function get_dealer_dashboard(params){
 				order.ending = order.ending*1000;
 				order.ending = millisecondsToStr(order.ending);
 				output += template(order);
-				//console.log(order);
+
 				var result= configure_order_items(order);
-				//console.log(result);
 				displayOrders(result, order.order_id);
-				load_image(order.style_id, order.order_id)
+				load_image(order.style_id, order.order_id);
+				
 			});
 		}else{
 			output="<tr><td colspan='4'>There's an error in parsing dealer's dashboard list.</td></tr>"
@@ -86,5 +86,20 @@ function get_user_order_details(){
 	jQuery.get(DASHBOARD_API + "/get-user-order-details/?order_id="+order_id, function(response){
 		response = jQuery.parseJSON(response);
 		console.log(response);				
+		if(response.success){
+			jQuery("#zipcode").html(response.order.zipcode);
+			jQuery("#address").html(response.order.consumer.street+", "+response.order.consumer.city_town+" ,"+response.order.consumer.state_province);
+			jQuery("#current_bid").html("$"+response.order.current_lowest_bid+" <span>"+response.order.current_bid_count+" Bids</span>");
+			jQuery("#finance_estimate").html("$"+response.order.current_lowest_finance_bid+" <span>per month for 72 months</span>");
+			
+			jQuery("#style_id").val(response.order.style_id);
+			var result= configure_order_items(response.order);
+			//console.log(result);
+			displayOrders(result, order_id);
+			getEquipmentDetailsByStyleId();
+			load_main_image();
+		}else{
+			alert("There's a problem in displaying order details.");
+		}
 	});
 }

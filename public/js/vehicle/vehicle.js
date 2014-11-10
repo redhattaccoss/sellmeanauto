@@ -203,7 +203,9 @@ function load_profile_image() {
 						if(photo.indexOf("_600.jpg") > -1) {
 							image_photo_small = photo;
 							//console.log(image_photo_small);
-							jQuery("#car_main_image").attr("src", MEDIA + image_photo_small).width("500");
+							//jQuery("#car_main_image").attr("src", MEDIA + image_photo_small).width("500");
+							var img="<img src='"+MEDIA+image_photo_small+"' style='width: 500px;'>";
+							jQuery("#car-main-image").html(img);
 							return false;
 						}
 					})
