@@ -409,6 +409,10 @@ class UserController extends Zend_Controller_Action
 			->from('user_credentials', 'type')
 			->where('id=?', $user_login_credentials->user_credentials_id );
 		$user_type = $db->fetchOne($sql);
+		if($user_type == "consumer"){
+			header("Location:/user/");
+			exit;
+		}
 		
 		
 		$sql = $db->select()
@@ -420,14 +424,10 @@ class UserController extends Zend_Controller_Action
 		$this->view->user_profiles= $user_profiles;	
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
-		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
+		$this->view->headLink()->appendStylesheet("/public/css/user/dealer-dashboard.css");
+		$this->view->headScript()->appendFile("/public/js/dashboard/delaer-bid-list.js", "text/javascript");
+		$this->_helper->layout->setLayout("dealer");
 		
-		if($user_type == "consumer"){
-			$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
-			$this->_helper->layout->setLayout("user");
-		}else{
-			$this->_helper->layout->setLayout("dealer");
-		}
 		
 	}
 	

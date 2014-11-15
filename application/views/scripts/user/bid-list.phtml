@@ -1,1 +1,30 @@
-<p>Bids Page. Under Construction</p>
+<div class="car-list dealer-car-list" >
+	<table id="bid-list-tb" class="table table-striped">
+		<thead style="background-color: #808080; color: #fff;">
+			<tr>
+				<th class="col-md-2">Item</th>
+				<th class="col-md-4">Details</th>
+				<th class="col-md-2">Bid Price</th>
+				<th class="col-md-2">Finance Estimate</th>
+				<th class="col-md-2">Status</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
+
+<script type="text/x-handlebars-template" id="dealer-bids-list-template">
+	<tr>
+		<td valign="top"><img id="car_main_image_{{id}}" /></td>
+		<td valign="top">
+			<h4 id="car_name_{{id}}">-</h4>
+			<p>Engine: <span id="engine_{{id}}">-</span></p>
+			<p>Transmission: <span id="transmission_{{id}}">-</span></p>
+			<p>Exterior Color: <span id="exterior_color_{{id}}">-</span></p>
+			<p>Interior Color: <span id="interior_color_{{id}}">-</span></p>
+		</td>
+		<td valign="top"><p id="bid_price_{{id}}" class="con-bid">${{bid_price}}</p></td>
+		<td valign="top"><p id="finance_estimate_{{id}}" class="c-bid">${{finance_estimate}}</p></td>
+		<td valign="top"><p>{{status}}<br /> <span>{{bid_count}} Bids</span></p><a href="/user/order/{{order_id}}" class="btn btn-default">View Details</a></td>
+	</tr>
+</script>

@@ -67,15 +67,20 @@ class BidsController extends Zend_Controller_Action{
 			$bids = $db->fetchAll($sql);
 			
 			foreach($bids as $key=>$bid){
-				$order_details = $db->fetchRow($db->select()->from(array("o"=>"orders"))->where("id = ?", $bid["order_id"]));
+				$order_details = $db->fetchRow($db->select()->from(array("o"=>"orders"))->where("id = ?", $bid["order_id"]));				
 				if ($order_details){
 					$order_details["start_millisecond"] = strtotime($order_details["order_date"]);
 					$date = DateTime::createFromFormat("Y-m-d H:i:s", $order_details["order_date"]);
 					$date->modify("+".$order_details["duration"]." days");
 					$order_details["end_millisecond"] = strtotime($date->format("Y-m-d H:i:s"));
-					$order_items = $db->fetchAll($db->select()->from(array("oi"=>"order_items"))->where("order_id = ?", $bid["order_id"]));					$order_details["order_items"] = $order_items;
+					$order_items = $db->fetchAll($db->select()->from(array("oi"=>"order_items"))->where("order_id = ?", $bid["order_id"]));
+					$order_details["order_items"] = $order_items;
+					
 				}
 				$bids[$key]["order_details"] = $order_details;
+				Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));			
+				$bid_count = BidUtilities::getCountBid($bid["order_id"]);
+				$bids[$key]["bid_count"] = $bid_count;
 			}
 			$result["success"] = true;
 			$result["bids"] = $bids;

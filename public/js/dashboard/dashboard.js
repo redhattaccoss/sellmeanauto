@@ -19,7 +19,7 @@ function check_user_session(){
 				}
 				if(user_page == "order"){
 					get_user_order_details();
-				}
+				}			
 			}else if(response.type=="consumer"){
 				if(user_page == "dashboard"){
 					get_user_dashboard();
