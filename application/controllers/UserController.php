@@ -460,10 +460,23 @@ class UserController extends Zend_Controller_Action
 		$this->view->user_profiles= $user_profiles;	
 		$this->view->order_id= $order_id;
 		
+		$order = $db->fetchRow($db->select()->from("orders")->where("id = ?", $order_id));
+		$this->view->order=$order;
+		
+		Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));			
+		$current_lowest_bid = BidUtilities::getCurrentLowestBid($order["id"]);
+		$current_lowest_finance_bid = BidUtilities::getCurrentLowestFinanceBid($order["id"]);
+		$count = BidUtilities::getCountBid($order["id"]);
+		
+		$this->view->current_lowest_bid=$current_lowest_bid;
+		$this->view->current_lowest_finance_bid=$current_lowest_finance_bid;
+		$this->view->bid_count=$count;
+		
+		
 		$this->view->headScript()->appendFile("/public/js/index/index.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/user/user.js", "text/javascript");
 		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
-		
+		$this->view->headScript()->appendFile("/public/js/dashboard/consumer-poster-view.js", "text/javascript");
 		$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
 		$this->view->headLink()->appendStylesheet("/public/css/user/user-poster-view.css");		
 		$this->_helper->layout->setLayout("user");

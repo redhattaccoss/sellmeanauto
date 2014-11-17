@@ -26,4 +26,10 @@ class BidUtilities{
 		$count = $db->fetchOne($db->quoteInto("SELECT COUNT(*) FROM bids WHERE order_id = ?", $order_id));
 		return $count;
 	}
+	
+	public static function getBidDetails($bid_id){
+		$db = Zend_Registry::get("main_db");
+		$bid = $db->fetchRow($db->quoteInto("SELECT * FROM bids WHERE id = ?", $bid_id));
+		return $bid;
+	}
 }

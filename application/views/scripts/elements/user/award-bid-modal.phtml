@@ -1,0 +1,45 @@
+<div class="modal fade" id="award-bid-modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h3 class="modal-title" id="myModalLabel">Confirmation</h3>
+			</div>
+			<div class="modal-body">
+				<h5><span id="award-bid-modal-consumer-address"></span></h5>
+				<h4><span id="award-bid-modal-model"></span></h4>
+				<h5 style="margin-bottom: 20px;"><span id="award-bid-modal-transmission"></span></h5>
+				<table class="table table-condensed">
+					<colgroup>
+						<col class="col-xs-2">
+						<col class="col-xs-6">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td> Price </td>
+							<td><span id="award-bid-modal-price"></span></td>
+						</tr>
+						<tr>
+							<td> FINANCE ESTIMATE </td>
+							<td><span id="award-bid-modal-finance-estimate"></span> for 72 months</td>
+						</tr>
+						<tr>
+							<td> Current Bid </td>
+							<td><span id="award-bid-modal-current-bid-expire-days"></span></td>
+						</tr>
+												
+					</tbody>
+				</table>
+				<div class="bid-a-con award-bid">
+                	<input type="hidden" name="order_id" id="award-form-order-id"/>
+					<p>Are you sure you want to accept this Bid Offer ?</p>
+                    <button class="btn btn-success">Yes</button> <button class="btn btn-default">Cancel</button>
+				</div>
+				<span class="note"> <span style="color:red;">*</span> Aenean consequat sagittis nibh quis euismod. Donec interdum ultricies leo, at placerat eros vestibulum vitae. Nullam sit amet adipiscing.
+					Phasellus rhoncus. Integer at neque aliquet, lobortis arcu id, consectetur mauris. Duis accumsan ut ultricies. Quisque commodo, sem vitae ornare lacinia, ante orci rutrum.Nam vitae porta felis, ut vulputate justo. Proin eu risus eros. Pellentesque viverra neque nec turpis vestibulum, vitae tempus velit eleifend. </span>
+			</div>
+		</div>
+	</div>
+</div>

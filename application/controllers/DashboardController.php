@@ -272,5 +272,64 @@ class DashboardController extends Zend_Controller_Action
 		exit;
 	}
 	
+	
+	public function getBidsByOrderIdAction()
+	{
+		$pageNum = 1;
+		$rowsPerPage = 5;
+		$offset = 0;
+		if(isset($_GET['page'])){
+			$pageNum = $_REQUEST['page'];
+		}
+		$offset = ($pageNum - 1) * $rowsPerPage;
+		
+		$order_id = $_GET['order_id'];
+		Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));
+		Zend_Loader::loadClass("Utilities",array(COMPONENTS_PATH));
+		$numrows = BidUtilities::getCountBid($order_id);
+		
+		
+		if($numrows > 0){ 
+		   $maxPage = ceil($numrows/$rowsPerPage);
+		}
+		$limit = " LIMIT $offset, $rowsPerPage ";
+		if(isset($_REQUEST['page'])){
+		   $counter =$offset + 1;
+		}else{
+		   $counter =1 ;
+		}		
+		
+		
+		$db = Zend_Registry::get("main_db");
+		$sql="SELECT * FROM bids b WHERE order_id=".$order_id." ORDER BY bid_price ASC $limit";
+		$bids = $db->fetchAll($sql);
+		$data=array();
+		foreach($bids as $bid){
+			$date_diff = "";
+			$date_posted = date("Y-m-d", strtotime($bid['date_posted']));			
+			$bid['date_diff'] = Utilities::dateDiff(sprintf('%s', date("Y-m-d")), $date_posted );	
+			$bid['date_posted_str'] = date("M d, Y", strtotime($bid['date_posted']));
+			$bid['counter'] = $counter++;
+			array_push($data, $bid);
+			
+		}
+		
+		
+		
+		echo json_encode(array("success"=>true, "bids"=>$data, "numrows"=>$numrows, "maxpage"=>$maxPage, "pagenum"=>$pageNum, "sql"=>$sql ));
+		exit;
+	}
+	
+	public function bidDetailsAction()
+	{
+		$db = Zend_Registry::get("main_db");	
+		$bid_id = $this->getRequest()->getQuery("id");
+		
+		Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));
+		$bid = BidUtilities::getBidDetails($bid_id);
+		echo json_encode(array("success"=>true, "bid"=>$bid ));
+		exit;
+	}
+	
 }
 

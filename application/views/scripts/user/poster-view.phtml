@@ -1,32 +1,37 @@
+<input type="hidden" name="order_id" id="order_id" value="<?php echo $this->order_id;?>"/>
+<input type="hidden" name="pagenum" id="pagenum" value=1 />
+<input type="hidden" name="style_id" id="style_id" />
+
+
 <div class="row">
-	<div class="col-md-5">
-        <div id="car-main-image"><img id="car_main_image" src="https://media.ed.edmunds-media.com/jaguar/xf/2013/oem/2013_jaguar_xf_sedan_30-awd_fq_oem_2_400.jpg" /></div>
+	<div class="col-md-6">
+        <div id="car-main-image-<?php echo $this->order_id;?>"><img src="/public/img/ajax-loader.gif" /></div>
     </div>    
     <div class="col-md-6">
     	<div class="c-info">
-                <h3 id="car-name">Jaguar XF</h3>
-                <h5 id="transmission">Supercharged AUTOMATIC</h5>
+                <h3 id="car_name_<?php echo $this->order_id;?>">-</h3>
+                <h5 id="transmission_<?php echo $this->order_id;?>">-</h5>
                 
                 <br clear="all" />
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <p>Exterior Color: <span id="exterior_color_<?php echo $this->order_id;?>">-</span></p>
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <p>Interior Color: <span id="interior_color_<?php echo $this->order_id;?>">-</span></p>
                         </div>
                     </div>
                     
                <br clear="all" />
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <p class="as_configured">As Configured</p>
-						<span class="as_configured_price">$0.00</span>
+						<span id="total_baseInvoice_<?php echo $this->order_id;?>" class="as_configured_price">$0.00</span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <p class="finance_estimate">Finance Estimate</p>
-                        <span class="pull-left finance_estimate_price">$551</span><span class="seventy_two_months">per month<br />for 72 months</span>
+                        <span id="finance_estimate" class="finance_estimate_price">$0</span>
                     </div>
                 </div> 
                 <br clear="all" />
@@ -40,28 +45,98 @@
        <div class="current_bid_box">
        		<div class="row">
                 <div class="col-md-6">
-                    <p>Current Bid : <span class="current_bid">$0.00</span> <span class="bid_count">0 Bids</span></p>
+                    <p>Current Bid : <span class="current_bid">$<?php echo $this->current_lowest_bid; ?></span> <span class="bid_count"><?php echo $this->bid_count;?> Bids</span></p>
                 </div>
                 <div class="col-md-6">
                     <p>
-                    	Finance Estimate : <span class="finance_estimate_price" style="margin-left:15px;">$551</span>
-                    	<span class="seventy_two_months">per month for 72 months</span>
+                    	Finance Estimate : <span id="finance_estimate_clone_str"  class="finance_estimate_price" style="margin-left:15px;">$<?php echo $this->current_lowest_finance_bid; ?> <span class="seventy_two_months">per month for 72 months</span></span>
                     </p>
                 </div>
             </div>
        </div>
        <br clear="all" />
-       <table id="poster-view-list-tb" class="table table-condensed table-striped">
+       <table id="poster-view-list-tb" class="table table-condensed table-striped table-bordered">
         <thead>
             <tr>
-                <th class="col-md-2">Rank</th>
-                <th class="col-md-4">Bid Offer</th>
+                <th class="col-md-1">Rank</th>
+                <th class="col-md-1">Bid Offer</th>
                 <th class="col-md-2">Finance Offer</th>
                 <th class="col-md-2">Date</th>
-                <th class="col-md-2">&nbsp;</th>
+                <th class="col-md-1">&nbsp;</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody></tbody>        
     </table>
+    
+    <nav>
+      <ul id="pagination" class="pagination"></ul>
+    </nav>
        
 </div>
+
+<?php echo $this -> partial("elements/user/award-bid-modal.phtml"); ?>
+
+
+<script type="text/x-handlebars-template" id="exterior-options-template">
+	<li style="margin-top:10px;">{{name}} <span class="price" style="float:right; margin-right:20px;">+ ${{price.baseMSRP}}</span></li>
+</script>
+
+<script type="text/x-handlebars-template" id="interior-options-template">
+	<li style="margin-top:10px;">{{name}} <span class="price" style="float:right; margin-right:20px;">+ ${{price.baseMSRP}}</span></li>
+</script>
+
+<script type="text/x-handlebars-template" id="accessories-options-template">
+{{#each equipment}}	
+	<li>{{this.name}}
+		<ul>
+			{{#each attributes}}	
+				<li>{{this.name}} : {{this.value}}</li>
+			{{/each}}
+		</ul>
+	</li>
+{{/each}}
+</script>
+
+
+<script type="text/x-handlebars-template" id="engine-options-template">
+{{#each engine}}	
+	 <tr>
+	 	<td class="name-capitalize">{{@key}} </td> 
+		<td>: {{this}}</td>
+	</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="transmission-options-template">
+{{#each transmission}}	
+	 <tr>
+	 	<td class="name-capitalize">{{@key}} </td> 
+		<td>: {{this}}</td>
+	 </tr>
+{{/each}}
+</script>
+
+
+<script type="text/x-handlebars-template" id="steering-options-template">
+	<tr>
+	 	<td colspan="2"><strong>{{this.name}}</strong></td> 
+	</tr>
+	{{#each attributes}}	
+		<tr>
+			<td class="name-capitalize">{{this.name}} </td> 
+			<td>: {{this.value}}</td>
+		 </tr>		
+	{{/each}}
+	
+</script>
+
+
+<script type="text/x-handlebars-template" id="poster-view-list-template">
+	<tr>
+		<td class="name-capitalize"><span class="badge">{{counter}}</span></td> 
+		<td><span class="bid-price">${{bid_price}}</span></td>
+		<td><span class="bid-price">${{finance_estimate}}</span> <span class="per_month">per month for 72 months</span></td>
+		<td><span class="per_month">{{date_posted_str}} - {{date_diff}} ago</span></td>
+		<td align="center"><button class="btn btn-success award-btn" data-bid_id={{id}}>Award</button></td>
+	 </tr>		
+</script>
