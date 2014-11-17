@@ -1,0 +1,116 @@
+h3{
+	margin-top:0px;
+	margin-bottom:0px;
+}
+
+
+h3.#car-name{
+	font-size:20px !important;
+	font-weight:bold !important;
+	line-height:120% !important;
+	color:#19537A !important;
+	text-align:left !important;
+}
+
+
+h5.#transmission{
+	font-size:15px;
+	line-height:120%;
+	color:#282A29;
+	text-align:left;
+}
+
+.as_configured, .finance_estimate{
+	font-size:13px !important;
+	font-weight:bold !important;
+	line-height:120% !important;
+	color:rgb(68,68,68) !important;
+	text-align:left !important;
+}
+
+.as_configured_price{
+	font-size:35px;
+	font-weight:bold;
+	line-height:120%;
+	color:rgb(25,83,122);
+	text-align:left;
+}
+
+.finance_estimate_price{
+	font-size:25px;
+	line-height:120%;
+	color:rgb(136,136,136);
+	text-align:left;
+	padding-top:5px;
+	margin-right:10px;
+	font-weight:normal !important;
+}
+
+.seventy_two_months{
+	font-size:11px;
+	line-height:120%;
+	color:rgb(136,136,136);
+	text-align:left;
+	font-weight:normal !important;
+}
+
+.best_price_offer{
+	font-size:17px;
+	font-weight:bold;
+	line-height:120%;
+	color:rgb(255,170,84);
+	text-align:left;
+	padding:15px;
+}
+
+.current_bid_box{
+	background-color:rgb(255,255,255);
+	width:80%;
+	height:60px;
+	border:#FFA64D solid 1px;
+	
+	/* Firefox v1.0+ */
+	-moz-border-radius:4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:4px;
+
+	line-height:60px;
+	padding-left:25px;
+	margin-left:14px;
+}
+
+.current_bid_box p {
+	font-size:13px;
+	font-weight:bold;
+	color:rgb(68,68,68);
+}
+
+.current_bid_box p span.current_bid{
+	font-size:20px;
+	color:rgb(139,196,63);
+	text-align:left;
+	margin-left:15px;
+	font-weight:normal !important;
+}
+
+.current_bid_box p span.bid_count{
+	font-size:15px;
+	color:rgb(119,119,119);
+	font-weight:normal !important;
+	margin-left:7px;
+}
+
+#poster-view-list-tb thead{
+	background-color: #BBBBBB; 
+	color: #fff;
+}
+
+#poster-view-list-tb thead tr th {
+	font-size:13px;
+	line-height:120%;
+	color:rgb(255,255,255);
+	text-align:left;
+	font-weight:normal !important;
+}

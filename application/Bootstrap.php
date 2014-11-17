@@ -90,6 +90,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		));
 		$router->addRoute('userOrderSummary', $detailsRoute);
 		
+		$detailsRoute = new Zend_Controller_Router_Route("user/poster-view/:id", array(
+		   'controller' => 'user',
+		   'action' => 'poster-view'
+		));
+		$router->addRoute('posterView', $detailsRoute);
+		
 		//added cars selection 
 		$route = new Zend_Controller_Router_Route("cars/select/:makeName/:modelName/:year",
 					array("controller"=>"cars", "action"=>"select"));
