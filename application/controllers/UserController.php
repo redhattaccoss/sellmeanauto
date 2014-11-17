@@ -465,9 +465,8 @@ class UserController extends Zend_Controller_Action
 		$this->view->headScript()->appendFile("/public/js/dashboard/dashboard.js", "text/javascript");
 		
 		$this->view->headLink()->appendStylesheet("/public/css/user/user.css");
-		$this->view->headLink()->appendStylesheet("/public/css/user/user-poster-view.css");
+		$this->view->headLink()->appendStylesheet("/public/css/user/user-poster-view.css");		
 		$this->_helper->layout->setLayout("user");
-        $this->_helper->layout->setLayout("user");
 	}
 	
 	public function logoutAction()
