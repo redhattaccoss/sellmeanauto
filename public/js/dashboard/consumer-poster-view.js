@@ -6,18 +6,101 @@ jQuery(document).ready(function() {
 	});	
 });
 
+function getCardDetails(style_id, items){
+	//console.log(style_id);
+	//console.log(items);
+	
+	var car_exterior = new Array();
+	var car_interior = new Array();
+	jQuery.each(items, function(i, item) {
+		if(item.item_type == "exterior"){
+			car_exterior.push(item.item_id);
+		}
+	});
+	
+	jQuery.each(items, function(i, item) {
+		if(item.item_type == "interior"){
+			car_exterior.push(item.item_id);
+		}
+	});
+	
+	
+	
+	var url = BASE_URL + "vehicle/v2/styles/" + style_id + "?view=full&fmt=json&api_key=" + API_KEY;
+	jQuery.ajax({
+		url : url,
+		type : "GET",
+		dataType : 'json',
+		success : function(response) {
+			
+			total_price = response.price.baseInvoice;
+			//console.log(total_price);
+			var exterior = new Array();
+			var interior = new Array();
+			jQuery.each(response.options, function(i, item) {
+				if(item.category == "Exterior"){
+					jQuery.each(item.options, function(k, v) {
+						exterior.push(v);
+					});
+				}
+				if(item.category == "Interior"){
+					jQuery.each(item.options, function(k, v) {
+						interior.push(v);
+					});
+				}
+			});
+			
+			
+			if(car_exterior){
+				jQuery.each(exterior, function(i, item) {
+					var num = item.id
+					num = num.toString();
+					jQuery.each(car_exterior, function(i, v) {
+						if(num == v){
+							total_price = total_price + item.price.baseMSRP
+							//console.log(v)
+						}
+					});						
+				});
+			}
+			
+			if(car_interior){
+				jQuery.each(interior, function(i, item) {
+					var num = item.id
+					num = num.toString();
+					jQuery.each(car_interior, function(i, v) {
+						if(num == v){
+							total_price = total_price + item.price.baseMSRP
+							//console.log(v)
+						}
+					});						
+				});
+			}
+			
+			//console.log(total_price);
+			jQuery("#award-bid-modal-price").html("$"+total_price);
+		},
+		error : function(response) {
+			getCardDetails(style_id, items);
+		}
+	});
+	
+	
+}
+
 function display_bid_offer(bid_id){
 	jQuery.get(DASHBOARD_API + "/bid-details/?id="+bid_id, function(response){
 		response = jQuery.parseJSON(response);
 		//console.log(response);
-		if (response.success){
-			
-			//jQuery("#award-bid-modal-price").html(response.bid.bid_price);
-			
+		if (response.success){			
+			//jQuery("#award-bid-modal-price").html(response.bid.bid_price);			
 			jQuery("#award-bid-modal-finance-estimate").html("$"+response.bid.finance_estimate);
 			jQuery("#award-bid-modal-current-bid-expire-days").html("$"+response.bid.bid_price);
 			jQuery("#award-form-order-id").val(order_id);
 			jQuery("#award-bid-modal").modal({keyboard:false, backdrop:"static"});
+			
+			getCardDetails(response.bid.style_id, response.bid.order_items);
+			
 		}
 	})
 }

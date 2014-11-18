@@ -314,8 +314,6 @@ class DashboardController extends Zend_Controller_Action
 			
 		}
 		
-		
-		
 		echo json_encode(array("success"=>true, "bids"=>$data, "numrows"=>$numrows, "maxpage"=>$maxPage, "pagenum"=>$pageNum, "sql"=>$sql ));
 		exit;
 	}
@@ -327,6 +325,13 @@ class DashboardController extends Zend_Controller_Action
 		
 		Zend_Loader::loadClass("BidUtilities", array(COMPONENTS_PATH));
 		$bid = BidUtilities::getBidDetails($bid_id);
+		
+		$sql="SELECT style_id FROM orders o WHERE id=".$bid['order_id'];	
+		$bid['style_id'] = $db->fetchOne($sql);
+		
+		$sql="SELECT * FROM order_items o WHERE order_id=".$bid['order_id'];
+		$bid['order_items'] = $db->fetchAll($sql);
+		
 		echo json_encode(array("success"=>true, "bid"=>$bid ));
 		exit;
 	}
