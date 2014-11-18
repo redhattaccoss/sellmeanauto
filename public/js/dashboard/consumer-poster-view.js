@@ -1,7 +1,7 @@
 DASHBOARD_API = "/dashboard";
 jQuery(document).ready(function() {
 	jQuery(window).load(function (e) {
-		//posted_view_details();
+		posted_view_details();
 		get_bids_by_order_id();		
 	});	
 });
